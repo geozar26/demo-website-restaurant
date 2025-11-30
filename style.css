@@ -1,7 +1,4 @@
-
-
 :root {
-  
     --color-primary: #0078ff;
     --color-secondary: #ff7043;
     --color-dark: #222;
@@ -20,7 +17,7 @@ body {
     color: var(--color-dark);
     background: var(--color-light);
 }
- 
+
 * {
     margin: 0;
     padding: 0;
@@ -28,9 +25,7 @@ body {
     font-family: var(--font-stack);
 }
 
-
-    
-
+/* --- Navbar --- */
 .navbar {
     display: flex;
     align-items: center;
@@ -80,10 +75,11 @@ body {
     margin-top: 10px;
 }
 
+/* --- Hero Section --- */
 .hero {
-    min-height:60vh;
+    min-height: 60vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("images/restaurant.png") no-repeat center/cover;
+        url("images/restaurant.png") no-repeat center/cover;
     color: var(--color-light);
     text-align: center;
     padding: 120px 20px;
@@ -115,7 +111,7 @@ body {
     background: #005fcc;
 }
 
-
+/* --- Content / About --- */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -123,10 +119,10 @@ body {
 }
 
 .row {
-    display: flex; /* ⭐️ ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ ΠΟΥ ΕΛΕΙΠΕ ⭐️ */
-    align-items: center; /* Για κάθετη στοίχιση */
-    gap: 30px; /* Κενό μεταξύ εικόνας και κειμένου σε desktop */
-    margin: 10px 0; /* Δώστε λίγο πάνω/κάτω περιθώριο */
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 10px 0;
 }
 
 .row .content {
@@ -160,8 +156,7 @@ body {
     object-fit: cover;
 }
 
-
-
+/* --- Items / Grid --- */
 .items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -202,8 +197,7 @@ body {
     color: var(--color-text-main);
 }
 
-
-
+/* --- Gallery --- */
 .gallery h2 {
     font-size: 2rem;
     text-align: center;
@@ -254,8 +248,7 @@ body {
     display: flex;
 }
 
-
-
+/* --- Specials Carousel --- */
 .todays-specials {
     max-width: 1200px;
     margin: 50px auto;
@@ -272,19 +265,14 @@ body {
     width: 100%;
     overflow-x: auto;
     box-sizing: border-box;
-
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none;     /* Firefox */
 }
-  
+
 .carousel-container::-webkit-scrollbar {
     width: 0;
     height: 0;
     display: none;
-}
-
-/* Απόκρυψη scrollbar για Firefox */
-.carousel-container {
-    -ms-overflow-style: none;  /* IE 10+ */
-    scrollbar-width: none;      /* Firefox */
 }
 
 .carousel-track {
@@ -355,8 +343,7 @@ body {
     background-color: var(--color-primary);
 }
 
-
-
+/* --- Testimonials --- */
 .testimonials-section {
     background-color: var(--color-light);
     padding: 15px;
@@ -441,8 +428,7 @@ body {
     align-self: flex-start;
 }
 
-
-
+/* --- Login Modal --- */
 .login-overlay {
     display: none;
     position: fixed;
@@ -565,12 +551,10 @@ body {
     color: var(--color-secondary);
 }
 
-
-
 .remember-me-container {
-    display: flex; 
-    align-items: center; 
-    margin: 6px 0; 
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
 }
 
 .remember-me-container input[type="checkbox"] {
@@ -583,9 +567,7 @@ body {
     cursor: pointer;
 }
 
-
-
-/* Image Modal */
+/* --- Image Modal --- */
 .modal {
     position: fixed;
     z-index: 1000;
@@ -664,8 +646,7 @@ body {
     padding: 0 5%;
 }
 
-
-
+/* --- Footer --- */
 .footer {
     background-color: #000;
     color: var(--color-light);
@@ -751,331 +732,300 @@ body {
     color: #aaa;
 }
 
+/* --- MEDIA QUERIES --- */
+
 @media (min-width: 993px) {
- .footer-col.footer-links {
- margin-right: -3px;
-}
+    .footer-col.footer-links {
+        margin-right: -3px;
+    }
 
- .footer-col.footer-resources {
- margin-left: -3px;
- }
+    .footer-col.footer-resources {
+        margin-left: -3px;
+    }
 }
-
 
 @media (max-width: 992px) {
-.carousel-card {
- min-width: 220px;
- }
+    .carousel-card {
+        min-width: 220px;
+    }
 }
 
 /* Medium Screens (<= 820px) */
 @media (max-width: 820px) {
-.carousel-card {
- min-width: 200px;
- }
+    .carousel-card {
+        min-width: 200px;
+    }
 }
 
-/* Tablet/Mobile (<= 768px) */
+/* Tablet/Mobile (<= 768px) - ΣΥΓΧΩΝΕΥΜΕΝΟ BLOCK */
 @media (max-width: 768px) {
- .navbar {
- padding: 10px 15px;
- }
+    .navbar {
+        padding: 10px 15px;
+    }
 
- .logo {
-padding-left: 0;
-font-size: 1.4rem;
- }
+    .logo {
+        padding-left: 0;
+        font-size: 1.4rem;
+    }
 
- .menu-icon {
-display: block;
- z-index: 1001;
-font-size: 2.0rem;
- margin-right: 0;
-}
+    .menu-icon {
+        display: block;
+        z-index: 1001;
+        font-size: 2.0rem;
+        margin-right: 0;
+    }
 
- .nav-links {
- top: 60px;
- height: auto;
- display: none;
- position: fixed;
- right: 0;
- width: 70%;
- background: rgba(255, 255, 255, 0.98);
- flex-direction: column;
-align-items: flex-start;
-z-index: 1000;
- box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- padding: 20px 20px 10px 20px;
- gap: 0;
- }
+    .nav-links {
+        top: 60px;
+        height: auto;
+        display: none;
+        position: fixed;
+        right: 0;
+        width: 70%;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        align-items: flex-start;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px 20px 10px 20px;
+        gap: 0;
+    }
 
- .nav-links a {
- display: block;
- width: 100%;
- padding: 10px 0;
- border-bottom: 1px solid #eee;
- }
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
 
- .nav-links a:last-child {
- border-bottom: none;
- }
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
 
- #menu-toggle:checked + .menu-icon + .nav-links {
- display: flex;
- }
+    #menu-toggle:checked + .menu-icon + .nav-links {
+        display: flex;
+    }
 
     /* ⭐️ ΔΙΟΡΘΩΣΗ: Πιο "σφιχτό" layout για την ενότητα 'About' ⭐️ */
- .row {
- display: flex; 
-flex-direction: column;
- text-align: center;
-gap: 15px; /* Μειώσαμε το κενό */
- margin: 0; /* Αφαιρέσαμε το margin */
- }
-    
+    .row {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin: 0; /* Μηδενίζει όλα τα margins του row */
+        gap: 0.8rem; /* Μικρό κενό μεταξύ εικόνας και κειμένου (~12.8px) */
+    }
+
     .row .content h2 {
-        text-align: center; /* Κεντράρισμα του τίτλου */
-        margin: 10px 0 5px 0; /* Μικρό margin στον τίτλο */
+        text-align: center;
+        /* Πάνω: 0.5rem (μικρό κενό από εικόνα), Κάτω: 0.2rem (πολύ μικρό κενό πριν το p) */
+        margin: 0.5rem 0 0.2rem 0;
     }
 
     .row .content p {
         text-align: justify;
-        padding: 0 5px; /* Καλύτερο padding για το κείμενο */
+        padding: 0 5px;
+        margin-top: 0;
+        margin-bottom: 0.5rem; /* Αυτό ελέγχει το κενό κάτω από το κείμενο πριν το footer */
     }
 
- .footer-container {
-grid-template-columns: repeat(2, 1fr);
-gap: 20px;
- padding: 25px 10px 10px 10px;
- }
+    /* Footer adjustments */
+    .footer {
+        /* Υποχρεωτικό: Μειώνει το μεγάλο margin-top: 2.5rem του desktop */
+        margin-top: 1.2rem;
+    }
 
- .footer-col.footer-left {
- order: 3;
- }
- .footer-col.footer-links {
- order: 1;
- }
- .footer-col.footer-resources {
- order: 2;
- }
- .footer-col.footer-right {
-order: 4;
-}
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 25px 10px 10px 10px;
+    }
 
- .testimonials-section {
- padding: 60px 20px;
- }
+    .footer-col.footer-left {
+        order: 3;
+    }
+    .footer-col.footer-links {
+        order: 1;
+    }
+    .footer-col.footer-resources {
+        order: 2;
+    }
+    .footer-col.footer-right {
+        order: 4;
+    }
 
-.testimonials-section h2 {
- font-size: 2rem;
- }
-    
+    .testimonials-section {
+        padding: 60px 20px;
+    }
+
+    .testimonials-section h2 {
+        font-size: 2rem;
+    }
+
     /* ⭐️ Τροποποιημένοι κανόνες padding του container ⭐️ */
-.container {
- padding: 5px 15px; /* Μικρότερο πάνω/κάτω padding */
-}
+    .container {
+        /* Μηδενίζει κάθετο padding. Κρατάει πλάγια 1rem (~16px). */
+        padding: 0 1rem;
+    }
 }
 
-
+/* Screens <= 700px */
 @media (max-width: 700px) {
- .navbar {
- padding: 10px 15px;
- }
+    .navbar {
+        padding: 10px 15px;
+    }
 
- .logo {
- margin-left: 10px;
-}
+    .logo {
+        margin-left: 10px;
+    }
 
- .modal-arrow {
- font-size: 2.5rem;
- }
+    .modal-arrow {
+        font-size: 2.5rem;
+    }
 
- .modal-content {
- margin: 10% 15px;
- max-width: calc(100% - 30px);
- padding: 20px 15px;
- width: auto;
- }
+    .modal-content {
+        margin: 10% 15px;
+        max-width: calc(100% - 30px);
+        padding: 20px 15px;
+        width: auto;
+    }
 
- .modal-content img {
- width: 100%;
- max-height: 250px;
- }
+    .modal-content img {
+        width: 100%;
+        max-height: 250px;
+    }
 
- .modal-content p {
-padding: 0;
- text-align: left;
- }
+    .modal-content p {
+        padding: 0;
+        text-align: left;
+    }
 
- .carousel-card {
- min-width: 180px;
- }
+    .carousel-card {
+        min-width: 180px;
+    }
 }
 
 /* Small Screens (<= 630px) */
 @media (max-width: 630px) {
- .item img {
- height: auto;
- aspect-ratio: 4 / 3;
- object-fit: cover;
- }
+    .item img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+    }
 }
-
 
 @media (max-width: 620px) {
-.modal-content {
- max-height: 90vh;
- }
+    .modal-content {
+        max-height: 90vh;
+    }
 
- .modal-content img {
-max-height: 40vh;
- object-fit: contain;
-aspect-ratio: auto;
-margin-bottom: 15px;
- }
+    .modal-content img {
+        max-height: 40vh;
+        object-fit: contain;
+        aspect-ratio: auto;
+        margin-bottom: 15px;
+    }
 }
-
 
 @media (max-width: 600px) {
- .footer-container {
- grid-template-columns: 1fr;
- gap: 8px;
-}
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
 
- .gallery h1 {
- font-size: 3rem;
-padding: 0 15px;
- }
+    .gallery h1 {
+        font-size: 3rem;
+        padding: 0 15px;
+    }
 
- .carousel-card {
- min-width: 160px;
-}
+    .carousel-card {
+        min-width: 160px;
+    }
 }
 
 @media (max-width: 520px) {
-.carousel-card {
- min-width: 270px;
- width: calc(90vw - 40px);
- max-width: 350px;
- }
+    .carousel-card {
+        min-width: 270px;
+        width: calc(90vw - 40px);
+        max-width: 350px;
+    }
 }
-
 
 @media (max-width: 460px) {
-.items {
- grid-template-columns: 1fr;
- padding: 20px 10px;
- gap: 20px;
- }
+    .items {
+        grid-template-columns: 1fr;
+        padding: 20px 10px;
+        gap: 20px;
+    }
 
- .item img {
-height: auto;
- aspect-ratio: 4 / 3;
- }
+    .item img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
 }
-
 
 @media (max-width: 400px) {
- .modal-content {
- margin: 10% 10px;
- max-width: calc(100% - 20px);
- padding: 15px 10px;
- }
+    .modal-content {
+        margin: 10% 10px;
+        max-width: calc(100% - 20px);
+        padding: 15px 10px;
+    }
 
- .modal-content h2 {
-font-size: 1.5rem;
-}
-    
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
     /* ⭐️ Τροποποιημένοι κανόνες padding του container ⭐️ */
     .container {
         padding: 5px 10px; /* Μειωμένο πάνω/κάτω/πλάγια padding */
     }
 
- .row {
- margin: 0; 
- gap: 10px; 
- }
- 
+    .row {
+        margin: 0;
+        gap: 10px;
+    }
+
     /* ⭐️ ΔΙΟΡΘΩΣΗ: Πιο "σφιχτό" layout για την ενότητα 'About' ⭐️ */
- .row .content h2 {
- margin: 5px 0 2px 0; 
- font-size: 1.8rem;
+    .row .content h2 {
+        margin: 5px 0 2px 0;
+        font-size: 1.8rem;
         text-align: center;
- }
- 
- .row .content p {
- margin-top: 3px; 
-font-size: 0.95rem;
+    }
+
+    .row .content p {
+        margin-top: 3px;
+        font-size: 0.95rem;
         padding: 0;
         text-align: justify;
- }
+    }
 }
-
 
 @media (max-width: 387px) {
- .footer-container {
- padding: 20px 5px 8px 5px;
- }
+    .footer-container {
+        padding: 20px 5px 8px 5px;
+    }
 
- .items {
- padding: 20px 15px;
- }
+    .items {
+        padding: 20px 15px;
+    }
 
- .gallery .gallery-container {
- padding: 30px 15px;
- }
+    .gallery .gallery-container {
+        padding: 30px 15px;
+    }
 
-.container {
- padding-left: 15px;
- padding-right: 15px;
- }
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
+/* FIX spacing About Us */
 @media (max-width: 768px) {
-    /* ... άλλα στυλ ... */
-    
-    .container {
-        /* Τώρα το κάνουμε 5px πάνω-κάτω για λιγότερο κενό */
-        padding: 5px 15px; 
-    }
+  .row .content h2 {
+    margin-top: 20px !important;
+    margin-bottom: 15px !important;
+  }
 
-    .row {
-        /* Αφαιρούμε όλα τα κάθετα κενά από την .row */
-        margin: 0; 
-        gap: 15px; 
-    }
-    
-    .row .content h2 {
-        /* Μειώστε το margin του τίτλου */
-        margin: 5px 0 3px 0; 
-    }
-
-    /* ... άλλα στυλ ... */
-}
-
-@media (max-width: 400px) {
-    /* ... άλλα στυλ ... */
-
-    .container {
-        /* Ακόμα πιο μικρό padding για το container */
-        padding: 0 10px; 
-    }
-
-    .row {
-        /* Μηδενίζουμε τα margins και μειώνουμε το gap */
-        margin: 0; 
-        gap: 5px; /* Πολύ μικρό κενό μεταξύ εικόνας και κειμένου */
-    }
-
-    .row .content h2 {
-        /* Ελάχιστο margin στον τίτλο */
-        margin: 2px 0 2px 0; 
-    }
-    
-    .row .content p {
-        /* Εξαλείψτε το πάνω margin του κειμένου */
-        margin-top: 0; 
-    }
-
-    /* ... άλλα στυλ ... */
+  .row .content p {
+    margin-bottom: 20px !important;
+  }
 }
