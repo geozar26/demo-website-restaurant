@@ -1,6 +1,6 @@
-// ------------------------------------------------------------------
+
 // ---- 1. LOGIN MODAL (POP-UP) ----
-// ------------------------------------------------------------------
+
 window.addEventListener("load", () => {
     // 1. Δήλωση Στοιχείων
     const overlay = document.getElementById("loginOverlay");
@@ -17,13 +17,13 @@ window.addEventListener("load", () => {
     // ΕΛΕΓΧΟΣ: Διακοπή αν λείπουν τα βασικά στοιχεία στο HTML
     if (!overlay || !popup || !closeBtn || !loginButton || !usernameInput || !rememberMeCheck) {
         console.error("Login Modal: Ένα ή περισσότερα απαραίτητα IDs (overlay/popup/button/inputs) δεν βρέθηκαν στο HTML. Διακόπτεται η λειτουργία του modal.");
-        return; // Διακόπτει την εκτέλεση του υπόλοιπου κώδικα του modal
+        return; 
     }
 
-    // ΚΛΕΙΔΙ Local Storage
+
     const LS_KEY = "userWantsToStayLogged";
 
-    // ΛΕΙΤΟΥΡΓΙΑ: Άνοιγμα Modal
+
     const openModal = () => {
         overlay.style.display = "block";
         popup.style.display = "block";
@@ -54,7 +54,7 @@ window.addEventListener("load", () => {
         setTimeout(openModal, 4000);
     }
 
-    // ------------------------------------------------------------------
+  
 
     // Κλείσιμο με το 'x' και με κλικ στο overlay
     closeBtn.addEventListener("click", closeModal);
@@ -144,12 +144,7 @@ const images = document.querySelectorAll(".recipe-img");
     });
 });
 
-// ----------------------------------------------------
-// ---- 3. CAROUSEL (TODAY'S SPECIALS) ----
-// ----------------------------------------------------
-// ----------------------------------------------------
-// ---- 3. CAROUSEL (TODAY'S SPECIALS) ----
-// ----------------------------------------------------
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const carouselSection = document.querySelector(".todays-specials");
@@ -273,5 +268,24 @@ document.addEventListener("DOMContentLoaded", () => {
             track.style.transition = 'none'; 
             initializeCarousel(); // Επανυπολογισμός και εκτέλεση
         }, 200); 
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Βρίσκει όλα τα links της gallery με την κλάση 'basic-trigger'
+    const galleryLinks = document.querySelectorAll('.basic-trigger'); 
+
+    galleryLinks.forEach(link => {
+        // Προσθέτει έναν Listener για το κλικ σε κάθε link
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // 1. Σταματάει την προεπιλεγμένη ενέργεια
+            const imageURL = link.getAttribute('href'); // 2. Παίρνει τη διεύθυνση της εικόνας
+
+            // 3. Δημιουργεί και εμφανίζει το Lightbox
+            const instance = basicLightbox.create(`
+                <img src="${imageURL}" alt="Gallery Image" style="max-height: 100vh;">
+            `);
+            instance.show();
+        });
     });
 });
