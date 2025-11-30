@@ -1018,14 +1018,29 @@ body {
     }
 }
 
-/* FIX spacing About Us */
+/* Media Query για μικρές οθόνες */
 @media (max-width: 768px) {
-  .row .content h2 {
-    margin-top: 20px !important;
-    margin-bottom: 15px !important;
-  }
+    /* Διασφάλιση ότι οι στήλες στο 'row' γίνονται στοιχεία σε μία στήλη */
+    .row {
+        flex-direction: column; /* Τα στοιχεία (εικόνα & κείμενο) μπαίνουν το ένα κάτω από το άλλο */
+        padding: 0 15px; /* Προσθήκη padding για να μην κολλάνε στα πλάγια */
+    }
+    
+    /* Διασφάλιση ότι η εικόνα πιάνει όλο το πλάτος */
+    .row .image,
+    .row .content {
+        width: 100%;
+        text-align: center; /* Κεντράρισμα του κειμένου */
+    }
 
-  .row .content p {
-    margin-bottom: 20px !important;
-  }
+    /* Διασφάλιση ότι το κείμενο μέσα στο content έχει σωστό padding */
+    .row .content h2 {
+        margin-top: 15px;
+    }
 }
+
+.row .image {
+        /* Αυτό το margin-top θα ισχύει μόνο σε μικρές οθόνες */
+        margin-top: 30px; 
+    }
+
