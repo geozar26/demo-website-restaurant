@@ -105,11 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
 const recipeCloseBtn = document.getElementById("recipeClose"); // ΨΑΧΝΟΥΜΕ ΤΟ ΝΕΟ ID
 const images = document.querySelectorAll(".recipe-img");
     
-    // ΕΛΕΓΧΟΣ: Διακοπή αν λείπουν τα βασικά στοιχεία
-    if (!modal || !modalTitle || !modalImage || !modalDescription) {
-         console.error("Recipe Modal: Ένα ή περισσότερα απαραίτητα IDs (modal/title/image/description) δεν βρέθηκαν στο HTML.");
-         return; 
-    }
+ // Βάλε το passwordInput στον έλεγχο:
+if (!overlay || !popup || !closeBtn || !loginButton || !usernameInput || !passwordInput || !rememberMeCheck) { 
+     console.error("Login Modal: Ένα ή περισσότερα απαραίτητα IDs (overlay/popup/button/inputs) δεν βρέθηκαν στο HTML. Διακόπτεται η λειτουργία του modal.");
+     return;
+}
 
     // Συνάρτηση για άνοιγμα του Recipe Modal
     function openRecipeModal(title, imageSrc, description) {
