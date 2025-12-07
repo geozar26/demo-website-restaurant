@@ -25,7 +25,6 @@ body {
     font-family: var(--font-stack);
 }
 
-/* --- Navbar --- */
 .navbar {
     display: flex;
     align-items: center;
@@ -36,6 +35,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    /* ΔΕΝ χρειάζεται καμία αλλαγή εδώ, είναι σωστά ρυθμισμένο. */
 }
 
 .logo {
@@ -43,14 +43,16 @@ body {
     font-weight: bold;
     color: var(--color-primary);
     padding-left: 10px;
-    margin-top: 16px;
+    /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει το logo και το nav bar προς τα κάτω */
+    margin-top: 0; /* Ήταν 16px */
 }
 
 .nav-links {
     display: flex;
     text-align: center;
     gap: 30px;
-    margin-top: 10px;
+    /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει τους συνδέσμους προς τα κάτω */
+    margin-top: 0; /* Ήταν 10px */
 }
 
 .nav-links a {
@@ -115,8 +117,9 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 30px 20px;
+    padding: 1px;
 }
+
 
 .row {
     display: flex;
@@ -149,6 +152,8 @@ body {
 }
 
 .row .image img {
+    padding-left:14px;
+    margin-top:30px;
     max-width: 100%;
     border-radius: 10px;
     height: auto;
@@ -197,7 +202,7 @@ body {
     color: var(--color-text-main);
 }
 
-/* --- Gallery --- */
+
 .gallery h2 {
     font-size: 2rem;
     text-align: center;
@@ -248,7 +253,7 @@ body {
     display: flex;
 }
 
-/* --- Specials Carousel --- */
+
 .todays-specials {
     max-width: 1200px;
     margin: 50px auto;
@@ -265,8 +270,8 @@ body {
     width: 100%;
     overflow-x: auto;
     box-sizing: border-box;
-    -ms-overflow-style: none;  /* IE 10+ */
-    scrollbar-width: none;     /* Firefox */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;    
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -428,7 +433,7 @@ body {
     align-self: flex-start;
 }
 
-/* --- Login Modal --- */
+
 .login-overlay {
     display: none;
     position: fixed;
@@ -567,7 +572,7 @@ body {
     cursor: pointer;
 }
 
-/* --- Image Modal --- */
+
 .modal {
     position: fixed;
     z-index: 1000;
@@ -646,7 +651,7 @@ body {
     padding: 0 5%;
 }
 
-/* --- Footer --- */
+
 .footer {
     background-color: #000;
     color: var(--color-light);
@@ -732,7 +737,118 @@ body {
     color: #aaa;
 }
 
-/* --- MEDIA QUERIES --- */
+/* --- SECTION --- */
+.form-section-clean {
+    background-color: #f8f8f8;
+    padding: 30px 20px;
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* --- ΦΟΡΜΑ ΑΡΙΣΤΕΡΑ --- */
+.form-center {
+    width: 100%;
+    max-width: 600px;
+    margin-left: 60px;
+    margin-right: auto;
+    z-index: 2;
+}
+
+.contact-card.form-card-style {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.contact-card.form-card-style h3 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.main-contact-form input {
+    width: 100%;
+    padding: 14px 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.main-contact-form input:focus {
+    border-color: var(--color-primary);
+}
+
+/* --- ΚΟΥΜΠΙ --- */
+.send-btn-green {
+    width: 50%;
+    display: block;
+    margin: 10px auto 0 auto;
+    padding: 12px 20px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.send-btn-green:hover {
+    background-color: #2d995b;
+}
+
+/* --- ΕΙΚΟΝΑ ΔΕΞΙΑ --- */
+.form-image-side {
+    flex: 1;
+    max-width: 600px;
+    min-width: 300px;
+    margin-right: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-image-side img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+
+    /* --- RESPONSIVE (ΓΙΑ ΚΙΝΗΤΑ/TABLETS) --- */
+    @media (max-width: 900px) {
+        .form-section-clean {
+            flex-direction: column; /* Τα βάζει το ένα κάτω από το άλλο */
+            padding: 40px 15px;
+        }
+
+        .video-form-center {
+            /* Στα κινητά αφαιρούμε το margin-left: 60px για να κεντραριστεί */
+            margin-left: 0; 
+            margin-right: 0;
+            margin-bottom: 40px; /* Κενό ανάμεσα σε φόρμα και εικόνα */
+        }
+
+        .form-image-side {
+            margin-right: 0;
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
 
 @media (min-width: 993px) {
     .footer-col.footer-links {
@@ -757,8 +873,10 @@ body {
     }
 }
 
-/* Tablet/Mobile (<= 768px) - ΣΥΓΧΩΝΕΥΜΕΝΟ BLOCK */
+/* Tablet/Mobile (<= 768px) - ΕΝΙΑΙΟ ΕΠΑΓΓΕΛΜΑΤΙΚΟ BLOCK */
 @media (max-width: 768px) {
+    
+    /* === 1. Navbar & Menu === */
     .navbar {
         padding: 10px 15px;
     }
@@ -805,32 +923,69 @@ body {
     #menu-toggle:checked + .menu-icon + .nav-links {
         display: flex;
     }
-
-    /* ⭐️ ΔΙΟΡΘΩΣΗ: Πιο "σφιχτό" layout για την ενότητα 'About' ⭐️ */
+    
+    /* === 2. Container & About Section (.row) === */
+    
+    /* Ρυθμίζει το κύριο container να πιάνει full πλάτος με πλευρικό padding */
+    .container {
+        max-width: 100%; 
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 1rem; /* Κρατάμε πλευρικό κενό (~16px) */
+        box-sizing: border-box; 
+    }
+    
+    /* Κάνει τις ενότητες εικόνας/κειμένου να στοιβάζονται κάθετα */
     .row {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        margin: 0; /* Μηδενίζει όλα τα margins του row */
-        gap: 0.8rem; /* Μικρό κενό μεταξύ εικόνας και κειμένου (~12.8px) */
+        flex-direction: column; 
+        align-items: center; 
+        gap: 20px; /* Λίγο περισσότερο κενό ανάμεσα στα στοιχεία */
+        margin: 20px 0;
+        height: auto; 
+    }
+
+    .row .image, 
+    .row .content {
+        flex: 1 1 100%; 
+        max-width: 100%;
+        text-align: center; /* Κεντράρισμα περιεχομένου */
+    }
+
+    .row .image img {
+        padding-left: 0; /* Αφαιρούμε το padding από το desktop */
+        margin-top: 0; /* Αφαιρούμε το περιττό margin */
+        margin-bottom: 20px; 
+        max-width: 100%;
+        max-height: 250px; /* Περιορισμός ύψους εικόνας */
+        width: 100%; 
+        object-fit: cover;
     }
 
     .row .content h2 {
-        text-align: center;
-        /* Πάνω: 0.5rem (μικρό κενό από εικόνα), Κάτω: 0.2rem (πολύ μικρό κενό πριν το p) */
-        margin: 0.5rem 0 0.2rem 0;
+        margin-top: 0; 
+        margin-left: 0;
+        text-align: center; /* Κεντράρισμα τίτλου */
+        font-size: 2rem;
     }
-
+    
     .row .content p {
-        text-align: justify;
-        padding: 0 5px;
-        margin-top: 0;
-        margin-bottom: 0.5rem; /* Αυτό ελέγχει το κενό κάτω από το κείμενο πριν το footer */
+        margin-top: 18px;
+        margin-bottom: 30px; 
+        text-align: justify; 
+    }
+    
+    /* Επιδιόρθωση padding για την Testimonials Section */
+     .testimonials-section {
+        padding: 60px 20px;
     }
 
-    /* Footer adjustments */
+    .testimonials-section h2 {
+        font-size: 2rem;
+    }
+
+
+    /* === 3. Footer Adjustments === */
     .footer {
-        /* Υποχρεωτικό: Μειώνει το μεγάλο margin-top: 2.5rem του desktop */
         margin-top: 1.2rem;
     }
 
@@ -840,31 +995,21 @@ body {
         padding: 25px 10px 10px 10px;
     }
 
-    .footer-col.footer-left {
-        order: 3;
-    }
-    .footer-col.footer-links {
-        order: 1;
-    }
-    .footer-col.footer-resources {
-        order: 2;
-    }
-    .footer-col.footer-right {
-        order: 4;
+    /* Αλλαγή σειράς (Order) για Footer Columns */
+    #links {
+        order: 1; 
     }
 
-    .testimonials-section {
-        padding: 60px 20px;
+    #follow-us {
+        order: 2; 
     }
 
-    .testimonials-section h2 {
-        font-size: 2rem;
+    #info {
+        order: 3; 
     }
 
-    /* ⭐️ Τροποποιημένοι κανόνες padding του container ⭐️ */
-    .container {
-        /* Μηδενίζει κάθετο padding. Κρατάει πλάγια 1rem (~16px). */
-        padding: 0 1rem;
+    #contact {
+        order: 4; 
     }
 }
 
@@ -974,9 +1119,9 @@ body {
         font-size: 1.5rem;
     }
 
-    /* ⭐️ Τροποποιημένοι κανόνες padding του container ⭐️ */
+   
     .container {
-        padding: 5px 10px; /* Μειωμένο πάνω/κάτω/πλάγια padding */
+        padding: 5px 10px; 
     }
 
     .row {
@@ -984,7 +1129,7 @@ body {
         gap: 10px;
     }
 
-    /* ⭐️ ΔΙΟΡΘΩΣΗ: Πιο "σφιχτό" layout για την ενότητα 'About' ⭐️ */
+    
     .row .content h2 {
         margin: 5px 0 2px 0;
         font-size: 1.8rem;
@@ -1018,29 +1163,49 @@ body {
     }
 }
 
-/* Media Query για μικρές οθόνες */
-@media (max-width: 768px) {
-    /* Διασφάλιση ότι οι στήλες στο 'row' γίνονται στοιχεία σε μία στήλη */
-    .row {
-        flex-direction: column; /* Τα στοιχεία (εικόνα & κείμενο) μπαίνουν το ένα κάτω από το άλλο */
-        padding: 0 15px; /* Προσθήκη padding για να μην κολλάνε στα πλάγια */
+
+/* Screens <= 700px */
+@media (max-width: 700px) {
+    /* ... άλλα styles ... */
+    
+    /* Κάνουμε την εικόνα λίγο πιο μικρή */
+    .row .image img {
+        max-height: 250px; 
     }
     
-    /* Διασφάλιση ότι η εικόνα πιάνει όλο το πλάτος */
-    .row .image,
-    .row .content {
-        width: 100%;
-        text-align: center; /* Κεντράρισμα του κειμένου */
+    /* ... άλλα styles ... */
+}
+
+@media (max-width: 500px) {
+    .row {
+        /* Σε πολύ μικρές οθόνες, γίνεται κάθετη διάταξη */
+        flex-direction: column; 
+        text-align: center;
+        gap: 15px; 
+    }
+    
+    .row .image, .row .content {
+        flex: 1 1 100%; /* Πιάνουν όλο το πλάτος */
+        max-width: 100%;
+        margin: 0 auto;
     }
 
-    /* Διασφάλιση ότι το κείμενο μέσα στο content έχει σωστό padding */
     .row .content h2 {
-        margin-top: 15px;
+        text-align: center; 
+        margin: 5px 0 5px 0;
+        font-size: 1.8rem;
+    }
+
+    .row .content p {
+        text-align: justify;
+        padding: 0 5px;
+        margin-top: 0;
+        margin-bottom: 0.5rem; 
     }
 }
 
-.row .image {
-        /* Αυτό το margin-top θα ισχύει μόνο σε μικρές οθόνες */
-        margin-top: 30px; 
-    }
-
+@media(max-width:749px) {
+     .row .content p{
+        margin-top:23px;
+     }
+}

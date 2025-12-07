@@ -1,7 +1,8 @@
 
 // ---- 1. LOGIN MODAL (POP-UP) ----
 
-window.addEventListener("load", () => {
+// ΑΛΛΑΓΗ ΕΔΩ: Χρησιμοποιούμε DOMContentLoaded για ταχύτερη εμφάνιση του modal
+document.addEventListener("DOMContentLoaded", () => { 
     // 1. Δήλωση Στοιχείων
     const overlay = document.getElementById("loginOverlay");
     const popup = document.getElementById("loginPopup");
@@ -10,16 +11,14 @@ window.addEventListener("load", () => {
 
     // Στοιχεία του Modal
     const usernameInput = document.getElementById("usernameInput");
-    // ΠΡΟΣΘΗΚΗ: Το passwordInput, για πληρότητα, αν και δεν χρησιμοποιείται ακόμα
     const passwordInput = document.getElementById("passwordInput"); 
     const rememberMeCheck = document.getElementById("rememberMeCheck");
 
-    // ΕΛΕΓΧΟΣ: Διακοπή αν λείπουν τα βασικά στοιχεία στο HTML
-    if (!overlay || !popup || !closeBtn || !loginButton || !usernameInput || !rememberMeCheck) {
-        console.error("Login Modal: Ένα ή περισσότερα απαραίτητα IDs (overlay/popup/button/inputs) δεν βρέθηκαν στο HTML. Διακόπτεται η λειτουργία του modal.");
-        return; 
+    // Ελέγχουμε την ύπαρξη όλων των στοιχείων πριν συνεχίσουμε
+    if (!overlay || !popup || !closeBtn || !loginButton || !usernameInput || !passwordInput || !rememberMeCheck) { 
+        console.error("Login Modal: Ένα ή περισσότερα απαραίτητα IDs δεν βρέθηκαν. Διακόπτεται η λειτουργία του modal.");
+        return;
     }
-
 
     const LS_KEY = "userWantsToStayLogged";
 
@@ -33,7 +32,6 @@ window.addEventListener("load", () => {
             try {
                 usernameInput.focus();
             } catch (e) {
-                // Χειρισμός σφάλματος αν το focus αποτύχει (π.χ. αν το input είναι κρυφό)
                 console.error("Could not set focus on username input:", e);
             }
         }, 100);
@@ -51,10 +49,10 @@ window.addEventListener("load", () => {
 
     // Αν ο χρήστης δεν επέλεξε "Μην το ξαναδείξεις", εμφανίζεται το modal μετά από 4 δευτερόλεπτα
     if (!isRemembered) {
-        setTimeout(openModal, 4000);
+        setTimeout(openModal, 4000); // Το modal θα εμφανιστεί μετά από 4 δευτερόλεπτα
     }
 
-  
+    
 
     // Κλείσιμο με το 'x' και με κλικ στο overlay
     closeBtn.addEventListener("click", closeModal);
@@ -88,7 +86,6 @@ window.addEventListener("load", () => {
         }
     });
 });
-
 
 // ----------------------------------------------------
 // ---- 2. RECIPE MODAL (MODAL ΣΥΝΤΑΓΩΝ) ----
@@ -271,21 +268,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Βρίσκει όλα τα links της gallery με την κλάση 'basic-trigger'
-    const galleryLinks = document.querySelectorAll('.basic-trigger'); 
-
-    galleryLinks.forEach(link => {
-        // Προσθέτει έναν Listener για το κλικ σε κάθε link
-        link.addEventListener('click', (event) => {
-            event.preventDefault(); // 1. Σταματάει την προεπιλεγμένη ενέργεια
-            const imageURL = link.getAttribute('href'); // 2. Παίρνει τη διεύθυνση της εικόνας
-
-            // 3. Δημιουργεί και εμφανίζει το Lightbox
-            const instance = basicLightbox.create(`
-                <img src="${imageURL}" alt="Gallery Image" style="max-height: 100vh;">
-            `);
-            instance.show();
-        });
-    });
-});

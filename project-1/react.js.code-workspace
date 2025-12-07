@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../../xampp/htdocs/img"
+		},
+		{
+			"path": "../../../../xampp/htdocs/webalizer"
+		},
+		{
+			"path": "../../../../xampp/htdocs/xampp"
+		},
+		{
+			"path": "../../../../xampp/htdocs/dashboard"
+		}
+	]
+}

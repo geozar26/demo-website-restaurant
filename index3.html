@@ -20,7 +20,7 @@
     <label for="menu-toggle" class="menu-icon">
       <i class="fa-solid fa-bars"></i>
     </label>
-  <nav class="nav-links">
+      <nav class="nav-links">
             <a href="index.html">Αρχική</a>
             <a href="index1.html">Σχετικά με εμάς</a>
             <a href="#services">Υπηρεσίες</a>
@@ -37,22 +37,34 @@
     </div>
   </section>
 
+<section id="contact-form" class="form-section-clean">         
 
-    <div class="container">
-        <section class="row"> 
-            
-            <div class="image">
-                <img src="images/about.jpg" alt="">
-            </div>
-            
-            <div class="content">
-                <h2>Σχετικά με Εμάς</h2>
-                <p>Στο kitchen grid αγαπάμε το καλό φαγητό και τη χαρά που φέρνει στο τραπέζι. Η κουζίνα μας βασίζεται σε φρέσκα, επιλεγμένα υλικά και παραδοσιακές συνταγές με μια σύγχρονη πινελιά.
-                  Κάθε πιάτο φτιάχνεται με προσοχή και αγάπη, ώστε να προσφέρει γεύσεις που μένουν αξέχαστες. Εδώ δεν σερβίρουμε μόνο φαγητό, αλλά μια εμπειρία που μπορείς να μοιραστείς με φίλους και οικογένεια.</p>
-            </div>
-          </div>
-        </section>
-   
+    <div class="contact-form-container form-center">
+
+        <div class="contact-card form-card-style">
+
+            <h3>Επικοινωνία</h3>
+
+            <form class="main-contact-form" method="POST" action="submit.php">
+
+                <input type="text" name="user_name" placeholder="πληκτρολογησε το ονομα σου " required>
+                <input type="email" name="user_email" placeholder="πληκτρολογησε το email σου" required>
+                <input type="tel" name="user_phone" placeholder="πληκτρολόγησε το τηλεφωνό σου" required>
+
+                <button type="submit" class="send-btn-green">στείλε</button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="form-image-side">
+        <img src="" alt="">
+    </div>
+
+</section>
+
+  
+
 
 <footer class="footer">
     <div class="footer-container">
@@ -98,8 +110,7 @@
     </div>
   </footer>
 
-  
-  
+
 
 </body>
 </html>
