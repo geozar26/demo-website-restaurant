@@ -18,6 +18,7 @@ body {
     background: var(--color-light);
 }
 
+
 * {
     margin: 0;
     padding: 0;
@@ -25,6 +26,14 @@ body {
     font-family: var(--font-stack);
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Βάζουμε σταθερό πλευρικό κενό για ασφάλεια σε desktop */
+}
+
+
+/* === NAVBAR & HEADER (Desktop) === */
 .navbar {
     display: flex;
     align-items: center;
@@ -32,12 +41,15 @@ body {
     padding: 20px 20px;
     background: var(--color-light);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    
+    /* 🔴 ΑΛΛΑΓΗ ΣΕ FIXED */
+    position: fixed; 
     top: 0;
+    left: 0;
+    width: 100%; /* Γεμίζει όλο το πλάτος */
+    
     z-index: 1000;
-    /* ΔΕΝ χρειάζεται καμία αλλαγή εδώ, είναι σωστά ρυθμισμένο. */
 }
-
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -78,6 +90,7 @@ body {
 }
 
 /* --- Hero Section --- */
+/* --- Hero Section --- */
 .hero {
     min-height: 60vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -85,12 +98,22 @@ body {
     color: var(--color-light);
     text-align: center;
     padding: 120px 20px;
+    
+    /* 🔴 ΕΔΩ ΕΙΝΑΙ Η ΑΛΛΑΓΗ ΓΙΑ ΚΕΝΤΡΑΡΙΣΜΑ */
+    display: flex; /* Ενεργοποιεί το Flexbox */
+    flex-direction: column; /* Τα στοιχεία στοιβάζονται κάθετα */
+    justify-content: center; /* Κεντράρισμα κάθετα (στο κέντρο) */
+    align-items: center; /* Κεντράρισμα οριζόντια */
+    
+    /* 🔴 ΠΡΟΣΟΧΗ: Προσθήκη padding-top για να μην κρύβεται κάτω από το FIXED navbar */
+    padding-top: 150px; /* Πρέπει να είναι αρκετό για να "σπρώξει" το περιεχόμενο κάτω από το navbar */
 }
 
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
 }
+/* ... (Τα υπόλοιπα styles του hero παραμένουν ίδια) ... */
 
 .hero p {
     max-width: 600px;
@@ -189,8 +212,9 @@ body {
     cursor: pointer;
     transition: 0.3s;
     filter: brightness(0.86);
+    /* 🔴 ΠΡΟΣΘΗΚΗ: Εξαναγκασμός hardware acceleration για ομαλότητα */
+    will-change: transform, filter; 
 }
-
 .item img:hover {
     transform: scale(1.03);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -893,29 +917,40 @@ body {
         margin-right: 0;
     }
 
+   
     .nav-links {
-        top: 60px;
-        height: auto;
-        display: none;
-        position: fixed;
+        position: fixed; 
+        top: 0;
         right: 0;
-        width: 70%;
-        background: rgba(255, 255, 255, 0.98);
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background: var(--color-light); 
+        z-index: 1000; 
+        
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px 20px 10px 20px;
-        gap: 0;
+        /* ➡️ Κεντράρισμα των στοιχείων οριζόντια */
+        align-items: center; 
+        padding: 70px 30px 20px 30px; 
+        gap: 20px;
+        
+        transform: translateX(100%); /* Κρυμμένο */
+        transition: transform 0.3s ease-in-out; 
+    }
+    
+    /* Όταν πατηθεί το checkbox */
+    #menu-toggle:checked ~ .nav-links {
+        transform: translateX(0); /* Εμφάνιση */
     }
 
-    .nav-links a {
-        display: block;
-        width: 100%;
+.nav-links a {
+        width: 100%; 
         padding: 10px 0;
         border-bottom: 1px solid #eee;
+        /* ➡️ Κεντράρισμα του κειμένου */
+        text-align: center; 
     }
-
     .nav-links a:last-child {
         border-bottom: none;
     }
@@ -1094,15 +1129,16 @@ body {
         max-width: 350px;
     }
 }
-
 @media (max-width: 460px) {
     .items {
-        grid-template-columns: 1fr;
-        padding: 20px 10px;
-        gap: 20px;
+        /* 🔴 Σημαντικό: Πάμε σε 1 στήλη για να μην υπάρχει horizontal scroll */
+        grid-template-columns: 1fr; 
+        padding: 20px 15px; /* Κρατήστε μικρό padding */
+        gap: 25px;
     }
 
     .item img {
+        /* Κάνουμε την εικόνα να έχει σταθερή αναλογία 4:3 */
         height: auto;
         aspect-ratio: 4 / 3;
     }
@@ -1209,3 +1245,4 @@ body {
         margin-top:23px;
      }
 }
+
