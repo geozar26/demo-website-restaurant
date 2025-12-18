@@ -206,28 +206,13 @@ body {
     object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s;
-    filter: brightness(0.86);
-    /* 🔴 ΠΡΟΣΘΗΚΗ: Εξαναγκασμός hardware acceleration για ομαλότητα */
-    will-change: transform, filter; 
-
-    /* 🔴 ΔΙΟΡΘΩΣΗ: Αφαιρούμε το cursor: pointer από εδώ */
-    /* cursor: pointer; */ 
-    
-    /* 🔴 ΔΙΟΡΘΩΣΗ: Αφήνουμε μόνο το transition για το hover */
-    transition: transform 0.3s, box-shadow 0.3s;
-
+  
+    transition: transform 0.3s  box-shadow 0.3s ease;
 }
 .item img:hover {
     transform: scale(1.03);
+    /* Ομαλή αύξηση φωτεινότητας στο hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   
-}
-
-.item img:active {
-    transform: scale(1.00); /* Επαναφορά στο κανονικό μέγεθος */
-    box-shadow: none;
-    filter: none; /* Ακύρωση τυχόν φίλτρων */
 }
 
 .item h4 {
