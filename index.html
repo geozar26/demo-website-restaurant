@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>website restaurant</title>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>website restaurant</title>
+</head>
+<body>
     
+
     <link rel="stylesheet" href="style.css">
 
 
@@ -19,35 +21,39 @@
 </head>
 <body>
 
-    <div id="loginOverlay" class="login-overlay"></div>
-    <div id="loginPopup" class="login-popup">
-        <span id="loginClose" class="close">&times;</span>
-        <h2>Σύνδεση</h2>
-        <input type="text" id="usernameInput" placeholder="Όνομα Χρήστη ή Email" />
-        <input type="password" id="passwordInput" placeholder="Κωδικός Πρόσβασης..." />
+<div id="loginOverlay" class="login-overlay"></div>
+<div id="loginPopup" class="login-popup">
+    <span id="loginClose" class="close">&times;</span>
+    <h2>Σύνδεση</h2>
+    
+    <form id="loginForm" action="#" method="POST"> 
+        
+        <input type="text" id="usernameInput" placeholder="Όνομα Χρήστη ή Email" required/>
+        <input type="password" id="passwordInput" placeholder="Κωδικός Πρόσβασης..." required />
         
         <div class="remember-me-container">
             <input type="checkbox" id="rememberMeCheck">
-            <label for="rememberMeCheck">Να με θυμάσαι / Μην το ξαναδείξεις</label>
+            <label for="rememberMeCheck">Να με θυμάσαι</label>
         </div>
 
-        <button id="loginButton">Συνδεθείτε</button>
-
-        <p class="social-text">Σύνδεση με Social Media</p>
-        <div class="social-icons-modal">
-            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-
-        <p class="register-link">
-            Δεν είστε μέλος; <a href="#">Εγγραφείτε</a>
-        </p>
+        <button type="submit" id="loginButton">Συνδεθείτε</button>
+        
+    </form>
+    <p class="social-text"> Συνέχεια με</p>
+    <div class="social-icons-modal">
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
     </div>
+
+    <p class="register-link">
+        Δεν είστε μέλος; <a href="#">Εγγραφείτε</a>
+    </p>
+</div>
 
     
     <header class="navbar">
-        <div class="logo">The kitchen grid</div>
+        <div class="logo">kitchen grid</div>
         <input type="checkbox" id="menu-toggle">
         <label for="menu-toggle" class="menu-icon">
             <i class="fa-solid fa-bars"></i>
@@ -55,7 +61,7 @@
         <nav class="nav-links">
             <a href="index.html">Αρχική</a>
             <a href="index1.html">Σχετικά με εμάς</a>
-            <a href="#services">Υπηρεσίες</a>
+            <a href="index4.html">Υπηρεσίες</a>
             <a href="index3.html">Επικοινωνία</a>
         </nav>
     </header>
@@ -63,10 +69,97 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Η Γεύση που Ψάχνετε, με Φρέσκα Υλικά.</h1>
-            <p>Ετοιμάζουμε καθημερινά φρέσκα πιάτα με τα καλύτερα υλικά. Ανακαλύψτε τις ξεχωριστές μας προτάσεις.</p>
+            <p>Ετοιμάζουμε καθημερινά νόστιμα πιάτα με τα καλύτερα υλικά.</p>
             <a href="" class="btn">Εξερευνήστε το Μενού</a>
         </div>
     </section>
+
+    <section class="todays-specials">
+    <h2>Σημερινά Πιάτα</h2>
+    <div class="carousel-container">
+        <div class="carousel-track">
+            
+            <div class="carousel-card">
+                <picture>
+                    <source srcset="images/mousakas.webp" type="image/webp">
+                    <img src="images/mousakas.png" alt="Μουσακάς" loading="lazy">
+                </picture>
+                <p>Μουσακάς</p>
+                <div class="carousel-tooltip">
+                    <b>Υλικά</b>
+                    <p>Κιμάς μοσχαρίσιος, μελιτζάνες, πατάτες, κρεμμύδια, σάλτσα ντομάτας.</p>
+                </div>
+            </div>
+            
+            <div class="carousel-card">
+                <picture>
+                    <source srcset="images/pastitsio.webp" type="image/webp">
+                    <img src="images/pastitsio.png" alt="παστίτσιο">
+                </picture>
+                <p>Παστίτσιο</p>
+                <div class="carousel-tooltip">
+                    <b>Υλικά</b>
+                    <p>μακαρόνια,κιμάς μοσχαρίσιος, μπεσαμέλ.</p>
+                </div>
+            </div>
+            
+            <div class="carousel-card">
+                <picture>
+                    <source srcset="images/gemista-kalamarakia.webp" type="image/webp">
+                    <img src="images/gemista-kalamarakia.png" alt="καλαμάρια">
+                </picture>
+                 <p>Γεμιστά Καλαμαράκια</p>
+                <div class="carousel-tooltip">
+                    <b>Υλικά</b>
+                    <p>καλαμάρια ρύζι, κουκουνάρι, μυρωδικά.</p>
+                </div>
+            </div>
+            
+            <div class="carousel-card">
+                <picture>
+                    <source srcset="images/gemistes-krepes.webp" type="image/webp">
+                    <img src="images/gemistes-krepes.png" alt="Κρέπες">
+                </picture>
+                <p>Γεμιστές Κρέπες</p>
+                <div class="carousel-tooltip">
+                    <b>Υλικά</b>
+                    <p>τυριά (γκούντα, ένταμ), ζαμπόν, κρέμα γάλακτος.</p>
+                   
+                </div>
+            </div>
+            
+            <div class="carousel-card">
+                <picture>
+                    <source srcset="images/garidomakaronada.webp" type="image/webp">
+                    <img src="images/garidomakaronada.png" alt="Γαριδομακαρονάδα">
+                </picture>
+                <p>Γαριδομακαρονάδα</p>
+                <div class="carousel-tooltip">
+                  
+                    <b>Υλικά</b>
+                    <p>γαρίδες λιγκουίνι, σάλτσα ντομάτας.</p>
+    
+                
+                </div>
+            </div>
+            
+            <div class="carousel-card">
+                <picture>
+                    <source srcset="images/giouvetsi-kritharaki.webp" type="image/webp">
+                    <img src="images/giouvetsi-kritharaki.png" alt="Γιουβέτσι με Κριθαράκι">
+                </picture>
+                <p>Γιουβέτσι με Κριθαράκι</p>
+                <div class="carousel-tooltip">
+                    <b>Υλικά</b>
+                    <p>Μοσχάρι, κριθαράκι, σάλτσα ντομάτας.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="carousel-dots"></div>
+</section>
+
     
     <section class="items">
         <h2>Προτάσεις Γεύσεων</h2>
@@ -224,57 +317,6 @@
         </div>
     </section>
 
-<section class="todays-specials">
-    <h2>Σημερινά Πιάτα</h2>
-    <div class="carousel-container">
-        <div class="carousel-track">
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/mousakas.webp" type="image/webp">
-                    <img src="images/mousakas.png" alt="Μουσακάς" loading="lazy">
-                </picture>
-                <p>Μουσακάς</p>
-            </div>
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/pastitsio.webp" type="image/webp">
-                    <img src="images/pastitsio.png" alt="παστίτσιο">
-                </picture>
-                <p>Παστίτσιο</p>
-            </div>
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/gemista-kalamarakia.webp" type="image/webp">
-                    <img src="images/gemista-kalamarakia.png" alt="καλαμάρια">
-                </picture>
-                <p>Γεμιστά Καλαμαράκια</p>
-            </div>
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/gemistes-krepes.webp" type="image/webp">
-                    <img src="images/gemistes-krepes.png" alt="Κρέπες">
-                </picture>
-                <p>Γεμιστές Κρέπες</p>
-            </div>
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/garidomakaronada.webp" type="image/webp">
-                    <img src="images/garidomakaronada.png" alt="Γαριδομακαρονάδα">
-                </picture>
-                <p>Γαριδομακαρονάδα</p>
-            </div>
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/giouvetsi-kritharaki.webp" type="image/webp">
-                    <img src="images/giouvetsi-kritharaki.png" alt="Γιουβέτσι με Κριθαράκι">
-                </picture>
-                <p>Γιουβέτσι με Κριθαράκι</p>
-            </div>
-        </div>
-    </div>
-    <div class="carousel-dots"></div>
-</section>
-
 
     <section class="gallery">
     <h2>Φωτογραφίες / Γκαλερί</h2>
@@ -383,9 +425,18 @@
     </footer>
 
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
     <script>
+   
+        document.querySelectorAll('.glightbox').forEach(item => {
+            item.addEventListener('click', function(event) {
+              
+                this.blur(); 
+            });
+        });
+        
+   
         const lightbox = GLightbox({
             selector: '.glightbox',
             loop: true,
@@ -393,6 +444,7 @@
             keyboardNavigation: true
         });
     </script>
+
 
 </body>
 </html>

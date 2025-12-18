@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Responsive Landing Page</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 
 </head>
@@ -37,20 +38,36 @@
     </div>
   </section>
 
-<section id="contact-form" class="form-section-clean">         
-    
-        <div class="contact-form-container form-center">
-        <div class="contact-card form-card-style">
-            <h3>Επικοινωνία</h3>
-            <form class="main-contact-form" method="POST" action="submit.php">
-                <input type="text" name="user_name" placeholder="Εισάγεται το ονομά σας" required>
-                <input type="email" name="user_email" placeholder="Πληκτρολόγησε το email σου" required>
-                <input type="tel" name="user_phone" placeholder="Πληκτρολόγησε το τηλεφωνό σου" required>
-                <button type="submit" class="send-btn-green">Αποστολή</button>
-            </form>
-        </div>
-    </div>
+
+
+<section class="services-section">
+    <div class="services-container">
+        
+        <h2 class="section-heading">Οι Βασικές μας Υπηρεσίες</h2>
+        
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <i class="ri-calendar-event-fill"></i> <h3 class="card-title">Online Κρατήσεις</h3>
+                <p class="card-description">Κάντε κράτηση τραπεζιού εύκολα και γρήγορα online. Επιβεβαίωση σε πραγματικό χρόνο, χωρίς αναμονή.</p>
+            </div>
+            
+            <div class="service-card">
+   <i class="ri-restaurant-fill"></i> <h3 class="card-title">Μενού & Ενημέρωση</h3>
+                <p class="card-description">Ανακαλύψτε το πλήρες μενού μας, δείτε τις καθημερινές σπεσιαλιτέ και τις εποχιακές μας προτάσεις.</p>
+            </div>
+            
+           <div class="service-card">
+    <i class="ri-takeaway-fill icon-style"></i> <h3 class="card-title">Delivery & Παραλαβή</h3>
+    <p class="card-description">Παραλάβετε την παραγγελία σας από το κατάστημα ή παραδώστε την στο χώρο σας με ασφάλεια και ταχύτητα.</p>
+</div>
+            
+        </div>
+    </div>
 </section>
+
+</body>
+</html>
 
   
 <footer class="footer">
