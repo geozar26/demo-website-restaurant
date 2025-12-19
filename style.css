@@ -37,25 +37,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 20px;
+    padding: 19px 19px;
     background: var(--color-light);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    
-    /* 🔴 ΑΛΛΑΓΗ ΣΕ FIXED */
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Γεμίζει όλο το πλάτος */
-
-    
-
+    width: 100%;
     z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    
 }
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-primary);
-    padding-left: 10px;
+    padding-left: 15px;
     /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει το logo και το nav bar προς τα κάτω */
     margin-top: 0; /* Ήταν 16px */
 }
@@ -65,11 +61,12 @@ body {
     text-align: center;
     gap: 30px;
     /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει τους συνδέσμους προς τα κάτω */
-    margin-top: 0; /* Ήταν 10px */
+    margin-top: 10px; /* Ήταν 10px */
 }
 
 .nav-links a {
     text-decoration: none;
+  
     color: var(--color-dark);
     font-weight: 500;
     transition: color 0.3s;
@@ -206,15 +203,18 @@ body {
     object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
-  
-    transition: transform 0.3s  box-shadow 0.3s ease;
-}
-.item img:hover {
-    transform: scale(1.03);
-    /* Ομαλή αύξηση φωτεινότητας στο hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform; 
+    transform: translateZ(0); 
+    backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent; /* Η λύση για το χρώμα στο πάτημα */
 }
 
+.item img:hover {
+    /* Χρησιμοποίησε μια πολύ μικρή αλλαγή για να είναι ομαλό */
+    transform: scale(1.03) translateZ(0);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 .item h4 {
     margin-top: 10px;
     font-size: 1.2em;
@@ -272,33 +272,7 @@ body {
     display: flex;
 }
 
-/* ======================================= */
-/* I. ΣΤΥΛ ΓΙΑ ΤΟΝ ΕΞΩΤΕΡΙΚΟ CONTAINER (ΤΟ ΚΛΕΙΔΙ ΓΙΑ ΝΑ ΜΗΝ ΚΟΒΕΤΑΙ) */
-/* ======================================= */
-/* Εφαρμόζουμε overflow: visible στα εξωτερικά στοιχεία του carousel
 
-
-/* ======================================= */
-/* II. ΣΤΥΛ ΓΙΑ ΤΗΝ ΚΑΡΤΑ (ΓΟΝΕΑΣ) */
-/* ======================================= */
-/* I. ΣΤΥΛ ΓΙΑ ΤΟΝ ΕΞΩΤΕΡΙΚΟ CONTAINER (ΤΟ ΚΛΕΙΔΙ ΓΙΑ ΝΑ ΜΗΝ ΚΟΒΕΤΑΙ) */
-/* ======================================= */
-/* 🔴 ΚΡΙΣΙΜΟ: Αυτό επιτρέπει στο tooltip να βγει πάνω από το όριο του slider. */
-/* ======================================= */
-/* I. ΓΕΝΙΚΟ SECTION & ΚΕΝΤΡΑΡΙΣΜΑ */
-/* ======================================= */
-/* ======================================= */
-/* 1. SECTION & ΤΙΤΛΟΣ (Κεντραρισμένα) */
-/* ======================================= */
-/* ======================================= */
-/* 1. SECTION & ΤΙΤΛΟΣ */
-/* ======================================= */
-/* ======================================= */
-/* 1. SECTION & ΤΙΤΛΟΣ (Απόλυτο Κεντράρισμα) */
-/* ======================================= */
-/* ======================================= */
-/* 1. SECTION & ΚΕΝΤΡΙΚΟΣ ΤΙΤΛΟΣ */
-/* ======================================= */
 .todays-specials {
     width: 100%;
     margin: 60px 0;
@@ -314,10 +288,6 @@ body {
     color: #333;
 }
 
-
-/* ======================================= */
-/* 2. CAROUSEL CONTAINER */
-/* ======================================= */
 .carousel-container {
     width: 85%; 
     max-width: 1150px; 
@@ -1327,46 +1297,63 @@ body {
         margin-right: 0;
     }
 
-}
-   
-
-
-    .nav-links {
-        position: fixed; 
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 80%;
-        max-width: 300px;
-        background: var(--color-light); 
-        z-index: 1000; 
-        
-        display: flex;
-        flex-direction: column;
-        /* ➡️ Κεντράρισμα των στοιχείων οριζόντια */
-        align-items: center; 
-        padding: 70px 30px 20px 30px; 
-        gap: 20px;
-        
-        transform: translateX(100%); /* Κρυμμένο */
-        transition: transform 0.3s ease-in-out; 
-    }
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;   /* Χρήση vw για σιγουριά στο πλάτος */
+    height: 100vh;  /* Χρήση vh για σιγουριά στο ύψος */
+    background: rgba(0, 0, 0, 0.5); /* Λίγο πιο σκούρο για να φαίνεται */
+    backdrop-filter: blur(4px);
+    z-index: 999;   /* Πρέπει να είναι μικρότερο από το nav-links */
     
+    /* Αρχικά κρυμμένο */
+    display: none; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Εμφάνιση ΜΟΝΟ όταν το checkbox είναι επιλεγμένο */
+#menu-toggle:checked ~ .menu-overlay {
+    display: block;
+    opacity: 1;
+}
+
+.nav-links {
+    position: fixed; 
+    top: 0;   /* Προσθήκη !important για να σιγουρευτούμε ότι θα πάει τέρμα πάνω */
+    right: 0;
+    height: 100vh;      /* Καλύπτει όλο το ύψος */
+    width: 70%;
+    max-width: 300px;
+    background: var(--color-light); 
+    z-index: 1000; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    
+    /* 🔴 ΑΛΛΑΓΗ: Το padding-top πρέπει να είναι αρκετό για να μην πέφτουν τα links 
+       πίσω από το hamburger, αλλά όχι τόσο πολύ ώστε να φαίνεται κενό. */
+    padding: 60px 0 20px 30px; 
+    gap: 10px;
+    
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out; 
+    margin: 0;          /* Σιγουρέψου ότι δεν υπάρχει margin */
+}
     /* Όταν πατηθεί το checkbox */
     #menu-toggle:checked ~ .nav-links {
         transform: translateX(0); /* Εμφάνιση */
     }
 
-
 .nav-links a {
-
-    .nav-links a {
-
-        width: 100%; 
+        width: 100%;
+        text-align: left; /* Κείμενο αριστερά */
+        font-size: 1.3rem;
+        font-weight: 400;
         padding: 10px 0;
-        border-bottom: 1px solid #eee;
-        /* ➡️ Κεντράρισμα του κειμένου */
-        text-align: center; 
+        border-bottom: 1px solid rgba(0,0,0,0.05); /* Πολύ απαλή γραμμή διαχωρισμού */
     }
     .nav-links a:last-child {
         /* Επαναφέρουμε τη γραμμή για να είναι ίδια με τα άλλα (χρώμα #eee) */
@@ -1463,7 +1450,7 @@ body {
     #contact {
         order: 4; 
     }
-}
+
 
 @media (max-width: 820px) {
     .carousel-card {
@@ -1475,7 +1462,7 @@ body {
     .carousel-card {
         min-width: 220px;
     }
-}
+}}
 
 /* === 4. Μεγάλες Οθόνες (max-width: 1085px) === */
 
@@ -1626,4 +1613,38 @@ body {
         margin-top:23px;
      }
 }
+}
+@media (max-width: 350px) {
+    /* 1. Μειώνουμε τα περιθώρια της σελίδας στο ελάχιστο */
+    .form-section-clean {
+        padding: 20px 5px !important; 
+    }
+
+    /* 2. Κάνουμε το λευκό πλαίσιο να πιάνει όλη την οθόνη */
+    .contact-form-container {
+        padding: 15px 10px ;
+        width: 100% ;
+        box-sizing: border-box; /* Πολύ σημαντικό για να μην ξεχειλίζει */
+    }
+
+    /* 3. Διόρθωση των Inputs για να χωράει το κείμενο */
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        font-size: 0.85rem; /* Πιο μικρό κείμενο placeholder */
+        letter-spacing: -0.2px;        /* Ελαφρύ στένεμα των γραμμάτων */
+    }
+
+    .form-group input, 
+    .form-group textarea {
+        font-size: 0.9rem ;
+        padding: 10px 8px ; /* Λιγότερο padding αριστερά-δεξιά */
+        width: 100% ;
+        box-sizing: border-box;
+    }
+
+    /* 4. Μείωση τίτλου για να μην πιάνει όλη την οθόνη */
+    .contact-form-container h2 {
+        font-size: 1.4rem;
+        word-wrap: break-word; /* Αν η λέξη είναι μεγάλη, την σπάει */
+    }
 }
