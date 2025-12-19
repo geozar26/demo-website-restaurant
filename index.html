@@ -1,449 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <title>website restaurant</title>
-</head>
-<body>
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Landing Page</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 
-    <link rel="stylesheet" href="style.css">
-
-
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" 
-          onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
-
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" as="style" 
-          onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"></noscript>
 </head>
 <body>
 
-<div id="loginOverlay" class="login-overlay"></div>
-<div id="loginPopup" class="login-popup">
-    <span id="loginClose" class="close">&times;</span>
-    <h2>Σύνδεση</h2>
-    
-    <form id="loginForm" action="#" method="POST"> 
-        
-        <input type="text" id="usernameInput" placeholder="Όνομα Χρήστη ή Email" required/>
-        <input type="password" id="passwordInput" placeholder="Κωδικός Πρόσβασης..." required />
-        
-        <div class="remember-me-container">
-            <input type="checkbox" id="rememberMeCheck">
-            <label for="rememberMeCheck">Να με θυμάσαι</label>
-        </div>
 
-        <button type="submit" id="loginButton">Συνδεθείτε</button>
-        
-    </form>
-    <p class="social-text"> Συνέχεια με</p>
-    <div class="social-icons-modal">
-        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-    </div>
 
-    <p class="register-link">
-        Δεν είστε μέλος; <a href="#">Εγγραφείτε</a>
-    </p>
-</div>
+  <header class="navbar">
+    <div class="logo">kitchen grid</div>
 
-    
-    <header class="navbar">
-        <div class="logo">kitchen grid</div>
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">
-            <i class="fa-solid fa-bars"></i>
-        </label>
-        <nav class="nav-links">
+   
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-overlay"></label>
+    <label for="menu-toggle" class="menu-icon">
+      <i class="fa-solid fa-bars"></i>
+    </label>
+      <nav class="nav-links">
             <a href="index.html">Αρχική</a>
             <a href="index1.html">Σχετικά με εμάς</a>
             <a href="index4.html">Υπηρεσίες</a>
             <a href="index3.html">Επικοινωνία</a>
         </nav>
-    </header>
+  </header>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Η Γεύση που Ψάχνετε, με Φρέσκα Υλικά.</h1>
-            <p>Ετοιμάζουμε καθημερινά νόστιμα πιάτα με τα καλύτερα υλικά.</p>
-            <a href="" class="btn">Εξερευνήστε το Μενού</a>
-        </div>
-    </section>
-
-    <section class="todays-specials">
-    <h2>Σημερινά Πιάτα</h2>
-    <div class="carousel-container">
-        <div class="carousel-track">
-            
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/mousakas.webp" type="image/webp">
-                    <img src="images/mousakas.png" alt="Μουσακάς" loading="lazy">
-                </picture>
-                <p>Μουσακάς</p>
-                <div class="carousel-tooltip">
-                    <b>Υλικά</b>
-                    <p>Κιμάς μοσχαρίσιος, μελιτζάνες, πατάτες, κρεμμύδια, σάλτσα ντομάτας.</p>
-                </div>
-            </div>
-            
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/pastitsio.webp" type="image/webp">
-                    <img src="images/pastitsio.png" alt="παστίτσιο">
-                </picture>
-                <p>Παστίτσιο</p>
-                <div class="carousel-tooltip">
-                    <b>Υλικά</b>
-                    <p>μακαρόνια,κιμάς μοσχαρίσιος, μπεσαμέλ.</p>
-                </div>
-            </div>
-            
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/gemista-kalamarakia.webp" type="image/webp">
-                    <img src="images/gemista-kalamarakia.png" alt="καλαμάρια">
-                </picture>
-                 <p>Γεμιστά Καλαμαράκια</p>
-                <div class="carousel-tooltip">
-                    <b>Υλικά</b>
-                    <p>καλαμάρια ρύζι, κουκουνάρι, μυρωδικά.</p>
-                </div>
-            </div>
-            
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/gemistes-krepes.webp" type="image/webp">
-                    <img src="images/gemistes-krepes.png" alt="Κρέπες">
-                </picture>
-                <p>Γεμιστές Κρέπες</p>
-                <div class="carousel-tooltip">
-                    <b>Υλικά</b>
-                    <p>τυριά (γκούντα, ένταμ), ζαμπόν, κρέμα γάλακτος.</p>
-                   
-                </div>
-            </div>
-            
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/garidomakaronada.webp" type="image/webp">
-                    <img src="images/garidomakaronada.png" alt="Γαριδομακαρονάδα">
-                </picture>
-                <p>Γαριδομακαρονάδα</p>
-                <div class="carousel-tooltip">
-                  
-                    <b>Υλικά</b>
-                    <p>γαρίδες λιγκουίνι, σάλτσα ντομάτας.</p>
-    
-                
-                </div>
-            </div>
-            
-            <div class="carousel-card">
-                <picture>
-                    <source srcset="images/giouvetsi-kritharaki.webp" type="image/webp">
-                    <img src="images/giouvetsi-kritharaki.png" alt="Γιουβέτσι με Κριθαράκι">
-                </picture>
-                <p>Γιουβέτσι με Κριθαράκι</p>
-                <div class="carousel-tooltip">
-                    <b>Υλικά</b>
-                    <p>Μοσχάρι, κριθαράκι, σάλτσα ντομάτας.</p>
-                </div>
-            </div>
-            
-        </div>
+ 
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Η Γεύση που Ψάχνετε, με Φρέσκα Υλικά.</h1>
+      <p>Ετοιμάζουμε καθημερινά νοστιμα πιάτα με τα καλύτερα υλικά.</p>
+      <a href="#about" class="btn">Εξερευνήστε το Μενού</a>
     </div>
-    <div class="carousel-dots"></div>
-</section>
-
-    
-    <section class="items">
-        <h2>Προτάσεις Γεύσεων</h2>
-        <div class="item">
-            <picture>
-                <source srcset="images/pizza.webp" type="image/webp">
-                <img class="recipe-img" src="images/pizza.png" alt="Λαχταριστή Pizza"
-                    data-title="Λαχταριστή Pizza"
-                    data-description="Πλούσια ιταλική πίτσα με τραγανή ζύμη, λιωμένο τυρί και φρέσκια σάλτσα ντομάτας. Ιδανική για μια γρήγορη και νόστιμη βραδιά."
-                    loading="lazy"> 
-            </picture>
-            <h4>Πίτσα</h4>
-        </div>
-        <div class="item">
-            <picture>
-                <source srcset="images/gyros.webp" type="image/webp">
-                <img class="recipe-img" src="images/gyros.png" alt="Αυθεντικός Γύρος"
-                    data-title="Αυθεντικός Γύρος"
-                    data-description="Παραδοσιακός ελληνικός γύρος με ζουμερό κρέας, πίτα, πατάτες τηγανητές, ντομάτα, κρεμμύδι και τζατζίκι. Ένα πλήρες γεύμα."
-                    loading="lazy">
-            </picture>
-            <h4>Πίτα Γύρο</h4>
-        </div>
-        <div class="item">
-            <picture>
-                <source srcset="images/spaghetti-mpolonez.webp" type="image/webp">
-                <img class="recipe-img" src="images/spaghetti-mpolonez.png" alt="Σπαγγέτι Μπολονέζ"
-                    data-title="Σπαγγέτι Μπολονέζ"
-                    data-description="Κλασικά σπαγγέτι με πλούσια σάλτσα μπολονέζ, φρέσκο βασιλικό και παρμεζάνα. Ένα αγαπημένο πιάτο για όλη την οικογένεια."
-                    loading="lazy">
-            </picture>
-            <h4>Σπαγγέτι</h4>
-        </div>
-        <div class="item">
-            <picture>
-                <source srcset="images/chicken.webp" type="image/webp">
-                <img class="recipe-img" src="images/chicken.png" alt="Κοτόπουλο στο Φούρνο"
-                    data-title="Κοτόπουλο στο Φούρνο"
-                    data-description="Ζουμερό και αρωματικό κοτόπουλο με τραγανή πέτσα, ψημένο στον φούρνο μαζί με πατάτες. Ιδανικό για οικογενειακό τραπέζι."
-                    loading="lazy">
-            </picture>
-            <h4>Κοτόπουλο</h4>
-        </div>
-        <div class="item">
-            <picture>
-                <source srcset="images/crepes.webp" type="image/webp">
-                <img class="recipe-img" src="images/crepes.png" alt="Νόστιμες Κρέπες"
-                    data-title="Γλυκιά Κρέπα"
-                    data-description="Κρέπες με πλούσια πραλίνα σοκολάτας και φρέσκες φέτες μπανάνας, γαρνιρισμένες με φύλλα μέντας."
-                    loading="lazy">
-            </picture>
-            <h4>Κρέπα</h4>
-        </div>
-        <div class="item">
-            <picture>
-                 <source srcset="images/soutzoukakia.webp" type="image/webp">
-                 <img class="recipe-img" src="images/soutzoukakia.png" alt="Σουτζουκάκια"
-                    data-title="Σουτζουκάκια Σμυρνέικα"
-                    data-description="Παραδοσιακά σουτζουκάκια με πλούσια σάλτσα ντομάτας και μπαχαρικά."
-                    loading="lazy">
-            </picture>
-            <h4>Σουτζουκάκια</h4>
-        </div>
-        <div class="item">
-            <picture>
-                <source srcset="images/beef.webp" type="image/webp">
-                <img class="recipe-img" src="images/beef.png" alt="Μπιφτέκια"
-                    data-title="Ζουμερά μπιφτέκια"
-                    data-description="Μπιφτέκια μοσχαρίσιου κιμά ψημένα στη σχάρα με λαχανικά."
-                    loading="lazy">
-            </picture>
-            <h4>Μπιφτέκια</h4>
-        </div>
-        <div class="item">
-            <picture>
-                <source srcset="images/profiterol.webp" type="image/webp">
-                <img class="recipe-img" src="images/profiterol.png" alt="Προφιτερόλ"
-                    data-title="Κρεμώδες προφιτερόλ"
-                    data-description="Προφιτερόλ με πλούσια σοκολάτα και σαντιγί, ένα κλασικό γλυκό με βελούδινη γεύση."
-                    loading="lazy">
-            </picture>
-            <h4>Προφιτερόλ</h4>
-        </div>
-    </section>
-
-    <div id="recipeModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
-        <div class="modal-content">
-            <span id="recipeClose" class="close">&times;</span> 
-            <h2 id="modalTitle"></h2>
-            <img id="modalImage" src="" alt="Recipe Image">
-            <p id="modalDescription"></p>
-        </div>
-    </div>
+  </section>
 
 
-    <section class="testimonials-section container">
-        <h2>Κριτικές πελατών</h2>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="client-info">
-                    <picture>
-                    <source srcset="images/testimo1.webp" type="image/webp">
-                    <img src="images/testimo1.jpg" alt="Πελάτης 1" class="client-img" loading="lazy">
-                    </picture>
-                    <div class="client-details"><h4>Μαρία Κ.</h4></div>
-                </div>
-                <p>Ο Μουσακάς ήταν σαν σπιτικός! Είδα ότι έχετε και άλλα πιάτα ημέρας, οπότε θα ξαναπαραγγείλουμε σίγουρα με την παρέα.</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="client-info">
-                    <picture>
-                        <source srcset="images/testimo2.webp" type="image/webp">
-                    <img src="images/testimo2.jpg" alt="Πελάτης" class="client-img" loading="lazy">
-                    </picture>
-                    <div class="client-details"><h4>Γιάννης Δ.</h4></div>
-                </div>
-                <p>Πρέπει να δοκιμάσετε τα Σουτζουκάκια! Είναι πολύ νόστιμα. Μου άρεσε που το μενού έχει τόσες πολλές επιλογές από παραδοσιακά μέχρι πιο μοντέρνα. Πολύ καλή εμπειρία.</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="client-info">
-                    <picture>
-                    <source srcset="images/testimo3.webp" type="image/webp">
-                    <img src="images/testimo3.jpg" alt="Πελάτης" class="client-img" loading="lazy">
-                    </picture>
-                    <div class="client-details"><h4>Μάριος Λ.</h4></div>
-                </div>
-                <p>Παραγγέλνω από εδώ συχνά. Το Παστίτσιο είναι απλά τέλειο.</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="client-info">
-                    <picture>
-                       <source srcset="images/testimo4.webp" type="image/webp">
-                    <img src="images/testimo4.png" alt="Εικόνα Πελάτη 4" class="client-img" loading="lazy">
-                    </picture>
-                    <div class="client-details"><h4>Ελένη Π.</h4></div>
-                </div>
-                <p>Σωτήριο για μέρες που δεν προλαβαίνω να μαγειρέψω. Τα παιδιά λατρεύουν τις Κρέπες και εμείς βρίσκουμε πάντα ένα καλό μαγειρευτό!</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-            </div>
-        </div>
-    </section>
 
-
-    <section class="gallery">
-    <h2>Φωτογραφίες / Γκαλερί</h2>
-    <div class="gallery-container">
-        <a href="images/carbonara.png" class="box glightbox">
-            <picture>
-                <source srcset="images/carbonara.webp" type="image/webp">
-                <img src="images/carbonara.png" alt="Καρμπονάρα">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/calzone.png" class="box glightbox">
-            <picture>
-                <source srcset="images/calzone.webp" type="image/webp">
-                <img src="images/calzone.png" alt="Καλτσόνε">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/pizza-2.png" class="box glightbox">
-            <picture>
-                <source srcset="images/pizza-2.webp" type="image/webp">
-                <img src="images/pizza-2.png" alt="Πίτσα">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/caesar-salad.png" class="box glightbox">
-            <picture>
-                <source srcset="images/caesar-salad.webp" type="image/webp">
-                <img src="images/caesar-salad.png" alt="Σαλάτα του Καίσαρα" loading="lazy">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/peinirli.png" class="box glightbox">
-            <picture>
-                <source srcset="images/peinirli.webp" type="image/webp">
-                <img src="images/peinirli.png" alt="Πεϊνιρλί">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/burger.png" class="box glightbox">
-            <picture>
-                <source srcset="images/burger.webp" type="image/webp">
-                <img src="images/burger.png" alt="Burger">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/sokolatopita.png" class="box glightbox">
-            <picture>
-                <source srcset="images/sokolatopita.webp" type="image/webp">
-                <img src="images/sokolatopita.png" alt="Σοκολατόπιτα">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-        <a href="images/profiterol.png" class="box glightbox">
-            <picture>
-                <source srcset="images/profiterol.webp" type="image/webp">
-                <img src="images/profiterol.png" alt="Προφιτερόλ">
-            </picture>
-            <div class="icon"><i class="fas fa-plus"></i></div>
-        </a>
-    </div>
-</section>
-    
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col footer-left">
-                <h3>Ακολουθηστε μας</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="footer-col footer-middle">
-                <h3>Συνδεσμοι</h3>
-                <ul>
-                    <li><a href="#home">Αρχική</a></li>
-                    <li><a href="index1.html">Σχετικά με Εμάς</a></li>
-                    <li><a href="#services">Υπηρεσίες</a></li>
-                    <li><a href="index3.html">Επικοινωνία</a></li>
-                </ul>
-            </div>
-            <div class="footer-col footer-middle">
-                <h3>Πληροφοριες</h3>
-                <ul>
-                    <li><a href="#">Συχνές ερωτήσεις</a></li>
-                    <li><a href="#">Συνταγές</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Γκάλερι</a></li>
-                </ul>
-            </div>
-            <div class="footer-col footer-right">
-                <h3>Επικοινωνια</h3>
-                <ul>
-                    <li><a href="#">Αρχική</a></li>
-                    <li><a href="#">Σχετικά με Εμάς</a></li>
-                    <li><a href="#">Υπηρεσίες</a></li>
-                    <li><a href="#">Επικοινωνία</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2025 The kitchen grid. Όλα τα δικαιώματα διατηρούνται.
-        </div>
-    </footer>
-
-
-  <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-    <script>
-   
-        document.querySelectorAll('.glightbox').forEach(item => {
-            item.addEventListener('click', function(event) {
-              
-                this.blur(); 
-            });
-        });
+<section class="services-section">
+    <div class="services-container">
         
-   
-        const lightbox = GLightbox({
-            selector: '.glightbox',
-            loop: true,
-            touchNavigation: true,
-            keyboardNavigation: true
-        });
-    </script>
+        <h2 class="section-heading">Οι Βασικές μας Υπηρεσίες</h2>
+        
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <i class="ri-calendar-event-fill"></i> <h3 class="card-title">Online Κρατήσεις</h3>
+                <p class="card-description">Κάντε κράτηση τραπεζιού εύκολα και γρήγορα online. Επιβεβαίωση σε πραγματικό χρόνο, χωρίς αναμονή.</p>
+            </div>
+            
+            <div class="service-card">
+   <i class="ri-restaurant-fill"></i> <h3 class="card-title">Μενού & Ενημέρωση</h3>
+                <p class="card-description">Ανακαλύψτε το πλήρες μενού μας, δείτε τις καθημερινές σπεσιαλιτέ και τις εποχιακές μας προτάσεις.</p>
+            </div>
+            
+           <div class="service-card">
+    <i class="ri-takeaway-fill icon-style"></i> <h3 class="card-title">Delivery & Παραλαβή</h3>
+    <p class="card-description">Παραλάβετε την παραγγελία σας από το κατάστημα ή παραδώστε την στο χώρο σας με ασφάλεια και ταχύτητα.</p>
+</div>
+            
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
+
+  
+<footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col footer-left">
+        <h3>Ακολουθηστε μας</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col footer-middle">
+        <h3>Συνδεσμοι</h3>
+        <ul>
+          <li><a href="#home">Αρχική</a></li>
+          <li><a href="index1.html">Σχετικά με Εμάς</a></li>
+          <li><a href="#services">Υπηρεσίες</a></li>
+          <li><a href="#contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-middle">
+        <h3>Πληροφοριες</h3>
+        <ul>
+          <li><a href="#">Συχνές ερωτήσεις</a></li>
+          <li><a href="#">Συνταγές</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Γκάλερι</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-right">
+        <h3>Επικοινωνια</h3>
+        <ul>
+          <li><a href="#">Αρχική</a></li>
+          <li><a href="#">Σχετικά με Εμάς</a></li>
+          <li><a href="#">Υπηρεσίες</a></li>
+          <li><a href="#">Επικοινωνία</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 The kitchen grid. Όλα τα δικαιώματα διατηρούνται.
+    </div>
+  </footer>
+
 
 
 </body>
