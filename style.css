@@ -686,6 +686,8 @@ body {
 
 .modal {
     position: fixed;
+     inset: 0;
+     pointer-events: none;
     z-index: 1000;
     left: 0;
     top: 0;
@@ -703,8 +705,8 @@ body {
 
 /* 🔴 ΝΕΑ ΚΛΑΣΗ: Εμφάνιση του modal. ΠΡΕΠΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ ΣΤΟ JS. */
 .modal.active {
-    visibility: visible;
     opacity: 1;
+    pointer-events: auto;
 }
 
 /* Τα υπόλοιπα styles του modal-content παραμένουν ως έχουν... */
