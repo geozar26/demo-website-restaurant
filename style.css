@@ -1,6 +1,4 @@
 
-
-
 :root {
     --color-primary: #0078ff;
     --color-dark: #222;
@@ -693,59 +691,36 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Ελαφρώς πιο σκούρο για καλύτερο contrast */
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: auto;
     
-    /* Hardware acceleration */
-    will-change: opacity, visibility;
-    backface-visibility: hidden;
-    
-    /* Layout */
-    display: flex; /* Χρήση flex για τέλειο κεντράρισμα χωρίς margin: 5% auto */
-    align-items: center;
-    justify-content: center;
-    
+    /* 🔴 ΔΙΟΡΘΩΣΗ: Αρχικά κρυφό με ομαλή μετάβαση */
     visibility: hidden; 
     opacity: 0;
-    transition: opacity 0.25s ease-out, visibility 0.25s ease-out;
+    transition: opacity 0.2s ease, visibility 0.2s ease; 
+    /* ❌ ΑΦΑΙΡΕΘΗΚΕ: display: none; */
 }
 
+/* 🔴 ΝΕΑ ΚΛΑΣΗ: Εμφάνιση του modal. ΠΡΕΠΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ ΣΤΟ JS. */
 .modal.active {
     visibility: visible;
     opacity: 1;
 }
 
+/* Τα υπόλοιπα styles του modal-content παραμένουν ως έχουν... */
+/* .modal-content { ... } */
+
 .modal-content {
     background-color: var(--color-light);
+    margin: 5% auto;
     padding: 30px;
-    width: 90%; /* Responsive width */
     max-width: 600px;
-    max-height: 85vh;
+    max-height: 80vh;
     overflow-y: auto;
     border-radius: 10px;
     text-align: center;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    
-    /* Animation για το περιεχόμενο */
-    transform: translateY(20px);
-    transition: transform 0.3s ease-out;
-}
-
-.modal.active .modal-content {
-    transform: translateY(0);
-}
-
-/* 🔵 ΚΡΙΣΙΜΟ: Πρόληψη rendering problems στην εικόνα */
-#modalImage {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    /* Δεσμεύει χώρο για την εικόνα πριν φορτώσει αν ξέρουμε το ratio */
-    aspect-ratio: 16 / 9; 
-    object-fit: cover;
-    background-color: #f0f0f0; /* Placeholder χρώμα μέχρι να έρθει η εικόνα */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content h2 {
@@ -1644,6 +1619,8 @@ body {
         padding: 20px 15px 30px 15px; 
     }
 }
+
+
 
 
 
