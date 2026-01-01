@@ -665,43 +665,63 @@ body {
     cursor: pointer;
 }
 
-.modal {
+/* Βασικό στυλ Modal (Overlay) */
+#recipeModal {
+    display: none; /* Κρυφό αρχικά */
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    overflow: auto;
-    
-    /* 🔴 ΔΙΟΡΘΩΣΗ: Αρχικά κρυφό με ομαλή μετάβαση */
-    visibility: hidden; 
-    opacity: 0; 
-    transition: opacity 0.2s ease, visibility 0.2s ease; 
-    /* ❌ ΑΦΑΙΡΕΘΗΚΕ: display: none; */
+    background-color: rgba(0, 0, 0, 0.85); /* Σκούρο διαφανές φόντο */
+    z-index: 9999;
+    overflow-y: auto;
 }
 
-/* 🔴 ΝΕΑ ΚΛΑΣΗ: Εμφάνιση του modal. ΠΡΕΠΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ ΣΤΟ JS. */
-.modal.active {
-    visibility: visible;
-    opacity: 1;
+/* Εμφάνιση Modal */
+#recipeModal.active {
+    display: flex !important; /* Χρησιμοποιούμε flex για τέλειο κεντράρισμα */
+    align-items: center;
+    justify-content: center;
 }
 
-/* Τα υπόλοιπα styles του modal-content παραμένουν ως έχουν... */
-/* .modal-content { ... } */
-
+/* Το εσωτερικό λευκό πλαίσιο */
 .modal-content {
-    background-color: var(--color-light);
-    margin: 5% auto;
+    background-color: white;
     padding: 30px;
     max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    border-radius: 10px;
-    text-align: center;
+    width: 90%;
+    border-radius: 12px;
     position: relative;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    margin: auto; /* Για σωστό scrolling αν η οθόνη είναι μικρή */
+}
+
+/* Η εικόνα μέσα στο modal */
+#modalImage {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+/* Κλείσιμο (X) */
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal .close:hover {
+    color: #ff0000;
 }
 
 .modal-content h2 {
@@ -713,13 +733,6 @@ body {
     font-weight: 600;
 }
 
-.modal-content img {
-    width: 80%;
-    max-height: 300px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
 
 .modal-content p {
     text-align: justify;
