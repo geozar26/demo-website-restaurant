@@ -1,4 +1,3 @@
-
 // 3. ΕΚΤΕΛΕΣΗ ΟΤΑΝ ΦΟΡΤΩΣΕΙ Η ΣΕΛΙΔΑ
 document.addEventListener("DOMContentLoaded", () => {
     initializeCarouselLogic();
@@ -18,38 +17,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 300);
         };
 
-    recipeImages.forEach(img => {
-    img.addEventListener("click", (e) => {
-        if (isScrolling) return;
-        e.preventDefault();
+       recipeImages.forEach(img => {
+            img.addEventListener("click", (e) => {
+                if (isScrolling) return;
+                e.preventDefault();
 
-        const titleElem = document.getElementById("modalTitle");
-        const imgElem = document.getElementById("modalImage");
-        const descElem = document.getElementById("modalDescription");
+                const titleElem = document.getElementById("modalTitle");
+                const imgElem = document.getElementById("modalImage");
+                const descElem = document.getElementById("modalDescription");
 
-        // 1. Καθαρισμός και προετοιμασία
-        if (imgElem) imgElem.style.opacity = "0";
+                // 1. ΑΜΕΣΟΣ ΚΑΘΑΡΙΣΜΟΣ
+                if (imgElem) imgElem.src = ""; 
+                
+                // 2. Χρησιμοποιούμε requestAnimationFrame για να βεβαιωθούμε 
+                // ότι ο browser "είδε" ότι η εικόνα σβήστηκε.
+                requestAnimationFrame(() => {
+                    if (titleElem) titleElem.textContent = img.dataset.title || img.alt;
+                    if (descElem) descElem.textContent = img.dataset.description || "";
+                    
+                    // 3. Βάζουμε τη νέα εικόνα
+                    if (imgElem) imgElem.src = img.src;
 
-        // 2. Πέρασμα δεδομένων
-        if (titleElem) titleElem.textContent = img.dataset.title || img.alt;
-        if (descElem) descElem.textContent = img.dataset.description || "";
-        
-        // 3. Ξεκινάει το φόρτωμα της εικόνας
-        if (imgElem) imgElem.src = img.src;
+                    // 4. Εμφανίζουμε το modal
+                    recipeModal.classList.add("active");
+                });
+            });
+        });
 
-        // 4. Εμφάνιση Modal με ελάχιστη καθυστέρηση για να προλάβει το Rendering
-        setTimeout(() => {
-            recipeModal.classList.add("active");
-            
-            // Εμφάνιση εικόνας μόνο αν είναι έτοιμη
-            if (imgElem.complete) {
-                imgElem.style.opacity = "1";
-            } else {
-                imgElem.onload = () => imgElem.style.opacity = "1";
-            }
-        }, 10);
-    });
-});
         if (recipeCloseBtn) recipeCloseBtn.onclick = closeRecipe;
         
         // Κλείσιμο με κλικ έξω από το περιεχόμενο
