@@ -1,9 +1,5 @@
 
 
-
-
-
-
 :root {
     --color-primary: #0078ff;
     --color-dark: #222;
@@ -43,7 +39,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
+    padding: 19px 19px;
     background: var(--color-light);
     position: fixed;
     top: 0;
