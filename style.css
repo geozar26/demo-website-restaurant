@@ -43,7 +43,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 19px 19px;
+    padding: 10px 16px;
     background: var(--color-light);
     position: fixed;
     top: 0;
