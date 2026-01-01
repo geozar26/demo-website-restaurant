@@ -1,55 +1,170 @@
+// 1. ΣΥΝΑΡΤΗΣΕΙΣ COOKIES
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+}
+
+function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// 2. ΛΟΓΙΚΗ CAROUSEL
+let isScrolling = false;
+
+function initializeCarouselLogic() {
+    const carouselSection = document.querySelector(".todays-specials");
+    if (!carouselSection) return;
+
+    const track = carouselSection.querySelector(".carousel-track");
+    const container = carouselSection.querySelector(".carousel-container");
+    const dotsContainer = carouselSection.querySelector(".carousel-dots");
+    const cards = track ? Array.from(track.children) : [];
+
+    if (!track || cards.length === 0 || !dotsContainer || !container) return;
+
+    const originalCardsCount = cards.length;
+    let currentSlide = 0;
+    const GAP = 30; 
+    let carouselMetrics = {}; 
+
+    function calculateCarouselMetrics() {
+        const cardWidth = cards[0].getBoundingClientRect().width; 
+        const slideDistance = cardWidth + GAP; 
+        const containerWidth = container.clientWidth;
+        const cardsPerView = Math.floor(containerWidth / slideDistance) || 1;
+        const totalPages = Math.max(1, originalCardsCount - cardsPerView + 1);
+        carouselMetrics = { slideDistance, totalPages, containerWidth };
+    }
+
+    function moveToSlide(index) {
+        const { slideDistance, totalPages } = carouselMetrics; 
+        if (index < 0) currentSlide = 0;
+        else if (index >= totalPages) currentSlide = totalPages - 1;
+        else currentSlide = index;
+
+        const maxScroll = track.scrollWidth - container.clientWidth;
+        let offset = -(currentSlide * slideDistance);
+        if (Math.abs(offset) > maxScroll) offset = -maxScroll;
+
+        track.style.transition = 'transform 0.5s ease-out';
+        track.style.transform = `translateX(${offset}px)`; 
+        updateDots();
+    }
+
+    // --- ΒΕΛΤΙΩΜΕΝΗ ΛΟΓΙΚΗ ΓΙΑ ΑΜΕΣΟ ΚΛΙΚ ---
+    let startX = 0;
+    let startY = 0;
+
+    container.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        // Επαναφέρουμε ΠΑΝΤΑ το isScrolling σε false με το που ακουμπάει το δάχτυλο
+        isScrolling = false; 
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        const moveX = Math.abs(e.touches[0].clientX - startX);
+        const moveY = Math.abs(e.touches[0].clientY - startY);
+        
+        // Αν η κίνηση είναι μικρότερη από 10px, δεν τη θεωρούμε swipe (βοηθάει στα ασταθή δάχτυλα)
+        if (moveX > 10 || moveY > 10) {
+            isScrolling = true;
+        }
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+        // Αν δεν υπήρξε κίνηση (swipe), σταματάμε εδώ και αφήνουμε το Click event να δουλέψει
+        if (!isScrolling) return; 
+
+        const endX = e.changedTouches[0].clientX;
+        const distance = startX - endX;
+        
+        if (Math.abs(distance) > 40) { 
+            if (distance > 0) moveToSlide(currentSlide + 1);
+            else moveToSlide(currentSlide - 1);
+        }
+        
+        // Μικρή καθυστέρηση για να προλάβει να εκτελεστεί το click event πριν το reset
+        setTimeout(() => { isScrolling = false; }, 50);
+    }, { passive: true });
+
+    function updateDots() {
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    function createDots(totalPages) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            if (i === currentSlide) dot.classList.add('active');
+            dot.addEventListener('click', () => moveToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function initializeCarousel() {
+        calculateCarouselMetrics(); 
+        createDots(carouselMetrics.totalPages); 
+        moveToSlide(currentSlide);
+    }
+
+    initializeCarousel();
+    window.addEventListener('resize', initializeCarousel);
+}
+
 // 3. ΕΚΤΕΛΕΣΗ ΟΤΑΝ ΦΟΡΤΩΣΕΙ Η ΣΕΛΙΔΑ
 document.addEventListener("DOMContentLoaded", () => {
-    // 🟢 ΕΝΕΡΓΟΠΟΙΗΣΗ CAROUSEL (Μην το παραλείψεις!)
     initializeCarouselLogic();
 
     const recipeModal = document.getElementById("recipeModal");
     const recipeCloseBtn = document.getElementById("recipeClose");
     const recipeImages = document.querySelectorAll(".recipe-img");
 
-    // --- ΔΙΟΡΘΩΜΕΝΗ ΛΟΓΙΚΗ MODAL (STOP RENDERING ISSUES) ---
     if (recipeModal) {
-        const closeRecipe = () => {
-            recipeModal.classList.remove("active");
-            setTimeout(() => {
-                const imgElem = document.getElementById("modalImage");
-                if (imgElem) imgElem.src = "";
-            }, 300);
+  // Βρες το τμήμα μέσα στο DOMContentLoaded και αντικατάστησέ το:
+recipeImages.forEach(img => {
+    img.addEventListener("click", (e) => {
+        if (isScrolling) return;
+        e.preventDefault();
+
+        const titleElem = document.getElementById("modalTitle");
+        const imgElem = document.getElementById("modalImage");
+        const descElem = document.getElementById("modalDescription");
+
+        // Αφαιρούμε το active αμέσως αν ήταν ανοιχτό (για γρήγορη εναλλαγή)
+        recipeModal.classList.remove("active");
+
+        // Δημιουργούμε ένα προσωρινό Image object για να "προ-φορτώσουμε" την εικόνα
+        const tempImg = new Image();
+        tempImg.src = img.src;
+
+        tempImg.onload = () => {
+            // ΜΟΝΟ όταν φορτώσει η εικόνα, περνάμε τα δεδομένα στα στοιχεία
+            if (titleElem) titleElem.textContent = img.dataset.title || img.alt;
+            if (imgElem) imgElem.src = img.src;
+            if (descElem) descElem.textContent = img.dataset.description || "";
+
+            // Εμφανίζουμε το modal αφού όλα είναι έτοιμα στη μνήμη του browser
+            recipeModal.classList.add("active");
         };
-
-        recipeImages.forEach(img => {
-            img.addEventListener("click", (e) => {
-                if (isScrolling) return; // Προστασία από το swipe του carousel
-                e.preventDefault();
-
-                const titleElem = document.getElementById("modalTitle");
-                const imgElem = document.getElementById("modalImage");
-                const descElem = document.getElementById("modalDescription");
-
-                // 1. ΠΡΟΕΤΟΙΜΑΣΙΑ ΠΕΡΙΕΧΟΜΕΝΟΥ (Ενώ είναι ακόμα κρυφό)
-                if (imgElem) imgElem.style.opacity = "0"; // Κρύβουμε την εικόνα για να μην "αναβοσβήνει"
-                if (titleElem) titleElem.textContent = img.dataset.title || img.alt;
-                if (descElem) descElem.textContent = img.dataset.description || "";
-                if (imgElem) imgElem.src = img.src;
-
-                // 2. FORCE REFLOW (Το "μαγικό" για το Rendering)
-                // Αναγκάζει τον browser να υπολογίσει τα μεγέθη κειμένου/διαστάσεων 
-                // ΠΡΙΝ δείξει το modal στον χρήστη.
-                void recipeModal.offsetWidth; 
-
-                // 3. ΕΜΦΑΝΙΣΗ
-                recipeModal.classList.add("active");
-
-                // 4. ΟΜΑΛΗ ΕΜΦΑΝΙΣΗ ΕΙΚΟΝΑΣ
-                if (imgElem) {
-                    if (imgElem.complete) {
-                        imgElem.style.opacity = "1";
-                    } else {
-                        imgElem.onload = () => { imgElem.style.opacity = "1"; };
-                    }
-                }
-            });
-        });
+    });
+});
 
         if (recipeCloseBtn) recipeCloseBtn.onclick = closeRecipe;
         window.addEventListener("click", (e) => { 
@@ -57,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ΛΟΓΙΚΗ LOGIN ---
+    // Λογική Login
     const LS_KEY = "userWantsToStayLogged";
     const AUTH_TOKEN = "session_token_xyz_12345"; 
     const isUserLogged = () => getCookie(LS_KEY) === AUTH_TOKEN || localStorage.getItem(LS_KEY) === AUTH_TOKEN;
