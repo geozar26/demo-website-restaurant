@@ -720,8 +720,6 @@ body {
     text-align: center;
     position: relative;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    backface-visibility: hidden; /* Βοηθάει στο hardware acceleration */
-    transform: translateZ(0);
 }
 
 .modal-content h2 {
@@ -734,11 +732,11 @@ body {
 }
 
 .modal-content img {
-    /* ... τα υπάρχοντα ... */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #f0f0f0; /* Ένα ελαφρύ φόντο μέχρι να φορτώσει η εικόνα */
+    width: 80%;
+    max-height: 300px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    border-radius: 8px;
 }
 
 .modal-content p {
@@ -1620,6 +1618,8 @@ body {
         padding: 20px 15px 30px 15px; 
     }
 }
+
+
 
 
 
