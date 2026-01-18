@@ -4,8 +4,9 @@ Main Page Preview: Παρουσίαση της κεντρικής σελίδας
 
 https://drive.google.com/file/d/1JIVVfmigExLtAQDV6ddt5HTC4lkxW3uf/view?usp=sharing
 
-https://drive.google.com/file/d/1EjO-MQK9dAqNAvjCCxL4suBJzQv-XNWQ/view?usp=sharing
 
 Mobile & Tablet View: Παρουσίαση της εμπειρίας χρήστη σε μικρότερες οθόνες (Mobile-first design).
 
 https://drive.google.com/file/d/1u1LNYkvwXxX9fXeync1PcyiQuBakM9EX/view?usp=sharing
+
+Mobile & Tablet View: Παρουσίαση της εμπειρίας χρήστη σε μικρότερες οθόνες (Mobile-first design).
