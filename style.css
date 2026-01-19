@@ -943,12 +943,6 @@ html {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-
-    /* 🟢 ΕΔΩ ΡΥΘΜΙΖΕΙΣ ΤΗ ΜΕΤΑΤΟΠΙΣΗ */
-    /* Το -30px την σπρώχνει λίγο αριστερά. 
-       Αν τη θέλεις κι άλλο, κάντο -50px ή -80px */
-    transform: translateX(-30px); 
-    
     z-index: 2;
     display: block;
 }
@@ -967,6 +961,7 @@ html {
 }
 
 .main-contact-form input {
+     background-color: var(--color-light);
     width: 100%;
     border: none; 
     border-bottom: 3px solid #e0e0e0; /* Πιο απαλή γραμμή */
