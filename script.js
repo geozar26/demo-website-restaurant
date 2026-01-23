@@ -1,8 +1,9 @@
 /**
- * Kitchen Grid - Ultra Fast Version
+ * Kitchen Grid - Ultra Fast & Clean Version (No Warnings)
  * --------------------------------
- * - Image Preloading: Φορτώνει τις εικόνες στην cache πριν πατηθούν.
- * - Instant Modal: Το modal ανοίγει ακαριαία χωρίς να περιμένει το δίκτυο.
+ * 1. Smart Preloading: Φορτώνει την εικόνα στο hover/touch για 0ms καθυστέρηση.
+ * 2. Instant Modal: Εμφάνιση περιεχομένου χωρίς "πήδημα" στο layout.
+ * 3. Stable Logic: Login, Modals, Carousel, Cookies παραμένουν άθικτα.
  */
 
 // --- 🍪 ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
@@ -24,15 +25,27 @@ function getCookie(name) {
     return null;
 }
 
-// --- 🚀 PRELOAD IMAGES (Η "Μηχανή" της ταχύτητας) ---
-function preloadRecipeImages() {
+// --- 🚀 SMART PRELOAD (Εξαφανίζει τα Warnings) ---
+function setupSmartPreload() {
     const images = document.querySelectorAll(".recipe-img");
     images.forEach(img => {
-        const link = document.createElement("link");
-        link.rel = "preload";
-        link.as = "image";
-        link.href = img.src;
-        document.head.appendChild(link);
+        // Προφόρτωση στο Hover (Desktop)
+        img.addEventListener("mouseenter", () => {
+            if (!img.dataset.preloaded) {
+                const preloader = new Image();
+                preloader.src = img.src;
+                img.dataset.preloaded = "true";
+            }
+        }, { once: true });
+
+        // Προφόρτωση στο Touch (Mobile)
+        img.addEventListener("touchstart", () => {
+            if (!img.dataset.preloaded) {
+                const preloader = new Image();
+                preloader.src = img.src;
+                img.dataset.preloaded = "true";
+            }
+        }, { passive: true, once: true });
     });
 }
 
@@ -54,15 +67,12 @@ function initializeAllModals() {
                 const mImg = document.getElementById("modalImage");
                 const mDesc = document.getElementById("modalDescription");
 
-                // Άμεση ενημέρωση περιεχομένου
+                // Ενημέρωση περιεχομένου
                 if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
                 if (mDesc) mDesc.textContent = img.dataset.description || "";
-                
-                if (mImg) {
-                    mImg.src = img.src; // Θα φορτώσει ακαριαία λόγω preload
-                }
+                if (mImg) mImg.src = img.src;
 
-                // Ανοίγει ΑΜΕΣΩΣ (πλέον δεν φοβόμαστε το "πήδημα" λόγω Preload + CSS)
+                // Εμφάνιση Modal
                 recipeModal.style.display = "block";
                 requestAnimationFrame(() => {
                     recipeModal.classList.add("active");
@@ -129,7 +139,7 @@ function initializeAllModals() {
     });
 }
 
-// --- 🎡 CAROUSEL LOGIC ---
+// --- 🎡 CAROUSEL LOGIC (Specials & Gallery) ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
@@ -299,9 +309,9 @@ function initializeCarouselLogic() {
     setupCarousel(".gallery-section"); 
 }
 
-// --- 🔐 LOGIN & DOM READY ---
+// --- 🔐 LOGIN & AUTH LOGIC ---
 document.addEventListener("DOMContentLoaded", () => {
-    preloadRecipeImages(); // 👈 Τρέχει πρώτο για ταχύτητα!
+    setupSmartPreload(); // Ενεργοποίηση έξυπνης προφόρτωσης
     initializeCarouselLogic();
     initializeAllModals();
 
