@@ -424,112 +424,180 @@ body {
 }
 
 .modal {
+
     position: fixed;
+
     z-index: 1000;
+
     left: 0;
+
     top: 0;
+
     width: 100%;
+
     height: 100%;
+
     background-color: rgba(0, 0, 0, 0.6);
+
     overflow: auto;
-    
+
+   
+
     /* 🔴 ΔΙΟΡΘΩΣΗ: Αρχικά κρυφό με ομαλή μετάβαση */
-    visibility: hidden; 
+
+    visibility: hidden;
+
     opacity: 0;
-    transition: opacity 0.2s ease, visibility 0.2s ease; 
+
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+
     /* ❌ ΑΦΑΙΡΕΘΗΚΕ: display: none; */
+
 }
+
+
 
 /* 🔴 ΝΕΑ ΚΛΑΣΗ: Εμφάνιση του modal. ΠΡΕΠΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ ΣΤΟ JS. */
+
 .modal.active {
+
     visibility: visible;
+
     opacity: 1;
+
 }
 
 
 
 
 
-/* Αν θες το modal να προσαρμόζεται στο ύψος της εικόνας */
+.modal-content {
+
+    position: fixed;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%); /* Το "κλειδί" για το απόλυτο κέντρο */
+
+   
+
+    background-color: var(--color-light);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+
+
+    padding: 20px;
+
+    width: 90%;            /* 90% του πλάτους της οθόνης για να έχει πάντα ίσο περιθώριο */
+
+    max-width: 450px;      /* Δεν θα ανοίξει παραπάνω από αυτό σε μεγάλες οθόνες */
+
+   
+
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    border-radius: 10px;
+
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+    z-index: 1001;
+
+   
+
+    margin: 0;             /* ΕΞΑΦΑΝΙΖΟΥΜΕ τα margins που χαλάνε το κεντράρισμα */
+
+}
+
+
 
 .modal-content h2 {
+
     color: var(--color-primary);
+
     margin-bottom: 20px;
+
     text-align: center;
+
     /* Αντί για 60px σταθερά, βάζουμε ένα μικρό ποσοστό για ασφάλεια */
-    padding: 0 5%; 
+
+    padding: 0 5%;
+
     /* Εξασφαλίζουμε ότι το κείμενο μπορεί να αλλάζει γραμμή αν χρειαστεί */
+
     word-wrap: break-word;
+
     overflow-wrap: break-word;
+
     font-size: 1.6rem;
+
     font-weight: 600;
+
 }
+
+
+
 .modal-content img {
+
     width: 80%;
+
     max-height: 250px;
+
     object-fit: contain;
+
     margin-bottom: 20px;
+
     border-radius: 8px;
+
 }
+
+
+
 .modal-content p {
+
     text-align: center;
-    
+
+   
+
     padding: 0 10px;
+
     line-height: 1.6;
+
     color: var(--color-text-secondary);
+
 }
 
 
-/* Το λευκό πλαίσιο του modal */
-.modal-content {
-    width: 90%;
-    max-width: 500px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    margin: auto;
-    /* Επιτρέπει στο modal να αλλάζει ύψος ανάλογα με την εικόνα */
-    height: auto; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-/* Η εικόνα μέσα στο modal */
-#modalImage {
-    /* Καταργούμε τα σταθερά ύψη και τα aspect-ratio */
-    width: 100%; 
-    height: auto; 
-    max-height: 70vh; /* Περιορισμός μόνο για να μην βγαίνει εκτός οθόνης (70% του ύψους της οθόνης) */
-    
-    /* Η ιδιότητα που την δείχνει ΟΛΟΚΛΗΡΗ */
-    object-fit: scale-down; 
-    
-    display: block;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    
-    /* Rendering Fixes για να μην τρέμει */
-    backface-visibility: hidden;
-    transform: translateZ(0);
-}
 .modal .close {
+
     position: absolute;
+
     top: 10px;    /* Απόσταση από πάνω */
+
     right: 15px;  /* Απόσταση από δεξιά */
+
     color: var(--color-text-main);
+
     font-size: 24px; /* Λίγο πιο μικρό για να είναι κομψό */
+
     line-height: 1;  /* Για να κεντραριστεί σωστά το ύψος του */
+
     font-weight: bold;
+
     cursor: pointer;
+
     transition: color 0.2s, transform 0.2s;
+
     z-index: 1002; /* Να είναι πάνω από όλα μέσα στο modal */
-}
-
-.modal .close:hover {
-    color: var( --color-primary);
-}
-
 .items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
