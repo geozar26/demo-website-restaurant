@@ -498,6 +498,26 @@ body {
     color: var(--color-text-secondary);
 }
 
+#modalImage {
+    /* 1. ΣΤΑΘΕΡΟΠΟΙΗΣΗ ΔΙΑΣΤΑΣΕΩΝ */
+    width: 100%;
+    max-width: 450px; /* Ρύθμισέ το ανάλογα με το modal σου */
+    aspect-ratio: 16 / 9; /* Κλειδώνει τις διαστάσεις για να μην "πηδάει" */
+    
+    /* 2. ΔΙΟΡΘΩΣΗ RENDERING */
+    object-fit: cover;
+    object-position: center;
+    image-rendering: -webkit-optimize-contrast; /* Βελτιώνει την καθαρότητα */
+    
+
+    /* 4. ΟΜΑΛΟΤΗΤΑ */
+    transition: opacity 0.3s ease-in-out;
+    background-color: #eee; /* "Placeholder" μέχρι να φανεί η εικόνα */
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 15px auto;
+}
+
 .modal .close {
     position: absolute;
     top: 10px;    /* Απόσταση από πάνω */
