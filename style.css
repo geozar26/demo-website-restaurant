@@ -447,29 +447,27 @@ body {
 }
 
 
-.modal-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Το "κλειδί" για το απόλυτο κέντρο */
-    
-    background-color: var(--color-light);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    padding: 20px;
-    width: 90%;            /* 90% του πλάτους της οθόνης για να έχει πάντα ίσο περιθώριο */
-    max-width: 450px;      /* Δεν θα ανοίξει παραπάνω από αυτό σε μεγάλες οθόνες */
+#modalImage {
+    width: 100%;
+    max-height: 350px; /* Περιορίζει το ύψος για να μην βγαίνει εκτός οθόνης σε κινητά */
     
-    max-height: 85vh; 
-    overflow-y: auto; 
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    z-index: 1001;
+    /* Η ΜΑΓΙΚΗ ΑΛΛΑΓΗ */
+    object-fit: contain; /* Δείχνει ΟΛΗ την εικόνα μέσα στο πλαίσιο χωρίς να την κόβει */
     
-    margin: 0;             /* ΕΞΑΦΑΝΙΖΟΥΜΕ τα margins που χαλάνε το κεντράρισμα */
+    background-color: transparent; /* Αφαιρούμε το γκρι φόντο αν δεν θες να φαίνεται το κενό */
+    
+    /* Rendering Fixes */
+    image-rendering: -webkit-optimize-contrast;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: block;
 }
+
+/* Αν θες το modal να προσαρμόζεται στο ύψος της εικόνας */
 
 .modal-content h2 {
     color: var(--color-primary);
@@ -498,24 +496,29 @@ body {
     color: var(--color-text-secondary);
 }
 
-#modalImage {
-    /* 1. ΣΤΑΘΕΡΟΠΟΙΗΣΗ ΔΙΑΣΤΑΣΕΩΝ */
-    width: 100%;
-    max-width: 450px; /* Ρύθμισέ το ανάλογα με το modal σου */
-    aspect-ratio: 16 / 9; /* Κλειδώνει τις διαστάσεις για να μην "πηδάει" */
-    
-    /* 2. ΔΙΟΡΘΩΣΗ RENDERING */
-    object-fit: cover;
-    object-position: center;
-    image-rendering: -webkit-optimize-contrast; /* Βελτιώνει την καθαρότητα */
-    
 
-    /* 4. ΟΜΑΛΟΤΗΤΑ */
-    transition: opacity 0.3s ease-in-out;
-    background-color: #eee; /* "Placeholder" μέχρι να φανεί η εικόνα */
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto 15px auto;
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Το "κλειδί" για το απόλυτο κέντρο */
+    
+    background-color: var(--color-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px;
+    width: 90%;            /* 90% του πλάτους της οθόνης για να έχει πάντα ίσο περιθώριο */
+    max-width: 450px;      /* Δεν θα ανοίξει παραπάνω από αυτό σε μεγάλες οθόνες */
+    
+    max-height: 85vh; 
+    overflow-y: auto; 
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    
+    margin: 0;             /* ΕΞΑΦΑΝΙΖΟΥΜΕ τα margins που χαλάνε το κεντράρισμα */
 }
 
 .modal .close {
