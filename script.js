@@ -1,5 +1,11 @@
+/**
+ * Kitchen Grid - Ultra Fast Version
+ * --------------------------------
+ * - Image Preloading: Φορτώνει τις εικόνες στην cache πριν πατηθούν.
+ * - Instant Modal: Το modal ανοίγει ακαριαία χωρίς να περιμένει το δίκτυο.
+ */
 
-
+// --- 🍪 ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -16,6 +22,18 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+
+// --- 🚀 PRELOAD IMAGES (Η "Μηχανή" της ταχύτητας) ---
+function preloadRecipeImages() {
+    const images = document.querySelectorAll(".recipe-img");
+    images.forEach(img => {
+        const link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.href = img.src;
+        document.head.appendChild(link);
+    });
 }
 
 // --- 🍲 MODAL LOGIC & GALLERY FIX ---
@@ -36,12 +54,19 @@ function initializeAllModals() {
                 const mImg = document.getElementById("modalImage");
                 const mDesc = document.getElementById("modalDescription");
 
+                // Άμεση ενημέρωση περιεχομένου
                 if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
-                if (mImg) mImg.src = img.src;
                 if (mDesc) mDesc.textContent = img.dataset.description || "";
+                
+                if (mImg) {
+                    mImg.src = img.src; // Θα φορτώσει ακαριαία λόγω preload
+                }
 
+                // Ανοίγει ΑΜΕΣΩΣ (πλέον δεν φοβόμαστε το "πήδημα" λόγω Preload + CSS)
                 recipeModal.style.display = "block";
-                setTimeout(() => recipeModal.classList.add("active"), 10);
+                requestAnimationFrame(() => {
+                    recipeModal.classList.add("active");
+                });
             });
         });
 
@@ -55,7 +80,7 @@ function initializeAllModals() {
         }
     }
 
-    // --- 🎡 CAROUSEL TOOLTIP TOGGLE LOGIC (FIXED) ---
+    // --- 🎡 CAROUSEL TOOLTIP TOGGLE LOGIC ---
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
     carouselCards.forEach(card => {
         card.style.cursor = "pointer";
@@ -67,21 +92,17 @@ function initializeAllModals() {
             if (dishId) {
                 const tooltip = document.getElementById(`modal-${dishId}`);
                 if (tooltip) {
-                    // Χρησιμοποιούμε το attribute 'data-open' ως σίγουρο διακόπτη
                     const isOpen = tooltip.getAttribute('data-open') === 'true';
 
                     if (isOpen) {
-                        // Αν είναι ανοιχτό, το κλείνουμε
                         tooltip.style.display = "none";
                         tooltip.setAttribute('data-open', 'false');
                     } else {
-                        // Κλείνουμε πρώτα όλα τα άλλα tooltips
                         document.querySelectorAll('[id^="modal-"]').forEach(t => {
                             t.style.display = "none";
                             t.setAttribute('data-open', 'false');
                         });
 
-                        // Ανοίγουμε το σωστό tooltip
                         tooltip.style.display = "block";
                         tooltip.setAttribute('data-open', 'true');
                         tooltip.style.backfaceVisibility = "hidden";
@@ -99,7 +120,6 @@ function initializeAllModals() {
         if (e.target.classList.contains('modal')) {
             e.target.style.display = "none";
         }
-        // Κλείσιμο tooltips αν πατήσεις οπουδήποτε αλλού στην οθόνη
         if (!e.target.closest('.carousel-card') && !e.target.closest('[data-dish]')) {
             document.querySelectorAll('[id^="modal-"]').forEach(t => {
                 t.style.display = "none";
@@ -109,7 +129,7 @@ function initializeAllModals() {
     });
 }
 
-// --- 🎡 CAROUSEL LOGIC (Specials & Gallery) ---
+// --- 🎡 CAROUSEL LOGIC ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
@@ -279,8 +299,9 @@ function initializeCarouselLogic() {
     setupCarousel(".gallery-section"); 
 }
 
-// --- 🔐 LOGIN & AUTH LOGIC (FIXED) ---
+// --- 🔐 LOGIN & DOM READY ---
 document.addEventListener("DOMContentLoaded", () => {
+    preloadRecipeImages(); // 👈 Τρέχει πρώτο για ταχύτητα!
     initializeCarouselLogic();
     initializeAllModals();
 
@@ -350,22 +371,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
-function toggleTooltip(event, element) {
-    // ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ: Εμποδίζει το κλικ να "διαρρεύσει" στην υπόλοιπη κάρτα
-    event.stopPropagation();
-    
-    const card = element.closest('.carousel-card');
-    const tooltip = card.querySelector('.carousel-tooltip');
-    
-    // Έλεγχος: αν είναι ήδη ανοιχτό, κλείστο. Αν όχι, άνοιξέ το.
-    if (tooltip.classList.contains('active')) {
-        tooltip.classList.remove('active');
-        console.log("Tooltip Closed"); // Θα το δεις στο Console του browser (F12)
-    } else {
-        // Κλείνουμε όλα τα άλλα πρώτα
-        document.querySelectorAll('.carousel-tooltip').forEach(t => t.classList.remove('active'));
-        tooltip.classList.add('active');
-        console.log("Tooltip Opened from Icon"); 
-    }
-}
