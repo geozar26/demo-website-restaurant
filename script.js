@@ -1,9 +1,10 @@
 /**
- * Kitchen Grid - Ultra Fast & Clean Version (No Warnings)
+ * Kitchen Grid - Ultra Fast & Clean Version
  * --------------------------------
- * 1. Smart Preloading: Φορτώνει την εικόνα στο hover/touch για 0ms καθυστέρηση.
- * 2. Instant Modal: Εμφάνιση περιεχομένου χωρίς "πήδημα" στο layout.
- * 3. Stable Logic: Login, Modals, Carousel, Cookies παραμένουν άθικτα.
+ * 1. Smart Preloading: Φορτώνει την εικόνα στο hover/touch.
+ * 2. Instant Modal: Εμφάνιση περιεχομένου χωρίς "πήδημα".
+ * 3. Stable Logic: Login, Modals, Cookies.
+ * 4. Gallery Fix: Διορθώθηκε το Swipe χωρίς να χρειάζεται reload.
  */
 
 // --- 🍪 ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
@@ -25,11 +26,10 @@ function getCookie(name) {
     return null;
 }
 
-// --- 🚀 SMART PRELOAD (Εξαφανίζει τα Warnings) ---
+// --- 🚀 SMART PRELOAD ---
 function setupSmartPreload() {
     const images = document.querySelectorAll(".recipe-img");
     images.forEach(img => {
-        // Προφόρτωση στο Hover (Desktop)
         img.addEventListener("mouseenter", () => {
             if (!img.dataset.preloaded) {
                 const preloader = new Image();
@@ -38,7 +38,6 @@ function setupSmartPreload() {
             }
         }, { once: true });
 
-        // Προφόρτωση στο Touch (Mobile)
         img.addEventListener("touchstart", () => {
             if (!img.dataset.preloaded) {
                 const preloader = new Image();
@@ -49,7 +48,7 @@ function setupSmartPreload() {
     });
 }
 
-// --- 🍲 MODAL LOGIC & GALLERY FIX ---
+// --- 🍲 MODAL LOGIC & RECIPE GALLERY ---
 function initializeAllModals() {
     const recipeModal = document.getElementById("recipeModal");
 
@@ -67,12 +66,10 @@ function initializeAllModals() {
                 const mImg = document.getElementById("modalImage");
                 const mDesc = document.getElementById("modalDescription");
 
-                // Ενημέρωση περιεχομένου
                 if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
                 if (mDesc) mDesc.textContent = img.dataset.description || "";
                 if (mImg) mImg.src = img.src;
 
-                // Εμφάνιση Modal
                 recipeModal.style.display = "block";
                 requestAnimationFrame(() => {
                     recipeModal.classList.add("active");
@@ -90,20 +87,22 @@ function initializeAllModals() {
         }
     }
 
-    // --- 🎡 CAROUSEL TOOLTIP TOGGLE LOGIC ---
+    // Carousel Tooltip Logic
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
     carouselCards.forEach(card => {
         card.style.cursor = "pointer";
         card.style.webkitTapHighlightColor = "transparent";
 
         card.addEventListener("click", (e) => {
+            // Αν είναι σε εξέλιξη swipe, μην ανοίξεις το tooltip
+            if (card.dataset.isSwiping === "true") return;
+
             e.stopPropagation();
             const dishId = card.getAttribute("data-dish");
             if (dishId) {
                 const tooltip = document.getElementById(`modal-${dishId}`);
                 if (tooltip) {
                     const isOpen = tooltip.getAttribute('data-open') === 'true';
-
                     if (isOpen) {
                         tooltip.style.display = "none";
                         tooltip.setAttribute('data-open', 'false');
@@ -112,10 +111,8 @@ function initializeAllModals() {
                             t.style.display = "none";
                             t.setAttribute('data-open', 'false');
                         });
-
                         tooltip.style.display = "block";
                         tooltip.setAttribute('data-open', 'true');
-                        tooltip.style.backfaceVisibility = "hidden";
                     }
                 }
             }
@@ -139,7 +136,7 @@ function initializeAllModals() {
     });
 }
 
-// --- 🎡 CAROUSEL LOGIC (Specials & Gallery) ---
+// --- 🎡 CAROUSEL LOGIC (Γενικό για τα Specials) ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
@@ -147,171 +144,153 @@ function setupCarousel(selector) {
     const track = section.querySelector(".carousel-track");
     const container = section.querySelector(".carousel-container");
     const dotsContainer = section.querySelector(".carousel-dots");
-    const cards = track ? Array.from(track.children) : [];
-
-    if (!track || cards.length === 0) return;
-
-    track.style.display = "flex";
-    track.style.flexWrap = "nowrap";
-    track.style.visibility = "hidden";
-    track.style.opacity = "0";
+    if (!track || !container) return;
 
     let currentSlide = 0;
-    let cardWidth, gap, slideDistance;
-
-    function updateDimensions() {
+    
+    function update() {
         const containerWidth = container.offsetWidth;
-        if (containerWidth < 360) {
-            cardWidth = containerWidth - 20; 
-            gap = 20;
-        } else {
-            cardWidth = 300;
-            gap = 30;
-        }
-        slideDistance = cardWidth + gap;
-        track.style.gap = `${gap}px`;
+        const cardWidth = containerWidth < 500 ? containerWidth * 0.8 : 300;
+        const gap = 20;
+        const slideDistance = cardWidth + gap;
+        
+        Array.from(track.children).forEach(card => {
+            card.style.flex = `0 0 ${cardWidth}px`;
+        });
 
-        cards.forEach(card => {
+        const maxTranslate = Math.max(0, track.scrollWidth - containerWidth);
+        let translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
+        track.style.transform = `translateX(${-translateValue}px)`;
+    }
+
+    window.addEventListener('resize', update);
+    update();
+}
+
+// --- 🖼️ GALLERY SPECIFIC LOGIC (FIXED SWIPE) ---
+function setupGallerySwipe() {
+    const section = document.querySelector(".gallery-section");
+    if (!section) return;
+
+    const track = section.querySelector(".carousel-track");
+    const container = section.querySelector(".carousel-container");
+    const dotsContainer = section.querySelector(".carousel-dots");
+    if (!track || !container) return;
+
+    // Mobile Fixes
+    container.style.touchAction = "pan-y";
+    container.style.overflow = "hidden";
+    
+    let currentSlide = 0;
+    let startX = 0, startY = 0;
+    let isDragging = false;
+    let isSwipingHorizontal = false;
+
+    function getDimensions() {
+        const containerWidth = container.getBoundingClientRect().width || container.offsetWidth;
+        const cardWidth = containerWidth < 600 ? containerWidth * 0.85 : 300;
+        const gap = containerWidth < 600 ? 15 : 30;
+        return { containerWidth, cardWidth, gap, slideDistance: cardWidth + gap };
+    }
+
+    function updateGallery() {
+        const { containerWidth, cardWidth, gap, slideDistance } = getDimensions();
+        if (containerWidth === 0) return;
+
+        Array.from(track.children).forEach(card => {
             card.style.flex = `0 0 ${cardWidth}px`;
             card.style.width = `${cardWidth}px`;
-            const img = card.querySelector("img");
-            if (img) {
-                img.style.width = "100%";
-                img.style.height = "160px";
-                img.style.objectFit = "cover";
-            }
         });
+
+        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
+        let translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
+        track.style.transition = "none";
+        track.style.transform = `translateX(${-translateValue}px)`;
+        
+        renderDots();
     }
 
-    function getMaxTranslate() {
-        return Math.max(0, track.scrollWidth - container.offsetWidth);
-    }
+    function moveGallery(index) {
+        const { slideDistance } = getDimensions();
+        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
+        const maxIndex = Math.ceil(maxTranslate / slideDistance);
 
-    function getTotalSteps() {
-        const maxT = getMaxTranslate();
-        if (maxT <= 0) return 0;
-        return Math.ceil(maxT / slideDistance);
-    }
-
-    function moveToSlide(index) {
-        const maxSteps = getTotalSteps();
-        const maxTranslate = getMaxTranslate();
-
-        if (index < 0) currentSlide = 0;
-        else if (index > maxSteps) currentSlide = maxSteps;
-        else currentSlide = index;
-
+        if (index < 0) index = 0;
+        if (index > maxIndex) index = maxIndex;
+        
+        currentSlide = index;
         let translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
 
-        track.style.transition = 'transform 0.5s ease-out';
+        track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
         track.style.transform = `translateX(${-translateValue}px)`;
-
-        updateDots();
+        
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
     }
 
-    function createDots() {
+    function renderDots() {
         if (!dotsContainer) return;
         dotsContainer.innerHTML = '';
-        const totalSteps = getTotalSteps();
-        if (totalSteps === 0) return;
+        const { slideDistance } = getDimensions();
+        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
+        const count = Math.ceil(maxTranslate / slideDistance) + 1;
 
-        for (let i = 0; i <= totalSteps; i++) {
+        if (count <= 1) return;
+
+        for (let i = 0; i < count; i++) {
             const dot = document.createElement('span');
-            dot.classList.add('dot');
-            if (i === currentSlide) dot.classList.add('active');
-
-            dot.addEventListener('click', (e) => {
-                e.stopPropagation();
-                moveToSlide(i);
-            });
+            dot.className = `dot ${i === currentSlide ? 'active' : ''}`;
+            dot.onclick = () => moveGallery(i);
             dotsContainer.appendChild(dot);
         }
     }
 
-    function updateDots() {
-        if (!dotsContainer) return;
-        const dots = dotsContainer.querySelectorAll('.dot');
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentSlide);
-        });
-    }
-
-    let startX = 0;
-    let startY = 0;
-    let isMoving = false;
-
+    // Swipe Events
     container.addEventListener('touchstart', (e) => {
-        if (!e.touches || e.touches.length === 0) return;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
-        isMoving = true;
+        isDragging = true;
+        isSwipingHorizontal = false;
+        Array.from(track.children).forEach(c => c.dataset.isSwiping = "false");
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const dx = startX - e.touches[0].clientX;
+        const dy = startY - e.touches[0].clientY;
+        if (Math.abs(dx) > Math.abs(dy)) {
+            isSwipingHorizontal = true;
+            if (Math.abs(dx) > 10) {
+                Array.from(track.children).forEach(c => c.dataset.isSwiping = "true");
+            }
+        }
     }, { passive: true });
 
     container.addEventListener('touchend', (e) => {
-        if (!isMoving || !e.changedTouches || e.changedTouches.length === 0) {
-            isMoving = false;
-            return;
+        if (!isDragging || !isSwipingHorizontal) { isDragging = false; return; }
+        const dx = startX - e.changedTouches[0].clientX;
+        if (Math.abs(dx) > 50) {
+            dx > 0 ? moveGallery(currentSlide + 1) : moveGallery(currentSlide - 1);
         }
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        const diffX = startX - endX;
-        const diffY = startY - endY;
-
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-            const totalSteps = getTotalSteps();
-            if (totalSteps > 0) {
-                 if (diffX > 0) moveToSlide(currentSlide + 1);
-                 else moveToSlide(currentSlide - 1);
-            }
-        }
-        isMoving = false;
+        isDragging = false;
     }, { passive: true });
 
-    function revealCarousel() {
-        updateDimensions();
-        createDots();
-        moveToSlide(currentSlide);
-        requestAnimationFrame(() => {
-            track.style.visibility = "visible";
-            track.style.opacity = "1";
-            track.style.transition = "opacity 0.4s ease";
-        });
-    }
-
-    const allImages = track.querySelectorAll("img");
-    let loadedCount = 0;
-    if (allImages.length === 0) revealCarousel();
-    else {
-        allImages.forEach(img => {
-            if (img.complete) {
-                loadedCount++;
-                if (loadedCount === allImages.length) revealCarousel();
-            } else {
-                img.addEventListener('load', () => {
-                    loadedCount++;
-                    if (loadedCount === allImages.length) revealCarousel();
-                });
-            }
-        });
-    }
-
-    window.addEventListener('resize', () => {
-        updateDimensions();
-        createDots(); 
-        moveToSlide(currentSlide);
-    });
-
-    window.addEventListener('load', revealCarousel);
+    // Fix for first load
+    const observer = new ResizeObserver(() => updateGallery());
+    observer.observe(container);
+    
+    updateGallery();
+    setTimeout(updateGallery, 500); // Double-check after images load
 }
 
 function initializeCarouselLogic() {
     setupCarousel(".todays-specials");
-    setupCarousel(".gallery-section"); 
+    setupGallerySwipe(); 
 }
 
-// --- 🔐 LOGIN & AUTH LOGIC ---
+// --- 🔐 LOGIN & DOM READY ---
 document.addEventListener("DOMContentLoaded", () => {
-    setupSmartPreload(); // Ενεργοποίηση έξυπνης προφόρτωσης
+    setupSmartPreload();
     initializeCarouselLogic();
     initializeAllModals();
 
@@ -352,17 +331,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginCloseBtn) {
         loginCloseBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            e.stopPropagation();
             closeLoginPopup();
         });
     }
 
     if (overlay) {
-        overlay.onclick = (e) => {
-            if (e.target === overlay) {
-                closeLoginPopup();
-            }
-        };
+        overlay.onclick = (e) => { if (e.target === overlay) closeLoginPopup(); };
     }
 
     if (loginForm) {
@@ -370,13 +344,11 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const val = loginForm.querySelector("input").value;
             const token = "auth_" + Math.random().toString(36).substr(2);
-            
             localStorage.setItem("userToken", token);
             localStorage.setItem("savedUser", val);
             setCookie("savedUser", val, 30);
             setCookie("userToken", token, 30);
             setCookie("hideLogin", "true", 30);
-            
             closeLoginPopup();
         });
     }
