@@ -474,7 +474,7 @@ body {
 
 .modal-content h2 {
     color: var(--color-primary);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
     /* Αντί για 60px σταθερά, βάζουμε ένα μικρό ποσοστό για ασφάλεια */
     padding: 0 5%; 
