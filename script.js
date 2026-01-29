@@ -1,10 +1,6 @@
 /**
- * Kitchen Grid - Ultra Fast & Clean Version
- * --------------------------------
- * 1. Smart Preloading: Φορτώνει την εικόνα στο hover/touch.
- * 2. Instant Modal: Εμφάνιση περιεχομένου χωρίς "πήδημα".
- * 3. Stable Logic: Login, Modals, Cookies.
- * 4. Gallery Fix: Διορθώθηκε το Swipe χωρίς να χρειάζεται reload.
+ * Kitchen Grid - Ultimate Version (No Reload Bug & Modal Swipe)
+ * -----------------------------------------------------------
  */
 
 // --- 🍪 ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
@@ -48,27 +44,29 @@ function setupSmartPreload() {
     });
 }
 
-// --- 🍲 MODAL LOGIC & RECIPE GALLERY ---
+// --- 🍲 MODAL LOGIC ΜΕ SWIPE SUPPORT ---
 function initializeAllModals() {
     const recipeModal = document.getElementById("recipeModal");
+    const mImg = document.getElementById("modalImage");
+    
+    // Συλλογή όλων των εικόνων της Gallery για εναλλαγή μέσα στο Modal
+    const galleryImages = Array.from(document.querySelectorAll(".gallery-section .recipe-img"));
+    let currentIndex = 0;
 
-    if (recipeModal) {
-        const recipeImages = document.querySelectorAll(".recipe-img");
-        recipeImages.forEach(img => {
+    if (recipeModal && galleryImages.length > 0) {
+        galleryImages.forEach((img, index) => {
             img.style.cursor = "pointer";
             img.style.webkitTapHighlightColor = "transparent";
 
             img.addEventListener("click", (e) => {
+                // Αν ο χρήστης κάνει swipe στο grid, μην ανοίξεις το modal
+                if (img.parentElement.dataset.isSwiping === "true") return;
+                
                 e.preventDefault();
                 e.stopPropagation();
 
-                const mTitle = document.getElementById("modalTitle");
-                const mImg = document.getElementById("modalImage");
-                const mDesc = document.getElementById("modalDescription");
-
-                if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
-                if (mDesc) mDesc.textContent = img.dataset.description || "";
-                if (mImg) mImg.src = img.src;
+                currentIndex = index;
+                updateModalContent(galleryImages[currentIndex]);
 
                 recipeModal.style.display = "block";
                 requestAnimationFrame(() => {
@@ -76,6 +74,34 @@ function initializeAllModals() {
                 });
             });
         });
+
+        function updateModalContent(imgEl) {
+            const mTitle = document.getElementById("modalTitle");
+            const mDesc = document.getElementById("modalDescription");
+            if (mTitle) mTitle.textContent = imgEl.dataset.title || imgEl.alt;
+            if (mDesc) mDesc.textContent = imgEl.dataset.description || "";
+            if (mImg) mImg.src = imgEl.src;
+        }
+
+        // --- 📱 SWIPE LOGIC ΜΕΣΑ ΣΤΟ MODAL ---
+        let modalStartX = 0;
+        recipeModal.addEventListener('touchstart', (e) => {
+            modalStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        recipeModal.addEventListener('touchend', (e) => {
+            const modalEndX = e.changedTouches[0].clientX;
+            const diff = modalStartX - modalEndX;
+
+            if (Math.abs(diff) > 50) { // Threshold για αλλαγή
+                if (diff > 0) { // Swipe αριστερά -> Επόμενη
+                    currentIndex = (currentIndex + 1) % galleryImages.length;
+                } else { // Swipe δεξιά -> Προηγούμενη
+                    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+                }
+                updateModalContent(galleryImages[currentIndex]);
+            }
+        }, { passive: true });
 
         const recipeCloseBtn = document.getElementById("recipeClose");
         if (recipeCloseBtn) {
@@ -87,30 +113,22 @@ function initializeAllModals() {
         }
     }
 
-    // Carousel Tooltip Logic
+    // Carousel Tooltip Logic (Specials)
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
     carouselCards.forEach(card => {
-        card.style.cursor = "pointer";
-        card.style.webkitTapHighlightColor = "transparent";
-
         card.addEventListener("click", (e) => {
-            // Αν είναι σε εξέλιξη swipe, μην ανοίξεις το tooltip
             if (card.dataset.isSwiping === "true") return;
-
             e.stopPropagation();
             const dishId = card.getAttribute("data-dish");
             if (dishId) {
                 const tooltip = document.getElementById(`modal-${dishId}`);
                 if (tooltip) {
                     const isOpen = tooltip.getAttribute('data-open') === 'true';
-                    if (isOpen) {
-                        tooltip.style.display = "none";
-                        tooltip.setAttribute('data-open', 'false');
-                    } else {
-                        document.querySelectorAll('[id^="modal-"]').forEach(t => {
-                            t.style.display = "none";
-                            t.setAttribute('data-open', 'false');
-                        });
+                    document.querySelectorAll('[id^="modal-"]').forEach(t => {
+                        t.style.display = "none";
+                        t.setAttribute('data-open', 'false');
+                    });
+                    if (!isOpen) {
                         tooltip.style.display = "block";
                         tooltip.setAttribute('data-open', 'true');
                     }
@@ -124,9 +142,6 @@ function initializeAllModals() {
             recipeModal.classList.remove("active");
             setTimeout(() => recipeModal.style.display = "none", 300);
         }
-        if (e.target.classList.contains('modal')) {
-            e.target.style.display = "none";
-        }
         if (!e.target.closest('.carousel-card') && !e.target.closest('[data-dish]')) {
             document.querySelectorAll('[id^="modal-"]').forEach(t => {
                 t.style.display = "none";
@@ -136,66 +151,47 @@ function initializeAllModals() {
     });
 }
 
-// --- 🎡 CAROUSEL LOGIC (Γενικό για τα Specials) ---
+// --- 🎡 CAROUSEL LOGIC (Specials) ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
-
     const track = section.querySelector(".carousel-track");
     const container = section.querySelector(".carousel-container");
-    const dotsContainer = section.querySelector(".carousel-dots");
     if (!track || !container) return;
 
     let currentSlide = 0;
-    
     function update() {
         const containerWidth = container.offsetWidth;
         const cardWidth = containerWidth < 500 ? containerWidth * 0.8 : 300;
         const gap = 20;
         const slideDistance = cardWidth + gap;
-        
-        Array.from(track.children).forEach(card => {
-            card.style.flex = `0 0 ${cardWidth}px`;
-        });
-
-        const maxTranslate = Math.max(0, track.scrollWidth - containerWidth);
-        let translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
-        track.style.transform = `translateX(${-translateValue}px)`;
+        Array.from(track.children).forEach(card => card.style.flex = `0 0 ${cardWidth}px`);
+        const maxT = Math.max(0, track.scrollWidth - containerWidth);
+        track.style.transform = `translateX(${-Math.min(currentSlide * slideDistance, maxT)}px)`;
     }
-
     window.addEventListener('resize', update);
     update();
 }
 
-// --- 🖼️ GALLERY SPECIFIC LOGIC (FIXED SWIPE) ---
+// --- 🖼️ GALLERY SPECIFIC LOGIC (FIXED SWIPE & NO-RELOAD) ---
 function setupGallerySwipe() {
     const section = document.querySelector(".gallery-section");
     if (!section) return;
-
     const track = section.querySelector(".carousel-track");
     const container = section.querySelector(".carousel-container");
     const dotsContainer = section.querySelector(".carousel-dots");
     if (!track || !container) return;
 
-    // Mobile Fixes
     container.style.touchAction = "pan-y";
-    container.style.overflow = "hidden";
-    
     let currentSlide = 0;
-    let startX = 0, startY = 0;
-    let isDragging = false;
-    let isSwipingHorizontal = false;
-
-    function getDimensions() {
-        const containerWidth = container.getBoundingClientRect().width || container.offsetWidth;
-        const cardWidth = containerWidth < 600 ? containerWidth * 0.85 : 300;
-        const gap = containerWidth < 600 ? 15 : 30;
-        return { containerWidth, cardWidth, gap, slideDistance: cardWidth + gap };
-    }
+    let startX = 0;
 
     function updateGallery() {
-        const { containerWidth, cardWidth, gap, slideDistance } = getDimensions();
+        const containerWidth = container.getBoundingClientRect().width || container.offsetWidth;
         if (containerWidth === 0) return;
+        const cardWidth = containerWidth < 600 ? containerWidth * 0.85 : 300;
+        const gap = containerWidth < 600 ? 15 : 30;
+        const slideDistance = cardWidth + gap;
 
         Array.from(track.children).forEach(card => {
             card.style.flex = `0 0 ${cardWidth}px`;
@@ -203,84 +199,59 @@ function setupGallerySwipe() {
         });
 
         const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
-        let translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
         track.style.transition = "none";
-        track.style.transform = `translateX(${-translateValue}px)`;
+        track.style.transform = `translateX(${-Math.min(currentSlide * slideDistance, maxTranslate)}px)`;
         
-        renderDots();
+        // Render Dots
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            const count = Math.ceil(maxTranslate / slideDistance) + 1;
+            if (count > 1) {
+                for (let i = 0; i < count; i++) {
+                    const dot = document.createElement('span');
+                    dot.className = `dot ${i === currentSlide ? 'active' : ''}`;
+                    dot.onclick = () => moveGallery(i);
+                    dotsContainer.appendChild(dot);
+                }
+            }
+        }
     }
 
     function moveGallery(index) {
-        const { slideDistance } = getDimensions();
-        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
+        const containerWidth = container.offsetWidth;
+        const cardWidth = containerWidth < 600 ? containerWidth * 0.85 : 300;
+        const slideDistance = cardWidth + (containerWidth < 600 ? 15 : 30);
+        const maxTranslate = Math.max(0, track.scrollWidth - containerWidth);
         const maxIndex = Math.ceil(maxTranslate / slideDistance);
 
         if (index < 0) index = 0;
         if (index > maxIndex) index = maxIndex;
-        
         currentSlide = index;
-        let translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
 
-        track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-        track.style.transform = `translateX(${-translateValue}px)`;
+        track.style.transition = 'transform 0.4s ease-out';
+        track.style.transform = `translateX(${-Math.min(currentSlide * slideDistance, maxTranslate)}px)`;
         
         const dots = dotsContainer.querySelectorAll('.dot');
         dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
     }
 
-    function renderDots() {
-        if (!dotsContainer) return;
-        dotsContainer.innerHTML = '';
-        const { slideDistance } = getDimensions();
-        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
-        const count = Math.ceil(maxTranslate / slideDistance) + 1;
-
-        if (count <= 1) return;
-
-        for (let i = 0; i < count; i++) {
-            const dot = document.createElement('span');
-            dot.className = `dot ${i === currentSlide ? 'active' : ''}`;
-            dot.onclick = () => moveGallery(i);
-            dotsContainer.appendChild(dot);
-        }
-    }
-
-    // Swipe Events
-    container.addEventListener('touchstart', (e) => {
+    // Touch Events για το Grid
+    container.addEventListener('touchstart', e => {
         startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isDragging = true;
-        isSwipingHorizontal = false;
         Array.from(track.children).forEach(c => c.dataset.isSwiping = "false");
-    }, { passive: true });
+    }, {passive: true});
 
-    container.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const dx = startX - e.touches[0].clientX;
-        const dy = startY - e.touches[0].clientY;
-        if (Math.abs(dx) > Math.abs(dy)) {
-            isSwipingHorizontal = true;
-            if (Math.abs(dx) > 10) {
-                Array.from(track.children).forEach(c => c.dataset.isSwiping = "true");
-            }
-        }
-    }, { passive: true });
-
-    container.addEventListener('touchend', (e) => {
-        if (!isDragging || !isSwipingHorizontal) { isDragging = false; return; }
+    container.addEventListener('touchend', e => {
         const dx = startX - e.changedTouches[0].clientX;
         if (Math.abs(dx) > 50) {
+            Array.from(track.children).forEach(c => c.dataset.isSwiping = "true");
             dx > 0 ? moveGallery(currentSlide + 1) : moveGallery(currentSlide - 1);
         }
-        isDragging = false;
-    }, { passive: true });
+    }, {passive: true});
 
-    // Fix for first load
     const observer = new ResizeObserver(() => updateGallery());
     observer.observe(container);
-    
     updateGallery();
-    setTimeout(updateGallery, 500); // Double-check after images load
 }
 
 function initializeCarouselLogic() {
@@ -288,68 +259,44 @@ function initializeCarouselLogic() {
     setupGallerySwipe(); 
 }
 
-// --- 🔐 LOGIN & DOM READY ---
+// --- 🔐 LOGIN & INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
     setupSmartPreload();
     initializeCarouselLogic();
     initializeAllModals();
 
+    // Login Logic
     const overlay = document.getElementById("loginOverlay");
     const popup = document.getElementById("loginPopup");
     const loginForm = document.getElementById("loginForm");
-    const loginCloseBtn = document.getElementById("loginClose");
-
+    
     const hasToken = localStorage.getItem("userToken") || getCookie("userToken");
     const hideLogin = getCookie("hideLogin");
-    const savedUser = localStorage.getItem("savedUser") || getCookie("savedUser");
 
-    if (loginForm && savedUser) {
-        const input = loginForm.querySelector("input");
-        if (input) input.value = savedUser;
-    }
-
-    if (!hideLogin && !hasToken) {
-        if (overlay && popup) {
-            setTimeout(() => {
-                overlay.style.display = "block";
-                popup.style.display = "block";
-                popup.setAttribute("aria-hidden", "false"); 
-                const firstInput = popup.querySelector("input");
-                if (firstInput) firstInput.focus();
-            }, 4000);
-        }
-    }
-
-    const closeLoginPopup = () => {
-        if (overlay && popup) {
-            overlay.style.display = "none";
-            popup.style.display = "none";
-            popup.setAttribute("aria-hidden", "true");
-        }
-    };
-
-    if (loginCloseBtn) {
-        loginCloseBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            closeLoginPopup();
-        });
-    }
-
-    if (overlay) {
-        overlay.onclick = (e) => { if (e.target === overlay) closeLoginPopup(); };
+    if (!hideLogin && !hasToken && overlay && popup) {
+        setTimeout(() => {
+            overlay.style.display = "block";
+            popup.style.display = "block";
+        }, 4000);
     }
 
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const val = loginForm.querySelector("input").value;
-            const token = "auth_" + Math.random().toString(36).substr(2);
-            localStorage.setItem("userToken", token);
-            localStorage.setItem("savedUser", val);
-            setCookie("savedUser", val, 30);
-            setCookie("userToken", token, 30);
+            setCookie("userToken", "auth_" + Date.now(), 30);
             setCookie("hideLogin", "true", 30);
-            closeLoginPopup();
+            localStorage.setItem("savedUser", val);
+            overlay.style.display = "none";
+            popup.style.display = "none";
         });
+    }
+
+    const loginClose = document.getElementById("loginClose");
+    if (loginClose) {
+        loginClose.onclick = () => {
+            overlay.style.display = "none";
+            popup.style.display = "none";
+        };
     }
 });
