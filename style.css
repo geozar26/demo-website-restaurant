@@ -1248,7 +1248,37 @@ html {
     .row .image img {
         max-height: 250px; 
     }
-  
+  .modal-content h2 {
+        /* 1. ΘΕΣΗ & ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΟ "X" */
+        margin-top: -10px !important; 
+        margin-bottom: 18px !important;
+        padding: 0 30px; /* Ασφαλής απόσταση από το κουμπί κλεισίματος */
+        min-height: 2.5rem; /* Εξασφαλίζει χώρο ακόμα και για 2 γραμμές */
+        
+        /* 2. ΜΕΓΕΘΟΣ ΚΕΙΜΕΝΟΥ (Λίγο μεγαλύτερο όπως ζήτησες) */
+        font-size: 1.55rem; 
+        line-height: 1.1;
+        font-weight: 700;
+        
+        /* 3. Η ΜΑΓΕΙΑ ΓΙΑ ΝΑ ΜΗΝ ΣΠΑΝΕ ΟΙ ΛΕΞΕΙΣ */
+        text-wrap: balance; /* Μοιράζει τις λέξεις επαγγελματικά */
+        word-break: normal;
+        overflow-wrap: break-word;
+        white-space: normal;
+        
+        display: block;
+        text-align: center;
+        width: 100%;
+        color: var(--color-primary);
+    }
+
+    /* Διασφάλιση ότι το κουμπί X δεν θα "πατάει" ποτέ το κείμενο */
+    #recipeClose, .close-btn {
+        top: 5px;
+        right: 10px;
+        font-size: 24px; /* Ελαφρώς μικρότερο X για να δώσει χώρο στο κείμενο */
+    }
+}
 }
 
 @media (max-width: 630px) {
