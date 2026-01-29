@@ -473,16 +473,33 @@ body {
 }
 
 .modal-content h2 {
-    color: var(--color-primary);
-    margin-bottom: 10px;
-    text-align: center;
-    /* Αντί για 60px σταθερά, βάζουμε ένα μικρό ποσοστό για ασφάλεια */
-    padding: 0 5%; 
-    /* Εξασφαλίζουμε ότι το κείμενο μπορεί να αλλάζει γραμμή αν χρειαστεί */
-    word-wrap: break-word;
+    /* 1. ΘΕΣΗ: Το κλειδί για να ανέβει ψηλά */
+    margin-top: -15px !important; /* Αρνητικό margin για να "τραβήξουμε" τον τίτλο προς τα πάνω */
+    margin-bottom: 15px !important;
+    
+    /* 2. ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΟ "X": Χρησιμοποιούμε padding στα πλάγια */
+    padding: 0 40px; /* Αυξάνουμε το πλάγιο padding για να μην ακουμπάει ΠΟΤΕ το κλείσιμο */
+    
+    /* 3. ΕΜΦΑΝΙΣΗ & ΜΕΓΕΘΟΣ */
+    font-size: 1.6rem; /* Λίγο μεγαλύτερο όπως ζήτησες */
+    line-height: 1.1;
+    font-weight: 700;
+    min-height: auto; /* Το αφήνουμε auto για να μην πιάνει έξτρα χώρο */
+    
+    /* 4. ΠΡΟΣΤΑΣΙΑ ΚΕΙΜΕΝΟΥ */
+    text-wrap: balance;
+    word-break: normal;
     overflow-wrap: break-word;
-    font-size: 1.6rem;
-    font-weight: 600;
+    
+    display: block;
+    text-align: center;
+    width: 100%;
+    color: var(--color-primary);
+}
+
+/* Διασφάλιση ότι το Modal container αφήνει τον τίτλο να ανέβει */
+.modal-content {
+    padding-top: 30px !important; /* Μειώνουμε το εσωτερικό κενό του modal στην κορυφή */
 }
 
 .modal-content img {
