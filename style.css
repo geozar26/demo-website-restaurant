@@ -1250,8 +1250,8 @@ html {
     }
   .modal-content h2 {
         /* 1. ΘΕΣΗ & ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΟ "X" */
-        margin-top: -10px !important; 
-        margin-bottom: 18px !important;
+        margin-top: -10px; 
+       
         padding: 0 30px; /* Ασφαλής απόσταση από το κουμπί κλεισίματος */
         min-height: 2.5rem; /* Εξασφαλίζει χώρο ακόμα και για 2 γραμμές */
         
