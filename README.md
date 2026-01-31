@@ -2,6 +2,8 @@
 
 Main Page Preview: Παρουσίαση της κεντρικής σελίδας σε πλήρη ανάλυση (Desktop View).
 
+https://drive.google.com/file/d/1gsGsxchFzy5cRN43CEbso_ae0-quRDPa/view?usp=sharing
+
 https://drive.google.com/file/d/1JIVVfmigExLtAQDV6ddt5HTC4lkxW3uf/view?usp=sharing
 
 
