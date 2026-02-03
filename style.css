@@ -92,6 +92,10 @@ body {
     display: none;
 }
 
+.nav-footer {
+    display: none;
+}
+
 /* --- Hero Section --- */
 
 .hero {
