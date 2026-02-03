@@ -1077,15 +1077,13 @@ html {
 }
 
 @media (max-width: 768px) {
-  
-    .menu-icon {
+   .menu-icon {
         display: block;
         z-index: 1005;
         cursor: pointer;
     }
 
     .menu-overlay {
-        /* Το επαναφέρουμε στη ροή μόνο για κινητά */
         display: block; 
         position: fixed;
         top: 0;
@@ -1095,14 +1093,11 @@ html {
         background: rgba(0,0,0,0.5);
         backdrop-filter: blur(4px);
         z-index: 999;
-
-        /* Κρυφό αλλά έτοιμο για transition */
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.5s ease-in-out, visibility 0.5s;
     }
 
-    /* Όταν ανοίγει το μενού */
     #menu-toggle:checked ~ .menu-overlay {
         opacity: 1;
         visibility: visible;
@@ -1112,40 +1107,110 @@ html {
         display: flex;
         position: fixed;
         top: 0;
-        right: -100%; /* Κλειστό */
+        right: -100%;
         height: 100vh;
-        width: 70%;
+        width: 75%;
         max-width: 300px;
         background: var(--color-light);
         z-index: 1000;
         transition: right 0.5s ease-in-out; 
-        
         flex-direction: column;
         align-items: flex-start;
-        justify-content: flex-start;
-        padding: 80px 0 20px 30px;
-        gap: 10px;
+        /* Αλλαγή εδώ για να μην κολλάει πάνω */
+        justify-content: flex-start; 
+        padding: 60px 20px 40px 30px; 
         margin: 0;
+        overflow-y: auto; /* Για να μπορείς να σκρολάρεις αν το μενού είναι μεγάλο */
     }
 
     #menu-toggle:checked ~ .nav-links {
-        right: 0; /* Ανοιχτό */
+        right: 0;
     }
 
-    /* Άνοιγμα Overlay */
-    #menu-toggle:checked ~ .menu-overlay {
-        opacity: 1;
-        visibility: visible;
-    }
-
+    /* Links - Επαναφορά εμφάνισης */
     .nav-links a {
+        display: block;
         width: 100%;
         font-size: 20px;
         text-align: left;
-        padding: 10px 0;
+        padding: 12px 0;
         border-bottom: 1px solid rgba(0,0,0,0.05);
+        text-decoration: none;
+        color: #333;
     }
 
+
+/* 1. FOOTER CONTAINER - Ρύθμιση για το σύνολο */
+.nav-links .nav-footer {
+    display: flex;
+    flex-direction: column;
+    /* Μικρή απόσταση από το πάνω μενού (Επικοινωνία) */
+    margin-top: -10px; 
+    padding-top: 15px; /* Εδώ ελέγχεις την απόσταση των Social από τα πάνω */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* 2. SOCIAL ICONS - Απόσταση από το κουμπί */
+.nav-links .nav-footer .social-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 35px; /* Κρατάμε το κενό πριν το κουμπί */
+}
+
+.nav-links .nav-footer .social-row a {
+    width: auto;
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    font-size: 1.6rem;
+    color: #333;
+}
+
+/* 3. ΤΟ ΚΟΥΜΠΙ - Απόσταση από τα στοιχεία επικοινωνίας */
+.nav-links .nav-footer .order-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    width: fit-content;
+    min-width: 190px;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    border: none;
+    margin-bottom: 30px; /* Κρατάμε το κενό πριν τη διεύθυνση */
+    transition: transform 0.2s ease;
+}
+
+/* 4. ΣΤΟΙΧΕΙΑ ΕΠΙΚΟΙΝΩΝΙΑΣ */
+.nav-links .nav-footer .contact-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-links .nav-footer .contact-box p, 
+.nav-links .nav-footer .contact-box a {
+    font-size: 0.95rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin: 0;
+    font-weight: 500;
+}
+/*
+/* Εικονίδια μέσα στο contact box */
+.nav-links .nav-footer .contact-box i {
+    font-size: 1.1rem;
+    color: #555;
+}
 
     /* === 2. Container & About Section (.row) === */
     .container {
@@ -1265,10 +1330,30 @@ html {
     .row .image img {
         max-height: 250px; 
     }
-  .modal-content h2 {
+
+  /* === ΤΕΛΙΚΟ FIX ΓΙΑ ΤΟ MODAL: ΤΙΤΛΟΣ ΠΙΟ ΠΑΝΩ & ΚΟΥΜΠΙ Χ === */
+    .modal-content {
+        position: relative;
+        padding-top: 35px; /* Μειωμένο κενό στην κορυφή για να ανέβουν όλα */
+        padding-bottom: 20px;
+    }
+
+    #recipeClose, .close-btn {
+        position: absolute;
+        top: 8px;    /* Το Χ λίγο πιο κοντά στην άκρη */
+        right: 12px; 
+        font-size: 26px;
+        z-index: 1010;
+        line-height: 1;
+        cursor: pointer;
+        color: #333; /* Σκούρο χρώμα για να φαίνεται καθαρά */
+    }
+
+   /* === ΕΠΑΓΓΕΛΜΑΤΙΚΟ FIX ΓΙΑ ΤΟΥΣ ΤΙΤΛΟΥΣ (ΟΧΙ ΣΠΑΣΙΜΟ ΛΕΞΕΩΝ) === */
+ .modal-content h2 {
         /* 1. ΘΕΣΗ & ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΟ "X" */
-        margin-top: 30px; 
-       
+        margin-top: -10px ; 
+        margin-bottom: 18px;
         padding: 0 30px; /* Ασφαλής απόσταση από το κουμπί κλεισίματος */
         min-height: 2.5rem; /* Εξασφαλίζει χώρο ακόμα και για 2 γραμμές */
         
@@ -1276,9 +1361,7 @@ html {
         font-size: 1.55rem; 
         line-height: 1.1;
         font-weight: 700;
-        
-        /* 3. Η ΜΑΓΕΙΑ ΓΙΑ ΝΑ ΜΗΝ ΣΠΑΝΕ ΟΙ ΛΕΞΕΙΣ */
-        text-wrap: balance; /* Μοιράζει τις λέξεις επαγγελματικά */
+        text-wrap: balance; 
         word-break: normal;
         overflow-wrap: break-word;
         white-space: normal;
@@ -1294,9 +1377,7 @@ html {
         top: 5px;
         right: 10px;
         font-size: 24px; /* Ελαφρώς μικρότερο X για να δώσει χώρο στο κείμενο */
-    }
-}
-}
+    }}
 
 @media (max-width: 630px) {
     .item img {
