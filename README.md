@@ -9,8 +9,4 @@ https://drive.google.com/file/d/1JIVVfmigExLtAQDV6ddt5HTC4lkxW3uf/view?usp=shari
 
 Mobile & Tablet View: Παρουσίαση της εμπειρίας χρήστη σε μικρότερες οθόνες (Mobile-first design).
 
-https://drive.google.com/file/d/1u1LNYkvwXxX9fXeync1PcyiQuBakM9EX/view?usp=sharing
-
-
-https://drive.google.com/file/d/1Q3YVG69ix3aRkmIWTwlIm4OvmCaNexks/view?usp=sharing
 
