@@ -1,6 +1,3 @@
-
-
-
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -36,12 +33,28 @@ function initializeAllModals() {
                 const mImg = document.getElementById("modalImage");
                 const mDesc = document.getElementById("modalDescription");
 
-                if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
-                if (mImg) mImg.src = img.src;
-                if (mDesc) mDesc.textContent = img.dataset.description || "";
+                // --- IMAGE LOADER OPTIMIZATION ---
+                // Δημιουργούμε ένα εικονικό image object για να προ-φορτώσουμε την εικόνα
+                const tempImg = new Image();
+                tempImg.src = img.src;
 
-                recipeModal.style.display = "block";
-                setTimeout(() => recipeModal.classList.add("active"), 10);
+                // Μόλις η εικόνα είναι έτοιμη στη μνήμη (cache), τότε ξεκινάμε το animation
+                tempImg.onload = () => {
+                    if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
+                    if (mImg) mImg.src = tempImg.src;
+                    if (mDesc) mDesc.textContent = img.dataset.description || "";
+
+                    // --- 60FPS ANIMATION LOGIC ---
+                    recipeModal.style.display = "flex"; // Χρήση flex για καλύτερο κεντράρισμα
+                    
+                    // Double RequestAnimationFrame για να σιγουρέψουμε ότι ο browser 
+                    // έχει καταλάβει το display: flex πριν ξεκινήσει το transition
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            recipeModal.classList.add("active");
+                        });
+                    });
+                };
             });
         });
 
@@ -50,12 +63,12 @@ function initializeAllModals() {
             recipeCloseBtn.onclick = (e) => {
                 e.stopPropagation();
                 recipeModal.classList.remove("active");
+                // Περιμένουμε να τελειώσει το transition (300ms) πριν το κάνουμε display: none
                 setTimeout(() => recipeModal.style.display = "none", 300);
             };
         }
     }
 
-    
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
     carouselCards.forEach(card => {
         card.style.cursor = "pointer";
@@ -67,21 +80,17 @@ function initializeAllModals() {
             if (dishId) {
                 const tooltip = document.getElementById(`modal-${dishId}`);
                 if (tooltip) {
-                    // Χρησιμοποιούμε το attribute 'data-open' ως σίγουρο διακόπτη
                     const isOpen = tooltip.getAttribute('data-open') === 'true';
 
                     if (isOpen) {
-                        // Αν είναι ανοιχτό, το κλείνουμε
                         tooltip.style.display = "none";
                         tooltip.setAttribute('data-open', 'false');
                     } else {
-                        // Κλείνουμε πρώτα όλα τα άλλα tooltips
                         document.querySelectorAll('[id^="modal-"]').forEach(t => {
                             t.style.display = "none";
                             t.setAttribute('data-open', 'false');
                         });
 
-                        // Ανοίγουμε το σωστό tooltip
                         tooltip.style.display = "block";
                         tooltip.setAttribute('data-open', 'true');
                         tooltip.style.backfaceVisibility = "hidden";
@@ -99,7 +108,6 @@ function initializeAllModals() {
         if (e.target.classList.contains('modal')) {
             e.target.style.display = "none";
         }
-        // Κλείσιμο tooltips αν πατήσεις οπουδήποτε αλλού στην οθόνη
         if (!e.target.closest('.carousel-card') && !e.target.closest('[data-dish]')) {
             document.querySelectorAll('[id^="modal-"]').forEach(t => {
                 t.style.display = "none";
@@ -108,7 +116,6 @@ function initializeAllModals() {
         }
     });
 }
-
 
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
@@ -279,7 +286,6 @@ function initializeCarouselLogic() {
     setupCarousel(".gallery-section"); 
 }
 
-// --- 🔐 LOGIN & AUTH LOGIC (FIXED) ---
 document.addEventListener("DOMContentLoaded", () => {
     initializeCarouselLogic();
     initializeAllModals();
