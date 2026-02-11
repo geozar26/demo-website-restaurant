@@ -1,3 +1,13 @@
+/**
+ * Kitchen Grid - Τελικός Κώδικας JS (Stable Fix & Aria Warning Solved)
+ * --------------------------------
+ * 1. ΑΦΑΙΡΕΣΗ του global override που χάλαγε το Glightbox/Gallery.
+ * 2. Βελτιωμένο Swipe Logic.
+ * 3. Login, Modals, Cookies λειτουργούν κανονικά.
+ * 4. FIX: Προσθήκη διαχείρισης aria-hidden για να μην βγάζει warning στο focus.
+ */
+
+// --- 🍪 ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -16,59 +26,9 @@ function getCookie(name) {
     return null;
 }
 
-function initializeAllModals() {
-    const recipeModal = document.getElementById("recipeModal");
 
-    if (recipeModal) {
-        const recipeImages = document.querySelectorAll(".recipe-img");
-        recipeImages.forEach(img => {
-            img.style.cursor = "pointer";
-            img.style.webkitTapHighlightColor = "transparent";
 
-            img.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const mTitle = document.getElementById("modalTitle");
-                const mImg = document.getElementById("modalImage");
-                const mDesc = document.getElementById("modalDescription");
-
-                // --- IMAGE LOADER OPTIMIZATION ---
-                // Δημιουργούμε ένα εικονικό image object για να προ-φορτώσουμε την εικόνα
-                const tempImg = new Image();
-                tempImg.src = img.src;
-
-                // Μόλις η εικόνα είναι έτοιμη στη μνήμη (cache), τότε ξεκινάμε το animation
-                tempImg.onload = () => {
-                    if (mTitle) mTitle.textContent = img.dataset.title || img.alt;
-                    if (mImg) mImg.src = tempImg.src;
-                    if (mDesc) mDesc.textContent = img.dataset.description || "";
-
-                    // --- 60FPS ANIMATION LOGIC ---
-                    recipeModal.style.display = "flex"; // Χρήση flex για καλύτερο κεντράρισμα
-                    
-                    // Double RequestAnimationFrame για να σιγουρέψουμε ότι ο browser 
-                    // έχει καταλάβει το display: flex πριν ξεκινήσει το transition
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            recipeModal.classList.add("active");
-                        });
-                    });
-                };
-            });
-        });
-
-        const recipeCloseBtn = document.getElementById("recipeClose");
-        if (recipeCloseBtn) {
-            recipeCloseBtn.onclick = (e) => {
-                e.stopPropagation();
-                recipeModal.classList.remove("active");
-                // Περιμένουμε να τελειώσει το transition (300ms) πριν το κάνουμε display: none
-                setTimeout(() => recipeModal.style.display = "none", 300);
-            };
-        }
-    }
-
+    // --- 🎡 CAROUSEL TOOLTIP TOGGLE LOGIC (FIXED) ---
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
     carouselCards.forEach(card => {
         card.style.cursor = "pointer";
@@ -80,17 +40,21 @@ function initializeAllModals() {
             if (dishId) {
                 const tooltip = document.getElementById(`modal-${dishId}`);
                 if (tooltip) {
+                    // Χρησιμοποιούμε το attribute 'data-open' ως σίγουρο διακόπτη
                     const isOpen = tooltip.getAttribute('data-open') === 'true';
 
                     if (isOpen) {
+                        // Αν είναι ανοιχτό, το κλείνουμε
                         tooltip.style.display = "none";
                         tooltip.setAttribute('data-open', 'false');
                     } else {
+                        // Κλείνουμε πρώτα όλα τα άλλα tooltips
                         document.querySelectorAll('[id^="modal-"]').forEach(t => {
                             t.style.display = "none";
                             t.setAttribute('data-open', 'false');
                         });
 
+                        // Ανοίγουμε το σωστό tooltip
                         tooltip.style.display = "block";
                         tooltip.setAttribute('data-open', 'true');
                         tooltip.style.backfaceVisibility = "hidden";
@@ -108,6 +72,7 @@ function initializeAllModals() {
         if (e.target.classList.contains('modal')) {
             e.target.style.display = "none";
         }
+        // Κλείσιμο tooltips αν πατήσεις οπουδήποτε αλλού στην οθόνη
         if (!e.target.closest('.carousel-card') && !e.target.closest('[data-dish]')) {
             document.querySelectorAll('[id^="modal-"]').forEach(t => {
                 t.style.display = "none";
@@ -115,8 +80,9 @@ function initializeAllModals() {
             });
         }
     });
-}
 
+
+// --- 🎡 CAROUSEL LOGIC (Specials & Gallery) ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
@@ -286,6 +252,7 @@ function initializeCarouselLogic() {
     setupCarousel(".gallery-section"); 
 }
 
+// --- 🔐 LOGIN & AUTH LOGIC (FIXED) ---
 document.addEventListener("DOMContentLoaded", () => {
     initializeCarouselLogic();
     initializeAllModals();
@@ -355,4 +322,101 @@ document.addEventListener("DOMContentLoaded", () => {
             closeLoginPopup();
         });
     }
+});
+
+// --- 🛠️ MODAL & ORDER LOGIC (ΔΙΟΡΘΩΜΕΝΟ) ---
+function initializeAllModals() {
+    const modal = document.getElementById("recipeModal");
+    const closeBtn = document.getElementById("recipeClose");
+    const toggleOrderBtn = document.getElementById("toggleOrderBtn");
+    const orderPanel = document.getElementById("orderPanel");
+    const qtyValue = document.getElementById("qtyValue");
+    const qtyPlus = document.getElementById("qtyPlus");
+    const qtyMinus = document.getElementById("qtyMinus");
+    
+    let currentQty = 1;
+
+    // Λειτουργία ανοίγματος Modal
+    const openRecipeModal = (imgElement) => {
+        if (!modal) return;
+        
+        document.getElementById("modalTitle").innerText = imgElement.dataset.title || "";
+        document.getElementById("modalImage").src = imgElement.src;
+        document.getElementById("modalDescription").innerText = imgElement.dataset.description || "";
+        
+        modal.style.display = "flex";
+        setTimeout(() => modal.classList.add("active"), 10);
+        
+        currentQty = 1;
+        if(qtyValue) qtyValue.innerText = currentQty;
+        if(orderPanel) orderPanel.classList.remove("active");
+    };
+
+    // --- ❌ ΕΔΩ ΑΦΑΙΡΕΘΗΚΕ ΤΟ ΚΛΙΚ ΣΤΙΣ ΕΙΚΟΝΕΣ (.recipe-img) ---
+
+    // 2. Κλικ στα info-btn (ΤΟ ΜΟΝΑΔΙΚΟ ΣΗΜΕΙΟ ΕΙΣΟΔΟΥ ΠΛΕΟΝ)
+    document.querySelectorAll('.info-btn').forEach(btn => {
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            const parent = btn.closest('.item');
+            const img = parent.querySelector('.recipe-img');
+            if (img) openRecipeModal(img);
+        };
+    });
+
+    // 3. Κλείσιμο Modal
+    if (closeBtn) {
+        closeBtn.onclick = () => {
+            modal.classList.remove("active");
+            setTimeout(() => modal.style.display = "none", 300);
+        };
+    }
+
+    // 4. Toggle Order Panel (Το καλάθι - Tooltip effect)
+    if (toggleOrderBtn && orderPanel) {
+        toggleOrderBtn.onclick = (e) => {
+            e.stopPropagation();
+            orderPanel.classList.toggle("active");
+        };
+    }
+
+    // 5. Διαχείριση Ποσότητας
+    if (qtyPlus) {
+        qtyPlus.onclick = () => {
+            currentQty++;
+            qtyValue.innerText = currentQty;
+        };
+    }
+    if (qtyMinus) {
+        qtyMinus.onclick = () => {
+            if (currentQty > 1) {
+                currentQty--;
+                qtyValue.innerText = currentQty;
+            }
+        };
+    }
+}
+  
+document.addEventListener("DOMContentLoaded", function() {
+    const elementsToReveal = document.querySelectorAll('.item, .testimonial-card, .gallery .box');
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        // Παίρνουμε μόνο τα στοιχεία που μπαίνουν τώρα στην οθόνη
+        const visibleEntries = entries.filter(entry => entry.isIntersecting);
+        
+        visibleEntries.forEach((entry, index) => {
+            // Αυξάνουμε το delay (0.2s) για να είναι ΠΟΛΥ φανερή η διαδοχή
+            entry.target.style.transitionDelay = `${index * 0.2}s`;
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.15, // Περιμένουμε να φανεί λίγο παραπάνω το στοιχείο
+        rootMargin: "0px 0px -50px 0px"
+    });
+
+    elementsToReveal.forEach(el => {
+        el.classList.add('reveal');
+        revealObserver.observe(el);
+    });
 });
