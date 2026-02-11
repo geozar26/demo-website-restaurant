@@ -397,26 +397,5 @@ function initializeAllModals() {
     }
 }
   
-document.addEventListener("DOMContentLoaded", function() {
-    const elementsToReveal = document.querySelectorAll('.item, .testimonial-card, .gallery .box');
 
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        // Παίρνουμε μόνο τα στοιχεία που μπαίνουν τώρα στην οθόνη
-        const visibleEntries = entries.filter(entry => entry.isIntersecting);
-        
-        visibleEntries.forEach((entry, index) => {
-            // Αυξάνουμε το delay (0.2s) για να είναι ΠΟΛΥ φανερή η διαδοχή
-            entry.target.style.transitionDelay = `${index * 0.2}s`;
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-        });
-    }, {
-        threshold: 0.15, // Περιμένουμε να φανεί λίγο παραπάνω το στοιχείο
-        rootMargin: "0px 0px -50px 0px"
-    });
 
-    elementsToReveal.forEach(el => {
-        el.classList.add('reveal');
-        revealObserver.observe(el);
-    });
-});
