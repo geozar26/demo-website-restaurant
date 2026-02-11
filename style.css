@@ -106,7 +106,7 @@ body {
     text-align: center;
     padding: 120px 20px;
     
-    /* 🔴 ΕΔΩ ΕΙΝΑΙ Η ΑΛΛΑΓΗ ΓΙΑ ΚΕΝΤΡΑΡΙΣΜΑ */
+
     display: flex; /* Ενεργοποιεί το Flexbox */
     flex-direction: column; /* Τα στοιχεία στοιβάζονται κάθετα */
     justify-content: center; /* Κεντράρισμα κάθετα (στο κέντρο) */
@@ -428,52 +428,34 @@ body {
     transform: scale(1.2);
 }
 
-.modal {
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    overflow: auto;
-    
-    /* 🔴 ΔΙΟΡΘΩΣΗ: Αρχικά κρυφό με ομαλή μετάβαση */
-    visibility: hidden; 
-    opacity: 0;
-    transition: opacity 0.2s ease, visibility 0.2s ease; 
-    /* ❌ ΑΦΑΙΡΕΘΗΚΕ: display: none; */
-}
-
-/* 🔴 ΝΕΑ ΚΛΑΣΗ: Εμφάνιση του modal. ΠΡΕΠΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ ΣΤΟ JS. */
-.modal.active {
-    visibility: visible;
-    opacity: 1;
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
+    position: relative; /* Για να μπει το καλάθι από πάνω */
+    text-align: center;
 }
 
 
 .modal-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Το "κλειδί" για το απόλυτο κέντρο */
-    
+    position: relative;        /* ΟΧΙ fixed εδώ */
     background-color: var(--color-light);
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    padding: 20px;
-    width: 90%;            /* 90% του πλάτους της οθόνης για να έχει πάντα ίσο περιθώριο */
-    max-width: 450px;      /* Δεν θα ανοίξει παραπάνω από αυτό σε μεγάλες οθόνες */
+    padding: 25px 20px;
+    width: 90%;
+    max-width: 450px;
     
-    max-height: 85vh; 
-    overflow-y: auto; 
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    /* 🔴 ΑΥΤΟ ΔΙΟΡΘΩΝΕΙ ΤΟ ΠΕΡΙΘΩΡΙΟ */
+    margin: 20px auto;         /* Μικρό περιθώριο από πάνω, auto στα πλάγια */
+    
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     z-index: 1001;
-    
-    margin: 0;             /* ΕΞΑΦΑΝΙΖΟΥΜΕ τα margins που χαλάνε το κεντράρισμα */
 }
 
 .modal-content h2 {
