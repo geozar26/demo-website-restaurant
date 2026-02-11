@@ -539,6 +539,166 @@ body {
     color: var( --color-primary);
 }
 
+.info-btn {
+    position: absolute;
+    bottom: 55px; /* Τοποθέτηση πάνω από το h4 */
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--color-primary);
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+/* Hover εφέ για καλύτερο UX */
+.info-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+
+/* Το κύριο πλαίσιο του Item (βεβαιώσου ότι έχει relative) */
+.item {
+    position: relative; /* Αυτό επιτρέπει στο κουμπί να κλειδώσει πάνω του */
+    padding-top: 50px;  /* Δίνουμε χώρο πάνω για να χωρέσει το κουμπί αν χρειάζεται */
+}
+
+/* Το Wrapper του FAB */
+.fab-wrapper {
+    position: absolute;
+    top: 10px;    /* Απόσταση από την κορυφή του item */
+    left: 10px;   /* Απόσταση από αριστερά */
+    z-index: 20;  /* Πάνω από όλα */
+}
+
+/* Το κουμπί (FAB) */
+.modal-fab {
+    background: #3498db;
+    color: white;
+    border: none;
+    width: 45px;  /* Λίγο πιο μικρό για να χωράει όμορφα στον κενό χώρο */
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Το Πάνελ - Το ρυθμίζουμε να ανοίγει προς τα δεξιά αφού είναι τέρμα αριστερά */
+.order-panel {
+    position: absolute;
+    top: 55px;   /* Κάτω από το κουμπί */
+    left: 0;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 15px;
+    width: 200px;
+    display: none;
+    z-index: 100;
+    transform-origin: top left;
+}
+
+.order-panel.active {
+    display: block;
+    animation: tooltipShow 0.3s ease-out;
+}
+
+/* Typography & Buttons μέσα στο πάνελ */
+.panel-title {
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.qty-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f4f7f9;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.qty-btn {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.add-to-cart-confirm {
+    width: 100%;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Animation */
+@keyframes tooltipShow {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+/* Γενική κλάση reveal για όλα */
+.reveal {
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+/* Ειδικό, πιο "φανερό" animation για τις κάρτες των Testimonials */
+.testimonial-card.reveal {
+    transform: translateY(50px) rotateX(-15deg) scale(0.9);
+    transform-origin: top; /* Το animation ξεκινά από το πάνω μέρος */
+    transition: 
+        opacity 0.9s ease-out, 
+        transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Όταν ενεργοποιηθεί */
+.testimonial-card.reveal.active {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+}
+
+/* Για τα υπόλοιπα στοιχεία (items, gallery) κράτα ένα πιο απλό slide */
+.item.reveal, .gallery .box.reveal {
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.item.reveal.active, .gallery .box.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
