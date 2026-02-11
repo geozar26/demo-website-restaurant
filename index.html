@@ -167,8 +167,7 @@
     <div class="carousel-dots"></div>
 </section>
 
-    
-    <section class="items">
+  <section class="items">
         <h2>Προτάσεις Γεύσεων</h2>
         <div class="item">
             <picture>
@@ -178,8 +177,12 @@
                     data-description="Πλούσια ιταλική πίτσα με τραγανή ζύμη, λιωμένο τυρί και φρέσκια σάλτσα ντομάτας. Ιδανική για μια νόστιμη βραδιά."
                     loading="lazy"> 
             </picture>
+          <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+            <i class="fa-solid fa-utensils"></i>
+        </button>
             <h4>Πίτσα</h4>
         </div>
+
         <div class="item">
             <picture>
                 <source srcset="images/gyros.webp" type="image/webp">
@@ -188,6 +191,9 @@
                     data-description="Παραδοσιακός ελληνικός γύρος με ζουμερό κρέας, πατάτες τηγανητές, ντομάτα, κρεμμύδι και τζατζίκι."
                     loading="lazy">
             </picture>
+            <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Πίτα Γύρο</h4>
         </div>
         <div class="item">
@@ -198,6 +204,9 @@
                     data-description="Κλασική σπαγγέτι με πλούσια σάλτσα από φρέσκο μοσχαρίσιο κιμά, αρωματισμένη με βότανα. Σερβίρεται με τριμμένη παρμεζάνα.""
                     loading="lazy">
             </picture>
+             <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Σπαγγέτι</h4>
         </div>
         <div class="item">
@@ -208,6 +217,9 @@
                     data-description="Ζουμερό και αρωματικό κοτόπουλο με τραγανή πέτσα, ψημένο στον φούρνο μαζί με πατάτες. Ιδανικό για οικογενειακό τραπέζι."
                     loading="lazy">
             </picture>
+             <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Κοτόπουλο</h4>
         </div>
         <div class="item">
@@ -218,6 +230,9 @@
                     data-description="Κρέπες με πλούσια πραλίνα σοκολάτας και φρέσκες φέτες μπανάνας, γαρνιρισμένες με φύλλα μέντας."
                     loading="lazy">
             </picture>
+             <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Κρέπα</h4>
         </div>
         <div class="item">
@@ -228,6 +243,9 @@
                     data-description="Παραδοσιακά σουτζουκάκια με πλούσια σάλτσα ντομάτας και μπαχαρικά."
                     loading="lazy">
             </picture>
+             <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Σουτζουκάκια</h4>
         </div>
         <div class="item">
@@ -238,28 +256,60 @@
                     data-description="Μπιφτέκια μοσχαρίσιου κιμά ψημένα στη σχάρα με λαχανικά."
                     loading="lazy">
             </picture>
+             <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Μπιφτέκια</h4>
         </div>
         <div class="item">
             <picture>
                 <source srcset="images/solomon.webp" type="image/webp">
-                <img class="recipe-img" src="images/solomon.jpg" alt="Σολομός"
+                <img class="recipe-img" src="images/solomon.jpg" alt="Προφιτερόλ"
                     data-title=""
                     data-description="ψητός σολομός με σάλτσα λεμονιού συνοδευόμενος απο φρέσκο άνιθο"
                     loading="lazy">
             </picture>
+             <button class="info-btn" aria-label="Περισσότερες πληροφορίες">
+        <i class="fa-solid fa-utensils"></i>
+    </button>
             <h4>Σολομός</h4>
         </div>
     </section>
 
-    <div id="recipeModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
-        <div class="modal-content">
-            <span id="recipeClose" class="close">&times;</span> 
-            <h2 id="modalTitle"></h2>
-            <img id="modalImage" src="" alt="Recipe Image">
-            <p id="modalDescription"></p>
+ <div id="recipeModal" class="modal">
+    <div class="modal-content">
+        
+        <span class="close" id="recipeClose">&times;</span>
+
+    <div class="fab-wrapper">
+    <button class="modal-fab" id="toggleOrderBtn">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </button>
+
+    <div class="order-panel" id="orderPanel">
+        <div class="order-content">
+            <span class="panel-title">Ποσότητα</span>
+            
+            <div class="qty-container">
+                <button class="qty-btn" id="qtyMinus"><i class="fa-solid fa-minus"></i></button>
+                <span id="qtyValue">1</span>
+                <button class="qty-btn" id="qtyPlus"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+            <button class="add-to-cart-confirm">
+                ΠΡΟΣΘΗΚΗ <span class="price-hint">| 12.50€</span>
+            </button>
         </div>
     </div>
+</div>
+
+    
+        <h2 id="modalTitle"></h2>
+        <img id="modalImage" src="" alt="">
+        <p id="modalDescription"></p>
+
+    </div>
+</div>  
 
 
     <section class="testimonials-section container">
