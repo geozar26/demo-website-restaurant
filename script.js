@@ -1,13 +1,6 @@
-/**
- * Kitchen Grid - Τελικός Κώδικας JS (Stable Fix & Aria Warning Solved)
- * --------------------------------
- * 1. ΑΦΑΙΡΕΣΗ του global override που χάλαγε το Glightbox/Gallery.
- * 2. Βελτιωμένο Swipe Logic.
- * 3. Login, Modals, Cookies λειτουργούν κανονικά.
- * 4. FIX: Προσθήκη διαχείρισης aria-hidden για να μην βγάζει warning στο focus.
- */
 
-// --- 🍪 ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
+
+// ---  ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -28,7 +21,7 @@ function getCookie(name) {
 
 
 
-    // --- 🎡 CAROUSEL TOOLTIP TOGGLE LOGIC (FIXED) ---
+    // ---CAROUSEL TOOLTIP TOGGLE LOGIC (FIXED) ---
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
     carouselCards.forEach(card => {
         card.style.cursor = "pointer";
@@ -82,7 +75,7 @@ function getCookie(name) {
     });
 
 
-// --- 🎡 CAROUSEL LOGIC (Specials & Gallery) ---
+// ---  CAROUSEL LOGIC (Specials & Gallery) ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
@@ -324,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// --- 🛠️ MODAL & ORDER LOGIC (ΔΙΟΡΘΩΜΕΝΟ) ---
+// ---  MODAL & ORDER LOGIC (ΔΙΟΡΘΩΜΕΝΟ) ---
 function initializeAllModals() {
     const modal = document.getElementById("recipeModal");
     const closeBtn = document.getElementById("recipeClose");
@@ -352,7 +345,7 @@ function initializeAllModals() {
         if(orderPanel) orderPanel.classList.remove("active");
     };
 
-    // --- ❌ ΕΔΩ ΑΦΑΙΡΕΘΗΚΕ ΤΟ ΚΛΙΚ ΣΤΙΣ ΕΙΚΟΝΕΣ (.recipe-img) ---
+    // ---  ΕΔΩ ΑΦΑΙΡΕΘΗΚΕ ΤΟ ΚΛΙΚ ΣΤΙΣ ΕΙΚΟΝΕΣ (.recipe-img) ---
 
     // 2. Κλικ στα info-btn (ΤΟ ΜΟΝΑΔΙΚΟ ΣΗΜΕΙΟ ΕΙΣΟΔΟΥ ΠΛΕΟΝ)
     document.querySelectorAll('.info-btn').forEach(btn => {
