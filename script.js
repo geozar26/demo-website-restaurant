@@ -1,23 +1,4 @@
-// --- 1. COOKIE LOGIC ---
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/;SameSite=Lax";
-}
-
-function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-// --- 2. CAROUSEL ENGINE (ORIGINAL SIZE & LOGIC) ---
+// --- 1. CAROUSEL ENGINE (ORIGINAL FORMAT RESTORED) ---
 function setupCarousel(selector) {
     const section = document.querySelector(selector);
     if (!section) return;
@@ -29,24 +10,40 @@ function setupCarousel(selector) {
 
     if (!track || cards.length === 0) return;
 
+    // Αρχικές ρυθμίσεις μορφής
+    track.style.display = "flex";
+    track.style.flexWrap = "nowrap";
+    track.style.transition = "transform 0.5s ease-out";
+
     let currentSlide = 0;
     let cardWidth, gap, slideDistance;
 
     function updateDimensions() {
         const containerWidth = container.offsetWidth;
+        
+        // Ακριβείς διαστάσεις όπως τις είχες αρχικά
         if (containerWidth < 360) {
             cardWidth = containerWidth - 20; 
             gap = 20;
         } else {
-            cardWidth = 300; // Επαναφορά στο σωστό μέγεθος
+            cardWidth = 300; 
             gap = 30;
         }
+        
         slideDistance = cardWidth + gap;
         track.style.gap = gap + "px";
 
         cards.forEach(card => {
             card.style.flex = "0 0 " + cardWidth + "px";
             card.style.width = cardWidth + "px";
+            
+            // Επαναφορά μορφής εικόνας
+            const img = card.querySelector("img");
+            if (img) {
+                img.style.width = "100%";
+                img.style.height = "160px";
+                img.style.objectFit = "cover";
+            }
         });
     }
 
@@ -61,21 +58,23 @@ function setupCarousel(selector) {
 
         const translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
         track.style.transform = "translateX(" + (-translateValue) + "px)";
-        
         updateDots();
     }
 
     function createDots() {
         if (!dotsContainer) return;
         dotsContainer.innerHTML = '';
-        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
-        const totalSteps = Math.ceil(maxTranslate / slideDistance);
+        const maxT = Math.max(0, track.scrollWidth - container.offsetWidth);
+        const steps = Math.ceil(maxT / slideDistance);
 
-        for (let i = 0; i <= totalSteps; i++) {
+        for (let i = 0; i <= steps; i++) {
             const dot = document.createElement('span');
             dot.classList.add('dot');
             if (i === currentSlide) dot.classList.add('active');
-            dot.onclick = () => moveToSlide(i);
+            dot.onclick = (e) => {
+                e.stopPropagation();
+                moveToSlide(i);
+            };
             dotsContainer.appendChild(dot);
         }
     }
@@ -86,84 +85,93 @@ function setupCarousel(selector) {
         dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
     }
 
-    // Touch Support
+    // Swipe Logic
     let startX = 0;
-    container.ontouchstart = (e) => startX = e.touches[0].clientX;
-    container.ontouchend = (e) => {
+    container.addEventListener('touchstart', (e) => startX = e.touches[0].clientX, {passive: true});
+    container.addEventListener('touchend', (e) => {
         const diffX = startX - e.changedTouches[0].clientX;
         if (Math.abs(diffX) > 50) {
             if (diffX > 0) moveToSlide(currentSlide + 1);
             else moveToSlide(currentSlide - 1);
         }
-    };
+    }, {passive: true});
 
-    // Εμφάνιση Carousel
+    // Εμφάνιση
     updateDimensions();
     createDots();
-    track.style.opacity = "1";
-    track.style.visibility = "visible";
-
+    
     window.addEventListener('resize', () => {
         updateDimensions();
+        createDots();
         moveToSlide(currentSlide);
     });
 }
 
-// --- 3. GSAP ANIMATIONS (CUSTOM FOR TESTIMONIALS) ---
+// --- 2. GSAP ANIMATIONS (MODERN & SEPARATE) ---
 function initAnimations() {
     if (typeof gsap === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
 
-    // Πιάτα & Gallery: Classic Fade Up
-    gsap.from(".items .item, .gallery-container .box", {
+    // Α) ΠΙΑΤΑ & GALLERY: Εμφάνιση με ελαφρύ ανέβασμα (Classic)
+    gsap.from(".items .item, [data-dish], .gallery-container .box", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 85%"
+            start: "top 85%",
+            toggleActions: "play none none none"
         },
         opacity: 0,
-        y: 30,
-        duration: 0.6,
+        y: 40,
+        duration: 0.8,
         stagger: 0.2,
         ease: "power2.out"
     });
 
-    // Testimonials: ΔΙΑΦΟΡΕΤΙΚΟ Animation (Slide-in από δεξιά)
-    // Δεν επηρεάζει το scale/μέγεθος
+    // Β) TESTIMONIALS: Διαφορετικό Animation (Slide & Scale)
+    // Εδώ οι κάρτες μένουν στο μέγεθός τους αλλά έρχονται "γλυκά" από το πλάι
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 80%"
+            start: "top 80%",
         },
         opacity: 0,
-        x: 50,             // Έρχεται από τα πλάγια
-        duration: 1,
-        stagger: 0.3,      // Ένα-ένα stagerred
-        ease: "back.out(1.5)"
+        x: 80, 
+        duration: 1.2,
+        stagger: 0.4,
+        ease: "back.out(1.4)"
     });
 }
 
-// --- 4. INITIALIZE ---
+// --- 3. INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
     setupCarousel(".todays-specials");
     setupCarousel(".gallery-section");
     
-    // Μικρή καθυστέρηση για το GSAP ώστε να βρει τα σωστά ύψη
-    setTimeout(initAnimations, 200);
-
-    // Tooltip Logic
+    // Tooltip / Modal Logic
     document.querySelectorAll(".carousel-card, [data-dish]").forEach(card => {
         card.onclick = (e) => {
             e.stopPropagation();
             const id = card.getAttribute("data-dish");
             const tooltip = document.getElementById("modal-" + id);
             if (tooltip) {
-                const isOpen = tooltip.style.display === "block";
-                document.querySelectorAll('[id^="modal-"]').forEach(t => t.style.display = "none");
-                tooltip.style.display = isOpen ? "none" : "block";
+                const isOpen = tooltip.getAttribute('data-open') === 'true';
+                document.querySelectorAll('[id^="modal-"]').forEach(t => {
+                    t.style.display = "none";
+                    t.setAttribute('data-open', 'false');
+                });
+                if (!isOpen) {
+                    tooltip.style.display = "block";
+                    tooltip.setAttribute('data-open', 'true');
+                }
             }
         };
     });
+
+    setTimeout(initAnimations, 250);
 });
 
 window.onclick = () => {
-    document.querySelectorAll('[id^="modal-"]').forEach(t => t.style.display = "none");
+    document.querySelectorAll('[id^="modal-"]').forEach(t => {
+        t.style.display = "none";
+        t.setAttribute('data-open', 'false');
+    });
 };
