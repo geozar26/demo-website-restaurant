@@ -384,53 +384,52 @@ function initializeAllModals() {
     }
 }
 
-// --- GSAP ANIMATIONS (UNIFIED STAGGERED STYLE) ---
+// --- GSAP ANIMATIONS (STRICT SEQUENTIAL REVEAL) ---
 document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Προτάσεις Γεύσεων (Και οι δύο σειρές)
-    // Χρησιμοποιούμε το stagger για να εμφανίζονται μία-μία με τη σειρά
+    // 1. Προτάσεις Γεύσεων - Εμφάνιση ΜΙΑ-ΜΙΑ (Μόνο όταν φτάσεις εκεί)
     gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 90%", 
+            start: "top 80%", // Ξεκινάει όταν το section μπει καλά στην οθόνη
             toggleActions: "play none none none"
         },
         opacity: 0,
-        y: 30,
-        scale: 0.95,      // Μικρό scale όπως στη gallery
-        duration: 0.5,
-        stagger: 0.15,    // Εμφάνιση μία προς μία
+        y: 40,
+        scale: 0.9,
+        duration: 0.6,
+        stagger: 0.35,    // ΜΕΓΑΛΟ stagger για να βλέπεις τη σειρά (ένα-προς-ένα)
         ease: "power2.out"
     });
 
-    // 2. Testimonials (Με το εφέ της Gallery)
+    // 2. Testimonials - Εμφάνιση ΜΙΑ-ΜΙΑ (Με το εφέ της Gallery)
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 95%", // Πολύ γρήγορη ενεργοποίηση στο scroll
+            start: "top 85%", // Ενεργοποιείται ακριβώς όταν το χρειάζεσαι
             toggleActions: "play none none none"
         },
         opacity: 0,
-        y: 30,
-        scale: 0.95,      // Το εφέ που ζήτησες από τη gallery
-        duration: 0.5,
-        stagger: 0.2,     // Πιο έντονο σταδιακό εφέ για τις κριτικές
+        y: 40,
+        scale: 0.9,
+        duration: 0.6,
+        stagger: 0.4,     // Ακόμα μεγαλύτερο stagger για να προλαβαίνεις να διαβάζεις
         ease: "power2.out"
     });
 
-    // 3. Gallery Section (Το σημείο αναφοράς μας)
+    // 3. Gallery Section
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
             trigger: ".gallery",
-            start: "top 90%",
+            start: "top 80%",
             toggleActions: "play none none none"
         },
         opacity: 0,
         y: 30,
-        scale: 0.95,
+        scale: 0.9,
         duration: 0.5,
-        stagger: 0.15,
+        stagger: 0.2,
         ease: "power2.out"
     });
 });
