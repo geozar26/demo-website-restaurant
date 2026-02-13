@@ -384,46 +384,49 @@ function initializeAllModals() {
     }
 }
 
-// --- GSAP ANIMATIONS (FAST WAVE VERSION) ---
+// --- GSAP ANIMATIONS (FIXED: ONE BY ONE VERSION) ---
 document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Ρυθμίσεις για γρήγορη αλλά σταδιακή ροή
-    const fastFlow = {
-        opacity: 0,
-        y: 40,             // Αρκετή κίνηση για να φαίνεται το "ανέβασμα"
-        duration: 0.4,      // Πολύ γρήγορη εμφάνιση (από 0.7)
-        stagger: 0.08,     // Πυκνό σταδιακό εφέ (σχεδόν αλυσιδωτό)
-        ease: "power2.out"
-    };
-
-    // 1. Προτάσεις Γεύσεων
+    // 1. Προτάσεις Γεύσεων - Εμφάνιση ΜΙΑ ΠΡΟΣ ΜΙΑ
     gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 88%", // Ξεκινάει λίγο νωρίτερα στο scroll
+            start: "top 85%",
             toggleActions: "play none none none"
         },
-        ...fastFlow
+        opacity: 0,
+        y: 40,
+        duration: 0.5,
+        stagger: 0.2, // Αυτό εξασφαλίζει ότι θα τις βλέπεις μία-μία
+        ease: "power2.out"
     });
 
-    // 2. Testimonials (Κριτικές)
+    // 2. Testimonials - Εμφάνιση ΜΙΑ ΠΡΟΣ ΜΙΑ (Γρήγορα αλλά διακριτά)
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 88%",
+            start: "top 85%",
             toggleActions: "play none none none"
         },
-        ...fastFlow
+        opacity: 0,
+        y: 40,
+        duration: 0.5,
+        stagger: 0.25, // Λίγο παραπάνω χρόνο ενδιάμεσα για να προλαβαίνει το μάτι
+        ease: "power2.out"
     });
 
-    // 3. Gallery Images
+    // 3. Gallery Images - Εμφάνιση ΜΙΑ ΠΡΟΣ ΜΙΑ
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
             trigger: ".gallery",
-            start: "top 88%",
+            start: "top 85%",
             toggleActions: "play none none none"
         },
-        ...fastFlow
+        opacity: 0,
+        y: 30,
+        duration: 0.4,
+        stagger: 0.15, 
+        ease: "power2.out"
     });
 });
