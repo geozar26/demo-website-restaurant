@@ -384,49 +384,49 @@ function initializeAllModals() {
     }
 }
 
-// --- GSAP ANIMATIONS (FIXED: ONE BY ONE VERSION) ---
+// --- GSAP ANIMATIONS (OPTIMIZED TRIGGER & SEQUENCE) ---
 document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Προτάσεις Γεύσεων - Εμφάνιση ΜΙΑ ΠΡΟΣ ΜΙΑ
+    // 1. Προτάσεις Γεύσεων - Σταδιακά και σταθερά
     gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 85%",
+            start: "top 90%", // Ξεκινάει νωρίς
             toggleActions: "play none none none"
         },
         opacity: 0,
         y: 40,
         duration: 0.5,
-        stagger: 0.2, // Αυτό εξασφαλίζει ότι θα τις βλέπεις μία-μία
+        stagger: 0.18, // Μία προς μία
         ease: "power2.out"
     });
 
-    // 2. Testimonials - Εμφάνιση ΜΙΑ ΠΡΟΣ ΜΙΑ (Γρήγορα αλλά διακριτά)
+    // 2. Testimonials - ΕΔΩ ΕΙΝΑΙ Η ΔΙΟΡΘΩΣΗ (Ενεργοποιείται πιο γρήγορα)
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 85%",
+            start: "top 95%", // Η πιο γρήγορη ενεργοποίηση: ξεκινάει αμέσως μόλις φανεί το section
             toggleActions: "play none none none"
         },
         opacity: 0,
         y: 40,
         duration: 0.5,
-        stagger: 0.25, // Λίγο παραπάνω χρόνο ενδιάμεσα για να προλαβαίνει το μάτι
+        stagger: 0.22, // Καθαρό "ένα προς ένα" εφέ
         ease: "power2.out"
     });
 
-    // 3. Gallery Images - Εμφάνιση ΜΙΑ ΠΡΟΣ ΜΙΑ
+    // 3. Gallery Images - Σταδιακά και σβέλτα
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
             trigger: ".gallery",
-            start: "top 85%",
+            start: "top 92%",
             toggleActions: "play none none none"
         },
         opacity: 0,
         y: 30,
         duration: 0.4,
-        stagger: 0.15, 
+        stagger: 0.15,
         ease: "power2.out"
     });
 });
