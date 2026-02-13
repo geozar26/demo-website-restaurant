@@ -1147,13 +1147,13 @@ html {
     transition: border-bottom-color 0.3s, box-shadow 0.3s; /* Προσθήκη box-shadow στο transition */
 }
 
-/* ΝΕΟ: Focus State για μοντέρνα αίσθηση */
+
 .main-contact-form input:focus {
     border-bottom-color: var(--color-primary); 
     box-shadow: 0 1px 0 0 var(--color-primary); /* Διακριτική σκιά για βάθος */
 }
 
-    /* 🟢 ΑΛΛΑΓΗ 2: Απλοποιούμε τη φόρμα για να κεντραριστεί με margin: auto */
+  
     .contact-form-container.form-center {
         /* Ακυρώνουμε το absolute positioning και το transform */
         position: static ;
