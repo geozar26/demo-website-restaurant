@@ -1,284 +1,169 @@
-// --- 1. TYPES & INTERFACES ---
-interface Window {
-    gsap: any;
-    ScrollTrigger: any;
-}
-
-// Δηλώσεις για εξωτερικές βιβλιοθήκες
-declare var gsap: any;
-declare var ScrollTrigger: any;
-
-// --- 2. COOKIE LOGIC ---
-function setCookie(name: string, value: string, days: number): void {
+// --- 1. COOKIE LOGIC ---
+function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires: string = "expires=" + date.toUTCString();
-    document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/;SameSite=Lax";
 }
 
-function getCookie(name: string): string | null {
-    const nameEQ: string = name + "=";
-    const ca: string[] = document.cookie.split(';');
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
-        let c: string = ca[i];
+        let c = ca[i];
         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
 
-// --- 3. CAROUSEL TOOLTIP LOGIC ---
-function initTooltips(): void {
-    const carouselCards = document.querySelectorAll<HTMLElement>(".carousel-card, [data-dish]");
-    carouselCards.forEach((card: HTMLElement) => {
-        card.style.cursor = "pointer";
-        card.style.webkitTapHighlightColor = "transparent";
-
-        card.addEventListener("click", (e: MouseEvent) => {
-            e.stopPropagation();
-            const dishId: string | null = card.getAttribute("data-dish");
-            if (!dishId) return;
-            
-            const tooltip = document.getElementById(`modal-${dishId}`);
-            if (tooltip) {
-                const isOpen: boolean = tooltip.getAttribute('data-open') === 'true';
-                if (isOpen) {
-                    tooltip.style.display = "none";
-                    tooltip.setAttribute('data-open', 'false');
-                } else {
-                    document.querySelectorAll<HTMLElement>('[id^="modal-"]').forEach((t: HTMLElement) => {
-                        t.style.display = "none";
-                        t.setAttribute('data-open', 'false');
-                    });
-                    tooltip.style.display = "block";
-                    tooltip.setAttribute('data-open', 'true');
-                    tooltip.style.backfaceVisibility = "hidden";
-                }
-            }
-        });
-    });
-}
-
-// --- 4. CAROUSEL ENGINE ---
-function setupCarousel(selector: string): void {
-    const section = document.querySelector(selector) as HTMLElement;
+// --- 2. CAROUSEL ENGINE (ORIGINAL SIZE & LOGIC) ---
+function setupCarousel(selector) {
+    const section = document.querySelector(selector);
     if (!section) return;
 
-    const track = section.querySelector(".carousel-track") as HTMLElement;
-    const container = section.querySelector(".carousel-container") as HTMLElement;
-    const dotsContainer = section.querySelector(".carousel-dots") as HTMLElement;
-    const cards = track ? Array.from(track.children) as HTMLElement[] : [];
+    const track = section.querySelector(".carousel-track");
+    const container = section.querySelector(".carousel-container");
+    const dotsContainer = section.querySelector(".carousel-dots");
+    const cards = track ? Array.from(track.children) : [];
 
-    if (!track || cards.length === 0 || !container) return;
+    if (!track || cards.length === 0) return;
 
-    track.style.display = "flex";
-    track.style.flexWrap = "nowrap";
-    track.style.visibility = "hidden";
-    track.style.opacity = "0";
+    let currentSlide = 0;
+    let cardWidth, gap, slideDistance;
 
-    let currentSlide: number = 0;
-    let cardWidth: number, gap: number, slideDistance: number;
-
-    function updateDimensions(): void {
-        const containerWidth: number = container.offsetWidth;
+    function updateDimensions() {
+        const containerWidth = container.offsetWidth;
         if (containerWidth < 360) {
             cardWidth = containerWidth - 20; 
             gap = 20;
         } else {
-            cardWidth = 300;
+            cardWidth = 300; // Επαναφορά στο σωστό μέγεθος
             gap = 30;
         }
         slideDistance = cardWidth + gap;
-        track.style.gap = `${gap}px`;
+        track.style.gap = gap + "px";
 
-        cards.forEach((card: HTMLElement) => {
-            card.style.flex = `0 0 ${cardWidth}px`;
-            card.style.width = `${cardWidth}px`;
-            const img = card.querySelector("img") as HTMLImageElement;
-            if (img) {
-                img.style.width = "100%";
-                img.style.height = "160px";
-                img.style.objectFit = "cover";
-            }
+        cards.forEach(card => {
+            card.style.flex = "0 0 " + cardWidth + "px";
+            card.style.width = cardWidth + "px";
         });
     }
 
-    function getMaxTranslate(): number {
-        return Math.max(0, track.scrollWidth - container.offsetWidth);
-    }
-
-    function getTotalSteps(): number {
-        const maxT: number = getMaxTranslate();
-        return maxT <= 0 ? 0 : Math.ceil(maxT / slideDistance);
-    }
-
-    function moveToSlide(index: number): void {
-        const maxSteps: number = getTotalSteps();
-        const maxTranslate: number = getMaxTranslate();
+    function moveToSlide(index) {
+        updateDimensions();
+        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
+        const totalSteps = Math.ceil(maxTranslate / slideDistance);
 
         if (index < 0) currentSlide = 0;
-        else if (index > maxSteps) currentSlide = maxSteps;
+        else if (index > totalSteps) currentSlide = totalSteps;
         else currentSlide = index;
 
-        const translateValue: number = Math.min(currentSlide * slideDistance, maxTranslate);
-        track.style.transition = 'transform 0.5s ease-out';
-        track.style.transform = `translateX(${-translateValue}px)`;
-
+        const translateValue = Math.min(currentSlide * slideDistance, maxTranslate);
+        track.style.transform = "translateX(" + (-translateValue) + "px)";
+        
         updateDots();
     }
 
-    function createDots(): void {
+    function createDots() {
         if (!dotsContainer) return;
         dotsContainer.innerHTML = '';
-        const totalSteps: number = getTotalSteps();
-        if (totalSteps === 0) return;
+        const maxTranslate = Math.max(0, track.scrollWidth - container.offsetWidth);
+        const totalSteps = Math.ceil(maxTranslate / slideDistance);
 
         for (let i = 0; i <= totalSteps; i++) {
             const dot = document.createElement('span');
             dot.classList.add('dot');
             if (i === currentSlide) dot.classList.add('active');
-            dot.addEventListener('click', (e: MouseEvent) => {
-                e.stopPropagation();
-                moveToSlide(i);
-            });
+            dot.onclick = () => moveToSlide(i);
             dotsContainer.appendChild(dot);
         }
     }
 
-    function updateDots(): void {
+    function updateDots() {
         if (!dotsContainer) return;
         const dots = dotsContainer.querySelectorAll('.dot');
-        dots.forEach((dot: Element, index: number) => {
-            (dot as HTMLElement).classList.toggle('active', index === currentSlide);
-        });
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
     }
 
-    // Touch Logic
-    let startX: number = 0, startY: number = 0, isMoving: boolean = false;
-    container.addEventListener('touchstart', (e: TouchEvent) => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isMoving = true;
-    }, { passive: true });
-
-    container.addEventListener('touchend', (e: TouchEvent) => {
-        if (!isMoving) return;
-        const diffX: number = startX - e.changedTouches[0].clientX;
-        const diffY: number = startY - e.changedTouches[0].clientY;
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+    // Touch Support
+    let startX = 0;
+    container.ontouchstart = (e) => startX = e.touches[0].clientX;
+    container.ontouchend = (e) => {
+        const diffX = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diffX) > 50) {
             if (diffX > 0) moveToSlide(currentSlide + 1);
             else moveToSlide(currentSlide - 1);
         }
-        isMoving = false;
-    }, { passive: true });
+    };
 
-    function revealCarousel(): void {
-        updateDimensions();
-        createDots();
-        moveToSlide(currentSlide);
-        requestAnimationFrame(() => {
-            track.style.visibility = "visible";
-            track.style.opacity = "1";
-            track.style.transition = "opacity 0.4s ease";
-        });
-    }
-
-    const allImages = track.querySelectorAll("img");
-    let loadedCount: number = 0;
-    if (allImages.length === 0) revealCarousel();
-    else {
-        allImages.forEach((img: HTMLImageElement) => {
-            if (img.complete) {
-                loadedCount++;
-                if (loadedCount === allImages.length) revealCarousel();
-            } else {
-                img.addEventListener('load', () => {
-                    loadedCount++;
-                    if (loadedCount === allImages.length) revealCarousel();
-                });
-            }
-        });
-    }
+    // Εμφάνιση Carousel
+    updateDimensions();
+    createDots();
+    track.style.opacity = "1";
+    track.style.visibility = "visible";
 
     window.addEventListener('resize', () => {
         updateDimensions();
-        createDots();
         moveToSlide(currentSlide);
     });
 }
 
-// --- GSAP ANIMATIONS (PROFESSIONAL & INDEPENDENT) ---
+// --- 3. GSAP ANIMATIONS (CUSTOM FOR TESTIMONIALS) ---
+function initAnimations() {
+    if (typeof gsap === "undefined") return;
 
-function initGSAP(): void {
-    // Έλεγχος αν οι βιβλιοθήκες είναι έτοιμες
-    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
-        console.warn("GSAP or ScrollTrigger not loaded yet.");
-        return;
-    }
+    // Πιάτα & Gallery: Classic Fade Up
+    gsap.from(".items .item, .gallery-container .box", {
+        scrollTrigger: {
+            trigger: ".items",
+            start: "top 85%"
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.2,
+        ease: "power2.out"
+    });
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    // 1. ΠΙΑΤΑ (Fade Up - Professional Clean)
-    if (document.querySelector(".items")) {
-        gsap.from(".items .item", {
-            scrollTrigger: {
-                trigger: ".items",
-                start: "top 85%",
-                toggleActions: "play none none none"
-            },
-            opacity: 0,
-            y: 40,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power2.out"
-        });
-    }
-
-    // 2. TESTIMONIALS (Custom "Slide-In" Animation - Original Size)
-    // Εδώ ΔΕΝ βάζουμε scale, ώστε να μείνουν στο μέγεθος που θες
-    if (document.querySelector(".testimonials-section")) {
-        gsap.from(".testimonial-card", {
-            scrollTrigger: {
-                trigger: ".testimonials-section",
-                start: "top 80%",
-            },
-            opacity: 0,
-            x: -60,             // Έρχονται από αριστερά
-            duration: 1.2,
-            stagger: 0.3,       // Ένα-ένα stagerred
-            ease: "back.out(1.2)" // Εφέ κίνησης που "τερματίζει" ομαλά
-        });
-    }
-
-    // 3. GALLERY (Zoom & Reveal Animation)
-    if (document.querySelector(".gallery")) {
-        gsap.from(".gallery-container .box", {
-            scrollTrigger: {
-                trigger: ".gallery",
-                start: "top 80%",
-            },
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: "expo.out"
-        });
-    }
+    // Testimonials: ΔΙΑΦΟΡΕΤΙΚΟ Animation (Slide-in από δεξιά)
+    // Δεν επηρεάζει το scale/μέγεθος
+    gsap.from(".testimonial-card", {
+        scrollTrigger: {
+            trigger: ".testimonials-section",
+            start: "top 80%"
+        },
+        opacity: 0,
+        x: 50,             // Έρχεται από τα πλάγια
+        duration: 1,
+        stagger: 0.3,      // Ένα-ένα stagerred
+        ease: "back.out(1.5)"
+    });
 }
 
-// --- INITIALIZATION FIX ---
+// --- 4. INITIALIZE ---
 document.addEventListener("DOMContentLoaded", () => {
-    // Αρχικοποίηση Carousel
     setupCarousel(".todays-specials");
     setupCarousel(".gallery-section");
     
-    // Αναγκαστική εμφάνιση αν το CSS τα κρατάει κρυφά
-    const tracks = document.querySelectorAll<HTMLElement>(".carousel-track");
-    tracks.forEach(track => {
-        track.style.opacity = "1";
-        track.style.visibility = "visible";
-    });
+    // Μικρή καθυστέρηση για το GSAP ώστε να βρει τα σωστά ύψη
+    setTimeout(initAnimations, 200);
 
-    // Καθυστέρηση 100ms για να σιγουρευτούμε ότι το DOM είναι έτοιμο για το GSAP
-    setTimeout(initGSAP, 100);
+    // Tooltip Logic
+    document.querySelectorAll(".carousel-card, [data-dish]").forEach(card => {
+        card.onclick = (e) => {
+            e.stopPropagation();
+            const id = card.getAttribute("data-dish");
+            const tooltip = document.getElementById("modal-" + id);
+            if (tooltip) {
+                const isOpen = tooltip.style.display === "block";
+                document.querySelectorAll('[id^="modal-"]').forEach(t => t.style.display = "none");
+                tooltip.style.display = isOpen ? "none" : "block";
+            }
+        };
+    });
 });
+
+window.onclick = () => {
+    document.querySelectorAll('[id^="modal-"]').forEach(t => t.style.display = "none");
+};
