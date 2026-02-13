@@ -412,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ΑΦΑΙΡΕΣΑΜΕ ΤΟ SCALE
     opacity: 0,
     y: 40, // Θα έρχονται από 40 pixels πιο κάτω
-    duration: 0.8,
+    duration: 0.3,
     stagger: 0.2,
     ease: "power2.out"
 });
@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scale: 0.9,
         opacity: 0,
         y: 30,
-        duration: 0.6,
+        duration: 0.3,
         stagger: 0.1,
         ease: "power2.out"
     });
