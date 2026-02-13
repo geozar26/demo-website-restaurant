@@ -207,45 +207,50 @@ function setupCarousel(selector: string): void {
     });
 }
 
-// --- GSAP ANIMATIONS (REFINED & CUSTOM) ---
+// --- GSAP ANIMATIONS (PROFESSIONAL & INDEPENDENT) ---
 
 function initGSAP(): void {
-    if (typeof gsap === "undefined") return;
+    // Έλεγχος αν οι βιβλιοθήκες είναι έτοιμες
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+        console.warn("GSAP or ScrollTrigger not loaded yet.");
+        return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. ANIMATION ΓΙΑ ΤΑ ΠΙΑΤΑ (Classic Fade Up)
+    // 1. ΠΙΑΤΑ (Fade Up - Professional Clean)
     if (document.querySelector(".items")) {
         gsap.from(".items .item", {
             scrollTrigger: {
                 trigger: ".items",
-                start: "top 80%",
+                start: "top 85%",
+                toggleActions: "play none none none"
             },
             opacity: 0,
-            y: 50,
+            y: 40,
             duration: 0.8,
             stagger: 0.2,
-            ease: "power3.out"
+            ease: "power2.out"
         });
     }
 
-    // 2. ANIMATION ΓΙΑ ΤΑ TESTIMONIALS (Custom Slide-In με Φυσικό Scale)
-    // Εδώ βγάζουμε το scale 0.9 για να παραμείνουν στο μέγεθος που ορίζει το CSS σου
+    // 2. TESTIMONIALS (Custom "Slide-In" Animation - Original Size)
+    // Εδώ ΔΕΝ βάζουμε scale, ώστε να μείνουν στο μέγεθος που θες
     if (document.querySelector(".testimonials-section")) {
         gsap.from(".testimonial-card", {
             scrollTrigger: {
                 trigger: ".testimonials-section",
-                start: "top 75%",
+                start: "top 80%",
             },
             opacity: 0,
-            x: -100,            // Έρχονται από αριστερά
-            rotation: -5,       // Μια μικρή κλίση που ισιώνει καθώς εμφανίζονται
-            duration: 1,
-            stagger: 0.3,       // Ένα-ένα με καθυστέρηση
-            ease: "back.out(1.7)" // Εφέ "ελατηρίου" για πιο επαγγελματικό look
+            x: -60,             // Έρχονται από αριστερά
+            duration: 1.2,
+            stagger: 0.3,       // Ένα-ένα stagerred
+            ease: "back.out(1.2)" // Εφέ κίνησης που "τερματίζει" ομαλά
         });
     }
 
-    // 3. ANIMATION ΓΙΑ ΤΟ GALLERY (Zoom-In εφέ)
+    // 3. GALLERY (Zoom & Reveal Animation)
     if (document.querySelector(".gallery")) {
         gsap.from(".gallery-container .box", {
             scrollTrigger: {
@@ -253,10 +258,27 @@ function initGSAP(): void {
                 start: "top 80%",
             },
             opacity: 0,
-            scale: 0.5,         // Ξεκινάνε από πολύ μικρά
-            duration: 0.7,
-            stagger: 0.1,
+            scale: 0.8,
+            duration: 0.6,
+            stagger: 0.15,
             ease: "expo.out"
         });
     }
 }
+
+// --- INITIALIZATION FIX ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Αρχικοποίηση Carousel
+    setupCarousel(".todays-specials");
+    setupCarousel(".gallery-section");
+    
+    // Αναγκαστική εμφάνιση αν το CSS τα κρατάει κρυφά
+    const tracks = document.querySelectorAll<HTMLElement>(".carousel-track");
+    tracks.forEach(track => {
+        track.style.opacity = "1";
+        track.style.visibility = "visible";
+    });
+
+    // Καθυστέρηση 100ms για να σιγουρευτούμε ότι το DOM είναι έτοιμο για το GSAP
+    setTimeout(initGSAP, 100);
+});
