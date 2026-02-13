@@ -407,13 +407,13 @@ document.addEventListener("DOMContentLoaded", () => {
 gsap.from(".testimonial-card", {
     scrollTrigger: {
         trigger: ".testimonials-section",
-        start: "top 88%",      // Ενεργοποιείται μόλις μπει το section
+        start: "top 70%",      // Ενεργοποιείται μόλις μπει το section
         toggleActions: "play none none none",
     },
     y: 40,                     // Έρχονται από κάτω προς τα πάνω
     opacity: 0,
     duration: 0.7,             // Σταθερή διάρκεια για ομαλότητα
-    stagger: 0.12,             // Γρήγορη διαδοχή
+    stagger: 0.9,             // Γρήγορη διαδοχή
     ease: "power2.out",        // ΟΜΑΛΟ σταμάτημα χωρίς αναπήδημα (bounce)
     clearProps: "all"          // Επαναφορά στο 100% του CSS
 });
