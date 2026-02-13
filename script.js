@@ -207,45 +207,56 @@ function setupCarousel(selector: string): void {
     });
 }
 
-// --- 5. GSAP ANIMATIONS ---
+// --- GSAP ANIMATIONS (REFINED & CUSTOM) ---
+
 function initGSAP(): void {
     if (typeof gsap === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const commonScroll = (trigger: string) => ({
-        trigger: trigger,
-        start: "top 80%",
-        toggleActions: "play none none none"
-    });
-
+    // 1. ANIMATION ΓΙΑ ΤΑ ΠΙΑΤΑ (Classic Fade Up)
     if (document.querySelector(".items")) {
         gsap.from(".items .item", {
-            scrollTrigger: commonScroll(".items"),
-            opacity: 0, y: 40, scale: 0.9, duration: 0.6, stagger: 0.35, ease: "power2.out"
+            scrollTrigger: {
+                trigger: ".items",
+                start: "top 80%",
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out"
         });
     }
-    // ... (τα υπόλοιπα animations ακολουθούν το ίδιο μοτίβο)
+
+    // 2. ANIMATION ΓΙΑ ΤΑ TESTIMONIALS (Custom Slide-In με Φυσικό Scale)
+    // Εδώ βγάζουμε το scale 0.9 για να παραμείνουν στο μέγεθος που ορίζει το CSS σου
+    if (document.querySelector(".testimonials-section")) {
+        gsap.from(".testimonial-card", {
+            scrollTrigger: {
+                trigger: ".testimonials-section",
+                start: "top 75%",
+            },
+            opacity: 0,
+            x: -100,            // Έρχονται από αριστερά
+            rotation: -5,       // Μια μικρή κλίση που ισιώνει καθώς εμφανίζονται
+            duration: 1,
+            stagger: 0.3,       // Ένα-ένα με καθυστέρηση
+            ease: "back.out(1.7)" // Εφέ "ελατηρίου" για πιο επαγγελματικό look
+        });
+    }
+
+    // 3. ANIMATION ΓΙΑ ΤΟ GALLERY (Zoom-In εφέ)
+    if (document.querySelector(".gallery")) {
+        gsap.from(".gallery-container .box", {
+            scrollTrigger: {
+                trigger: ".gallery",
+                start: "top 80%",
+            },
+            opacity: 0,
+            scale: 0.5,         // Ξεκινάνε από πολύ μικρά
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "expo.out"
+        });
+    }
 }
-
-// --- 6. INITIALIZATION ---
-document.addEventListener("DOMContentLoaded", () => {
-    initTooltips();
-    setupCarousel(".todays-specials");
-    setupCarousel(".gallery-section");
-    initGSAP();
-
-    window.addEventListener("click", (e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        const recipeModal = document.getElementById("recipeModal");
-        if (recipeModal && target === recipeModal) {
-            recipeModal.classList.remove("active");
-            setTimeout(() => recipeModal.style.display = "none", 300);
-        }
-        if (!target.closest('.carousel-card') && !target.closest('[data-dish]')) {
-            document.querySelectorAll<HTMLElement>('[id^="modal-"]').forEach((t: HTMLElement) => {
-                t.style.display = "none";
-                t.setAttribute('data-open', 'false');
-            });
-        }
-    });
-});
