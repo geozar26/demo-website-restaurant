@@ -432,4 +432,38 @@ gsap.from(".testimonial-card", {
         ease: "power2.out"
     });
 });
+
+// 4. Footer Animation - Social Icons (Από πάνω) & Columns (Από κάτω)
+const footerTL = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".footer",
+        start: "top 90%", // Ξεκινάει λίγο πριν φανεί ολόκληρο το footer
+        toggleActions: "play none none none"
+    }
+});
+
+// Animation για τα Social Icons (Ντόμινο από πάνω)
+footerTL.from(".footer-left .social-icons a", {
+    y: -50,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: "bounce.out" // Μικρή αναπήδηση για να φαίνεται πιο "ζωντανό"
+});
+
+// Animation για τις στήλες και τα κείμενα (Ανάδυση από κάτω)
+footerTL.from(".footer-col h3, .footer-col ul li", {
+    y: 30,
+    opacity: 0,
+    duration: 0.5,
+    stagger: 0.05, // Πολύ γρήγορη διαδοχή για εφέ ροής
+    ease: "power2.out"
+}, "-=0.4"); // Ξεκινάει λίγο πριν τελειώσουν τα icons (overlap)
+
+// Animation για το copyright line στο τέλος
+footerTL.from(".footer-bottom", {
+    opacity: 0,
+    duration: 1,
+    ease: "power1.inOut"
+});
   
