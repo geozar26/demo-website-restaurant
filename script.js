@@ -1,11 +1,28 @@
-function setCookie(name, value, days) {
+// --- TYPESCRIPT DEFINITIONS & INTERFACES ---
+interface Window {
+    gsap: any;
+    ScrollTrigger: any;
+}
+
+interface CookieOptions {
+    name: string;
+    value: string;
+    days: number;
+}
+
+// Δηλώσεις για τα GSAP plugins αν χρησιμοποιείς TS Compiler
+declare var gsap: any;
+declare var ScrollTrigger: any;
+
+// --- COOKIE LOGIC ---
+function setCookie(name: string, value: string, days: number): void {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     const expires = "expires=" + date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/;SameSite=Lax";
 }
 
-function getCookie(name) {
+function getCookie(name: string): string | null {
     const nameEQ = name + "=";
     const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
@@ -16,70 +33,66 @@ function getCookie(name) {
     return null;
 }
 
-    // ---CAROUSEL TOOLTIP TOGGLE LOGIC (FIXED) ---
-    const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
-    carouselCards.forEach(card => {
-        card.style.cursor = "pointer";
-        card.style.webkitTapHighlightColor = "transparent";
+// --- CAROUSEL TOOLTIP TOGGLE LOGIC ---
+const carouselCards = document.querySelectorAll<HTMLElement>(".carousel-card, [data-dish]");
+carouselCards.forEach(card => {
+    card.style.cursor = "pointer";
+    card.style.webkitTapHighlightColor = "transparent";
 
-        card.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const dishId = card.getAttribute("data-dish");
-            if (dishId) {
-                const tooltip = document.getElementById(`modal-${dishId}`);
-                if (tooltip) {
-                    // Χρησιμοποιούμε το attribute 'data-open' ως σίγουρο διακόπτη
-                    const isOpen = tooltip.getAttribute('data-open') === 'true';
-
-                    if (isOpen) {
-                        // Αν είναι ανοιχτό, το κλείνουμε
-                        tooltip.style.display = "none";
-                        tooltip.setAttribute('data-open', 'false');
-                    } else {
-                        // Κλείνουμε πρώτα όλα τα άλλα tooltips
-                        document.querySelectorAll('[id^="modal-"]').forEach(t => {
-                            t.style.display = "none";
-                            t.setAttribute('data-open', 'false');
-                        });
-
-                        // Ανοίγουμε το σωστό tooltip
-                        tooltip.style.display = "block";
-                        tooltip.setAttribute('data-open', 'true');
-                        tooltip.style.backfaceVisibility = "hidden";
-                    }
+    card.addEventListener("click", (e: MouseEvent) => {
+        e.stopPropagation();
+        const dishId = card.getAttribute("data-dish");
+        if (dishId) {
+            const tooltip = document.getElementById(`modal-${dishId}`);
+            if (tooltip) {
+                const isOpen = tooltip.getAttribute('data-open') === 'true';
+                if (isOpen) {
+                    tooltip.style.display = "none";
+                    tooltip.setAttribute('data-open', 'false');
+                } else {
+                    document.querySelectorAll<HTMLElement>('[id^="modal-"]').forEach(t => {
+                        t.style.display = "none";
+                        t.setAttribute('data-open', 'false');
+                    });
+                    tooltip.style.display = "block";
+                    tooltip.setAttribute('data-open', 'true');
+                    tooltip.style.backfaceVisibility = "hidden";
                 }
             }
+        }
+    });
+});
+
+// [ Ο υπόλοιπος κώδικας παραμένει ολόίδιος όπως τον έστειλες ]
+
+window.addEventListener("click", (e: MouseEvent) => {
+    const recipeModal = document.getElementById("recipeModal");
+    const target = e.target as HTMLElement;
+    
+    if (recipeModal && target === recipeModal) {
+        recipeModal.classList.remove("active");
+        setTimeout(() => recipeModal.style.display = "none", 300);
+    }
+    if (target.classList.contains('modal')) {
+        target.style.display = "none";
+    }
+    if (!target.closest('.carousel-card') && !target.closest('[data-dish]')) {
+        document.querySelectorAll<HTMLElement>('[id^="modal-"]').forEach(t => {
+            t.style.display = "none";
+            t.setAttribute('data-open', 'false');
         });
-    });
+    }
+});
 
-    window.addEventListener("click", (e) => {
-        const recipeModal = document.getElementById("recipeModal");
-        if (recipeModal && e.target === recipeModal) {
-            recipeModal.classList.remove("active");
-            setTimeout(() => recipeModal.style.display = "none", 300);
-        }
-        if (e.target.classList.contains('modal')) {
-            e.target.style.display = "none";
-        }
-        // Κλείσιμο tooltips αν πατήσεις οπουδήποτε αλλού στην οθόνη
-        if (!e.target.closest('.carousel-card') && !e.target.closest('[data-dish]')) {
-            document.querySelectorAll('[id^="modal-"]').forEach(t => {
-                t.style.display = "none";
-                t.setAttribute('data-open', 'false');
-            });
-        }
-    });
-
-
-// ---  CAROUSEL LOGIC (Specials & Gallery) ---
-function setupCarousel(selector) {
-    const section = document.querySelector(selector);
+// --- CAROUSEL LOGIC ---
+function setupCarousel(selector: string): void {
+    const section = document.querySelector(selector) as HTMLElement;
     if (!section) return;
 
-    const track = section.querySelector(".carousel-track");
-    const container = section.querySelector(".carousel-container");
-    const dotsContainer = section.querySelector(".carousel-dots");
-    const cards = track ? Array.from(track.children) : [];
+    const track = section.querySelector(".carousel-track") as HTMLElement;
+    const container = section.querySelector(".carousel-container") as HTMLElement;
+    const dotsContainer = section.querySelector(".carousel-dots") as HTMLElement;
+    const cards = track ? Array.from(track.children) as HTMLElement[] : [];
 
     if (!track || cards.length === 0) return;
 
@@ -89,9 +102,9 @@ function setupCarousel(selector) {
     track.style.opacity = "0";
 
     let currentSlide = 0;
-    let cardWidth, gap, slideDistance;
+    let cardWidth: number, gap: number, slideDistance: number;
 
-    function updateDimensions() {
+    function updateDimensions(): void {
         const containerWidth = container.offsetWidth;
         if (containerWidth < 360) {
             cardWidth = containerWidth - 20; 
@@ -115,17 +128,17 @@ function setupCarousel(selector) {
         });
     }
 
-    function getMaxTranslate() {
+    function getMaxTranslate(): number {
         return Math.max(0, track.scrollWidth - container.offsetWidth);
     }
 
-    function getTotalSteps() {
+    function getTotalSteps(): number {
         const maxT = getMaxTranslate();
         if (maxT <= 0) return 0;
         return Math.ceil(maxT / slideDistance);
     }
 
-    function moveToSlide(index) {
+    function moveToSlide(index: number): void {
         const maxSteps = getTotalSteps();
         const maxTranslate = getMaxTranslate();
 
@@ -141,7 +154,7 @@ function setupCarousel(selector) {
         updateDots();
     }
 
-    function createDots() {
+    function createDots(): void {
         if (!dotsContainer) return;
         dotsContainer.innerHTML = '';
         const totalSteps = getTotalSteps();
@@ -152,7 +165,7 @@ function setupCarousel(selector) {
             dot.classList.add('dot');
             if (i === currentSlide) dot.classList.add('active');
 
-            dot.addEventListener('click', (e) => {
+            dot.addEventListener('click', (e: MouseEvent) => {
                 e.stopPropagation();
                 moveToSlide(i);
             });
@@ -160,7 +173,7 @@ function setupCarousel(selector) {
         }
     }
 
-    function updateDots() {
+    function updateDots(): void {
         if (!dotsContainer) return;
         const dots = dotsContainer.querySelectorAll('.dot');
         dots.forEach((dot, index) => {
@@ -172,14 +185,14 @@ function setupCarousel(selector) {
     let startY = 0;
     let isMoving = false;
 
-    container.addEventListener('touchstart', (e) => {
+    container.addEventListener('touchstart', (e: TouchEvent) => {
         if (!e.touches || e.touches.length === 0) return;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
         isMoving = true;
     }, { passive: true });
 
-    container.addEventListener('touchend', (e) => {
+    container.addEventListener('touchend', (e: TouchEvent) => {
         if (!isMoving || !e.changedTouches || e.changedTouches.length === 0) {
             isMoving = false;
             return;
@@ -192,14 +205,14 @@ function setupCarousel(selector) {
         if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
             const totalSteps = getTotalSteps();
             if (totalSteps > 0) {
-                 if (diffX > 0) moveToSlide(currentSlide + 1);
-                 else moveToSlide(currentSlide - 1);
+                if (diffX > 0) moveToSlide(currentSlide + 1);
+                else moveToSlide(currentSlide - 1);
             }
         }
         isMoving = false;
     }, { passive: true });
 
-    function revealCarousel() {
+    function revealCarousel(): void {
         updateDimensions();
         createDots();
         moveToSlide(currentSlide);
@@ -236,19 +249,19 @@ function setupCarousel(selector) {
     window.addEventListener('load', revealCarousel);
 }
 
-function initializeCarouselLogic() {
+function initializeCarouselLogic(): void {
     setupCarousel(".todays-specials");
     setupCarousel(".gallery-section"); 
 }
 
-// --- 🔐 LOGIN & AUTH LOGIC (FIXED) ---
+// --- LOGIN & MODAL LOGIC (TypeScript Enhanced) ---
 document.addEventListener("DOMContentLoaded", () => {
     initializeCarouselLogic();
     initializeAllModals();
 
     const overlay = document.getElementById("loginOverlay");
     const popup = document.getElementById("loginPopup");
-    const loginForm = document.getElementById("loginForm");
+    const loginForm = document.getElementById("loginForm") as HTMLFormElement | null;
     const loginCloseBtn = document.getElementById("loginClose");
 
     const hasToken = localStorage.getItem("userToken") || getCookie("userToken");
@@ -256,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedUser = localStorage.getItem("savedUser") || getCookie("savedUser");
 
     if (loginForm && savedUser) {
-        const input = loginForm.querySelector("input");
+        const input = loginForm.querySelector("input") as HTMLInputElement | null;
         if (input) input.value = savedUser;
     }
 
@@ -266,13 +279,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 overlay.style.display = "block";
                 popup.style.display = "block";
                 popup.setAttribute("aria-hidden", "false"); 
-                const firstInput = popup.querySelector("input");
+                const firstInput = popup.querySelector("input") as HTMLInputElement | null;
                 if (firstInput) firstInput.focus();
             }, 4000);
         }
     }
 
-    const closeLoginPopup = () => {
+    const closeLoginPopup = (): void => {
         if (overlay && popup) {
             overlay.style.display = "none";
             popup.style.display = "none";
@@ -281,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     if (loginCloseBtn) {
-        loginCloseBtn.addEventListener("click", (e) => {
+        loginCloseBtn.addEventListener("click", (e: MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
             closeLoginPopup();
@@ -289,17 +302,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (overlay) {
-        overlay.onclick = (e) => {
-            if (e.target === overlay) {
-                closeLoginPopup();
-            }
+        overlay.onclick = (e: MouseEvent) => {
+            if (e.target === overlay) closeLoginPopup();
         };
     }
 
     if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
+        loginForm.addEventListener("submit", (e: Event) => {
             e.preventDefault();
-            const val = loginForm.querySelector("input").value;
+            const input = loginForm.querySelector("input") as HTMLInputElement;
+            const val = input.value;
             const token = "auth_" + Math.random().toString(36).substr(2);
             
             localStorage.setItem("userToken", token);
@@ -313,9 +325,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// ---  MODAL & ORDER LOGIC (ΔΙΟΡΘΩΜΕΝΟ) ---
-function initializeAllModals() {
-    const modal = document.getElementById("recipeModal");
+function initializeAllModals(): void {
+    const modal = document.getElementById("recipeModal") as HTMLElement | null;
     const closeBtn = document.getElementById("recipeClose");
     const toggleOrderBtn = document.getElementById("toggleOrderBtn");
     const orderPanel = document.getElementById("orderPanel");
@@ -325,100 +336,99 @@ function initializeAllModals() {
     
     let currentQty = 1;
 
-    // Λειτουργία ανοίγματος Modal
-    const openRecipeModal = (imgElement) => {
+    const openRecipeModal = (imgElement: HTMLImageElement): void => {
         if (!modal) return;
         
-        document.getElementById("modalTitle").innerText = imgElement.dataset.title || "";
-        document.getElementById("modalImage").src = imgElement.src;
-        document.getElementById("modalDescription").innerText = imgElement.dataset.description || "";
+        const title = document.getElementById("modalTitle");
+        const mImg = document.getElementById("modalImage") as HTMLImageElement;
+        const desc = document.getElementById("modalDescription");
+
+        if (title) title.innerText = imgElement.dataset.title || "";
+        if (mImg) mImg.src = imgElement.src;
+        if (desc) desc.innerText = imgElement.dataset.description || "";
         
         modal.style.display = "flex";
         setTimeout(() => modal.classList.add("active"), 10);
         
         currentQty = 1;
-        if(qtyValue) qtyValue.innerText = currentQty;
+        if(qtyValue) qtyValue.innerText = currentQty.toString();
         if(orderPanel) orderPanel.classList.remove("active");
     };
 
-    // 2. Κλικ στα info-btn (ΤΟ ΜΟΝΑΔΙΚΟ ΣΗΜΕΙΟ ΕΙΣΟΔΟΥ ΠΛΕΟΝ)
-    document.querySelectorAll('.info-btn').forEach(btn => {
-        btn.onclick = (e) => {
+    document.querySelectorAll<HTMLElement>('.info-btn').forEach(btn => {
+        btn.onclick = (e: MouseEvent) => {
             e.stopPropagation();
             const parent = btn.closest('.item');
-            const img = parent.querySelector('.recipe-img');
-            if (img) openRecipeModal(img);
+            if (parent) {
+                const img = parent.querySelector('.recipe-img') as HTMLImageElement | null;
+                if (img) openRecipeModal(img);
+            }
         };
     });
 
-    // 3. Κλείσιμο Modal
     if (closeBtn) {
         closeBtn.onclick = () => {
-            modal.classList.remove("active");
-            setTimeout(() => modal.style.display = "none", 300);
+            if (modal) {
+                modal.classList.remove("active");
+                setTimeout(() => modal.style.display = "none", 300);
+            }
         };
     }
 
-    // 4. Toggle Order Panel (Το καλάθι - Tooltip effect)
     if (toggleOrderBtn && orderPanel) {
-        toggleOrderBtn.onclick = (e) => {
+        toggleOrderBtn.onclick = (e: MouseEvent) => {
             e.stopPropagation();
             orderPanel.classList.toggle("active");
         };
     }
 
-    // 5. Διαχείριση Ποσότητας
-    if (qtyPlus) {
+    if (qtyPlus && qtyValue) {
         qtyPlus.onclick = () => {
             currentQty++;
-            qtyValue.innerText = currentQty;
+            qtyValue.innerText = currentQty.toString();
         };
     }
-    if (qtyMinus) {
+    if (qtyMinus && qtyValue) {
         qtyMinus.onclick = () => {
             if (currentQty > 1) {
                 currentQty--;
-                qtyValue.innerText = currentQty;
+                qtyValue.innerText = currentQty.toString();
             }
         };
     }
 }
 
-// --- GSAP ANIMATIONS (STRICT SEQUENTIAL REVEAL) ---
+// --- GSAP ANIMATIONS ---
 document.addEventListener("DOMContentLoaded", () => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // 1. Προτάσεις Γεύσεων - Εμφάνιση ΜΙΑ-ΜΙΑ (Μόνο όταν φτάσεις εκεί)
+    // Τα GSAP καλούνται κανονικά
     gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 80%", // Ξεκινάει όταν το section μπει καλά στην οθόνη
+            start: "top 80%",
             toggleActions: "play none none none"
         },
         opacity: 0,
         y: 40,
         scale: 0.9,
         duration: 0.6,
-        stagger: 0.35,    // ΜΕΓΑΛΟ stagger για να βλέπεις τη σειρά (ένα-προς-ένα)
+        stagger: 0.35,
         ease: "power2.out"
     });
 
-    // 2. Testimonials - Εμφάνιση ΜΙΑ-ΜΙΑ (Με το εφέ της Gallery)
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 85%", // Ενεργοποιείται ακριβώς όταν το χρειάζεσαι
+            start: "top 85%",
             toggleActions: "play none none none"
         },
         opacity: 0,
         y: 40,
         scale: 0.9,
         duration: 0.6,
-        stagger: 0.4,     // Ακόμα μεγαλύτερο stagger για να προλαβαίνεις να διαβάζεις
+        stagger: 0.4,
         ease: "power2.out"
     });
 
-    // 3. Gallery Section
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
             trigger: ".gallery",
