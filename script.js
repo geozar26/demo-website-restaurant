@@ -106,39 +106,48 @@ function setupCarousel(selector) {
         moveToSlide(currentSlide);
     });
 }
-
-// --- 2. GSAP ANIMATIONS (MODERN & SEPARATE) ---
-function initAnimations() {
-    if (typeof gsap === "undefined") return;
+// --- GSAP ANIMATIONS (UNIFIED FAST & STAGGERED) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Register GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    // Α) ΠΙΑΤΑ & GALLERY: Εμφάνιση με ελαφρύ ανέβασμα (Classic)
-    gsap.from(".items .item, [data-dish], .gallery-container .box", {
+    // Κοινές ρυθμίσεις για ομοιομορφία
+    const commonSettings = {
+        opacity: 0,
+        y: 30,
+        duration: 0.5, // Γρήγορο animation
+        stagger: 0.1,  // Σταδιακή εμφάνιση (το ένα μετά το άλλο γρήγορα)
+        ease: "power2.out"
+    };
+
+    // 1. Προτάσεις Γεύσεων (Menu Items)
+    gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
             start: "top 85%",
             toggleActions: "play none none none"
         },
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out"
+        ...commonSettings
     });
 
-    // Β) TESTIMONIALS: Διαφορετικό Animation (Slide & Scale)
-    // Εδώ οι κάρτες μένουν στο μέγεθός τους αλλά έρχονται "γλυκά" από το πλάι
+    // 2. Κριτικές Πελατών (Testimonials)
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 80%",
+            start: "top 85%",
+            toggleActions: "play none none none"
         },
-        opacity: 0,
-        x: 80, 
-        duration: 1.2,
-        stagger: 0.4,
-        ease: "back.out(1.4)"
+        ...commonSettings
     });
-}
 
+    // 3. Gallery Images (Boxes)
+    gsap.from(".gallery-container .box", {
+        scrollTrigger: {
+            trigger: ".gallery",
+            start: "top 85%",
+            toggleActions: "play none none none"
+        },
+        ...commonSettings
+    });
+});
 
