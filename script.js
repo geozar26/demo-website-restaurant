@@ -1,6 +1,3 @@
-
-
-// ---  ΣΥΝΑΡΤΗΣΕΙΣ COOKIES ---
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -18,8 +15,6 @@ function getCookie(name) {
     }
     return null;
 }
-
-
 
     // ---CAROUSEL TOOLTIP TOGGLE LOGIC (FIXED) ---
     const carouselCards = document.querySelectorAll(".carousel-card, [data-dish]");
@@ -58,7 +53,8 @@ function getCookie(name) {
     });
 
     window.addEventListener("click", (e) => {
-        if (e.target === recipeModal) {
+        const recipeModal = document.getElementById("recipeModal");
+        if (recipeModal && e.target === recipeModal) {
             recipeModal.classList.remove("active");
             setTimeout(() => recipeModal.style.display = "none", 300);
         }
@@ -345,8 +341,6 @@ function initializeAllModals() {
         if(orderPanel) orderPanel.classList.remove("active");
     };
 
-    // ---  ΕΔΩ ΑΦΑΙΡΕΘΗΚΕ ΤΟ ΚΛΙΚ ΣΤΙΣ ΕΙΚΟΝΕΣ (.recipe-img) ---
-
     // 2. Κλικ στα info-btn (ΤΟ ΜΟΝΑΔΙΚΟ ΣΗΜΕΙΟ ΕΙΣΟΔΟΥ ΠΛΕΟΝ)
     document.querySelectorAll('.info-btn').forEach(btn => {
         btn.onclick = (e) => {
@@ -389,6 +383,55 @@ function initializeAllModals() {
         };
     }
 }
+
+// --- GSAP ANIMATIONS ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Προτάσεις Γεύσεων (Menu Items) - Fade In Up
+    gsap.from(".items .item", {
+        scrollTrigger: {
+            trigger: ".items",
+            start: "top 80%", // Ξεκινάει όταν το πάνω μέρος του section είναι στο 80% της οθόνης
+            toggleActions: "play none none none"
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2, // Καθυστέρηση μεταξύ των items
+        ease: "power2.out"
+    });
+
+    // 2. Testimonials - Scale Up & Fade
+    gsap.from(".testimonial-card", {
+        scrollTrigger: {
+            trigger: ".testimonials-section",
+            start: "top 75%",
+            toggleActions: "play none none none"
+        },
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "back.out(1.7)" // Ελαφρύ "bounciness"
+    });
+
+    // 3. Gallery Images - Fade In & Zoom
+    gsap.from(".gallery-container .box", {
+        scrollTrigger: {
+            trigger: ".gallery",
+            start: "top 80%",
+            toggleActions: "play none none none"
+        },
+        scale: 0.9,
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+    });
+});
   
 
 
