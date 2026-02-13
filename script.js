@@ -384,16 +384,16 @@ function initializeAllModals() {
     }
 }
 
-// --- GSAP ANIMATIONS (PERFECT FLOW VERSION) ---
+// --- GSAP ANIMATIONS (FAST WAVE VERSION) ---
 document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Ρυθμίσεις για "ζωντανή" αλλά σταδιακή εμφάνιση
-    const smoothFlow = {
+    // Ρυθμίσεις για γρήγορη αλλά σταδιακή ροή
+    const fastFlow = {
         opacity: 0,
-        y: 50,             // Μεγαλύτερη κίνηση για να είναι ορατό το εφέ
-        duration: 0.7,      // Ισορροπημένη διάρκεια
-        stagger: 0.12,     // Το "κλειδί" για το σταδιακό εφέ (wave effect)
+        y: 40,             // Αρκετή κίνηση για να φαίνεται το "ανέβασμα"
+        duration: 0.4,      // Πολύ γρήγορη εμφάνιση (από 0.7)
+        stagger: 0.08,     // Πυκνό σταδιακό εφέ (σχεδόν αλυσιδωτό)
         ease: "power2.out"
     };
 
@@ -401,29 +401,29 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 85%", // Ενεργοποιείται όταν το section μπει 15% μέσα στην οθόνη
+            start: "top 88%", // Ξεκινάει λίγο νωρίτερα στο scroll
             toggleActions: "play none none none"
         },
-        ...smoothFlow
+        ...fastFlow
     });
 
     // 2. Testimonials (Κριτικές)
     gsap.from(".testimonial-card", {
         scrollTrigger: {
             trigger: ".testimonials-section",
-            start: "top 82%", // Λίγο νωρίτερα από τα άλλα για να "προλάβει" το scroll
+            start: "top 88%",
             toggleActions: "play none none none"
         },
-        ...smoothFlow
+        ...fastFlow
     });
 
     // 3. Gallery Images
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
             trigger: ".gallery",
-            start: "top 85%",
+            start: "top 88%",
             toggleActions: "play none none none"
         },
-        ...smoothFlow
+        ...fastFlow
     });
 });
