@@ -403,20 +403,22 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power2.out"
     });
 
-    // 2. Testimonials - Scale Up & Fade
-    gsap.from(".testimonial-card", {
-        scrollTrigger: {
-            trigger: ".testimonials-section",
-            start: "top 75%",
-            toggleActions: "play none none none"
-        },
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "back.out(1.7)" // Ελαφρύ "bounciness"
-    });
-
+   // 2. Testimonials - Γρήγορη εμφάνιση & Σταθερό Μέγεθος
+gsap.from(".testimonial-card", {
+    scrollTrigger: {
+        trigger: ".testimonials-section",
+        start: "top 92%", // Ενεργοποιείται σχεδόν αμέσως
+        toggleActions: "play none none none"
+    },
+    y: 30,             // Μικρή κίνηση προς τα πάνω
+    opacity: 0,
+    filter: "blur(8px)", 
+    duration: 0.5,     // Πιο γρήγορο animation για να μη μένει κενό
+    stagger: 0.1,      // Πολύ γρήγορη διαδοχή
+    ease: "power2.out",
+    clearProps: "all"  // ΠΟΛΥ ΣΗΜΑΝΤΙΚΟ: Μόλις τελειώσει το animation, καθαρίζει τα styles του GSAP 
+                       // για να αφήσει το CSS να πάρει τον έλεγχο του μεγέθους
+});
     // 3. Gallery Images - Fade In & Zoom
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
