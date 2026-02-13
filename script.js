@@ -403,20 +403,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power2.out"
     });
 
-// 2. Testimonials - Εμφάνιση κατά το Scroll Down
+// 2. Testimonials - Ομαλή Εμφάνιση χωρίς αναπήδημα
 gsap.from(".testimonial-card", {
     scrollTrigger: {
         trigger: ".testimonials-section",
-        start: "top 85%",      // Ξεκινάει όταν η κορυφή του section φτάσει στο 85% του ύψους της οθόνης
-        toggleActions: "play none none none", // Παίζει μόνο την πρώτη φορά που μπαίνει (onEnter)
+        start: "top 88%",      // Ενεργοποιείται μόλις μπει το section
+        toggleActions: "play none none none",
     },
-    y: 50,                     // Έρχονται από κάτω προς τα πάνω
+    y: 40,                     // Έρχονται από κάτω προς τα πάνω
     opacity: 0,
-    filter: "blur(10px)",      // Ξεκινάνε θολά
-    duration: 0.8,             // Διάρκεια για να είναι ομαλό
-    stagger: 0.15,             // Γρήγορη διαδοχή
-    ease: "power2.out",
-    clearProps: "all"          // Επαναφέρει το μέγεθος στο 100% του CSS μόλις τελειώσει
+    duration: 0.7,             // Σταθερή διάρκεια για ομαλότητα
+    stagger: 0.12,             // Γρήγορη διαδοχή
+    ease: "power2.out",        // ΟΜΑΛΟ σταμάτημα χωρίς αναπήδημα (bounce)
+    clearProps: "all"          // Επαναφορά στο 100% του CSS
 });
     // 3. Gallery Images - Fade In & Zoom
     gsap.from(".gallery-container .box", {
