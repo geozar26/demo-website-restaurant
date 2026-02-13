@@ -402,6 +402,24 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power3.out"
     });
 
+ // --- GSAP ANIMATIONS (STADIACKO VERSION) ---
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Προτάσεις Γεύσεων - Πιο αργή εμφάνιση
+    gsap.from(".items .item", {
+        scrollTrigger: {
+            trigger: ".items",
+            start: "top 85%", 
+            toggleActions: "play none none none"
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1.2, // Αυξήθηκε για πιο ομαλή κίνηση
+        stagger: 0.3,  // Μεγαλύτερη καθυστέρηση ανάμεσα στα πιάτα
+        ease: "power3.out"
+    });
+
     // 2. Testimonials - Σταδιακή εμφάνιση ένας-ένας
     gsap.from(".testimonial-card", {
         scrollTrigger: {
@@ -416,6 +434,20 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power2.out"
     });
 
+    // 3. Gallery Images - Smooth Fade & Slide
+    gsap.from(".gallery-container .box", {
+        scrollTrigger: {
+            trigger: ".gallery",
+            start: "top 85%",
+            toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.15, // Δημιουργεί ένα ωραίο εφέ "κύματος" στις εικόνες
+        ease: "power2.out"
+    });
+});
     // 3. Gallery Images - Smooth Fade & Slide
     gsap.from(".gallery-container .box", {
         scrollTrigger: {
