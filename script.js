@@ -141,37 +141,4 @@ function initAnimations() {
     });
 }
 
-// --- 3. INITIALIZATION ---
-document.addEventListener("DOMContentLoaded", () => {
-    setupCarousel(".todays-specials");
-    setupCarousel(".gallery-section");
-    
-    // Tooltip / Modal Logic
-    document.querySelectorAll(".carousel-card, [data-dish]").forEach(card => {
-        card.onclick = (e) => {
-            e.stopPropagation();
-            const id = card.getAttribute("data-dish");
-            const tooltip = document.getElementById("modal-" + id);
-            if (tooltip) {
-                const isOpen = tooltip.getAttribute('data-open') === 'true';
-                document.querySelectorAll('[id^="modal-"]').forEach(t => {
-                    t.style.display = "none";
-                    t.setAttribute('data-open', 'false');
-                });
-                if (!isOpen) {
-                    tooltip.style.display = "block";
-                    tooltip.setAttribute('data-open', 'true');
-                }
-            }
-        };
-    });
 
-    setTimeout(initAnimations, 250);
-});
-
-window.onclick = () => {
-    document.querySelectorAll('[id^="modal-"]').forEach(t => {
-        t.style.display = "none";
-        t.setAttribute('data-open', 'false');
-    });
-};
