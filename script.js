@@ -384,53 +384,50 @@ function initializeAllModals() {
     }
 }
 
-// --- GSAP ANIMATIONS ---
+// --- GSAP ANIMATIONS (STADIACKO VERSION) ---
 document.addEventListener("DOMContentLoaded", () => {
-    // Register GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Προτάσεις Γεύσεων (Menu Items) - Fade In Up
+    // 1. Προτάσεις Γεύσεων - Πιο αργή εμφάνιση
     gsap.from(".items .item", {
         scrollTrigger: {
             trigger: ".items",
-            start: "top 80%", // Ξεκινάει όταν το πάνω μέρος του section είναι στο 80% της οθόνης
+            start: "top 85%", 
             toggleActions: "play none none none"
         },
-        y: 60,
+        y: 50,
         opacity: 0,
-        duration: 0.8,
-        stagger: 0.2, // Καθυστέρηση μεταξύ των items
-        ease: "power2.out"
+        duration: 1.2, // Αυξήθηκε για πιο ομαλή κίνηση
+        stagger: 0.3,  // Μεγαλύτερη καθυστέρηση ανάμεσα στα πιάτα
+        ease: "power3.out"
     });
 
-   gsap.from(".testimonial-card", {
-    scrollTrigger: {
-        trigger: ".testimonials-section",
-        start: "top 75%",
-        toggleActions: "play none none none"
-    },
-    // ΑΦΑΙΡΕΣΑΜΕ ΤΟ SCALE
-    opacity: 0,
-    y: 40, // Θα έρχονται από 40 pixels πιο κάτω
-    duration: 0.3,
-    stagger: 0.2,
-    ease: "power2.out"
-});
-    // 3. Gallery Images - Fade In & Zoom
-    gsap.from(".gallery-container .box", {
+    // 2. Testimonials - Σταδιακή εμφάνιση ένας-ένας
+    gsap.from(".testimonial-card", {
         scrollTrigger: {
-            trigger: ".gallery",
+            trigger: ".testimonials-section",
             start: "top 80%",
             toggleActions: "play none none none"
         },
-        scale: 0.9,
         opacity: 0,
-        y: 30,
-        duration: 0.3,
-        stagger: 0.1,
+        y: 60,         // Λίγο περισσότερη κίνηση από κάτω προς τα πάνω
+        duration: 1.0,  // Πιο αργό animation
+        stagger: 0.4,  // Εμφανίζονται σταδιακά (ο ένας μετά τον άλλο με διαφορά 0.4 δευτ.)
+        ease: "power2.out"
+    });
+
+    // 3. Gallery Images - Smooth Fade & Slide
+    gsap.from(".gallery-container .box", {
+        scrollTrigger: {
+            trigger: ".gallery",
+            start: "top 85%",
+            toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.15, // Δημιουργεί ένα ωραίο εφέ "κύματος" στις εικόνες
         ease: "power2.out"
     });
 });
-  
-
 
