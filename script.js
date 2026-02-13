@@ -384,14 +384,53 @@ function initializeAllModals() {
     }
 }
 
-gsap.from(".gallery-container .box", {
-    scrollTrigger: {
-        trigger: ".gallery",
-        start: "top 90%",
-    },
-    opacity: 0,
-    scale: 0.5, // Ξεκινάει από το μισό μέγεθος
-    duration: 0.5,
-    stagger: 0.15,
-    ease: "back.out(1.7)" // Κάνει ένα μικρό "τίναγμα" στο τέλος
+// --- GSAP ANIMATIONS (UNIFIED STAGGERED STYLE) ---
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Προτάσεις Γεύσεων (Και οι δύο σειρές)
+    // Χρησιμοποιούμε το stagger για να εμφανίζονται μία-μία με τη σειρά
+    gsap.from(".items .item", {
+        scrollTrigger: {
+            trigger: ".items",
+            start: "top 90%", 
+            toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 30,
+        scale: 0.95,      // Μικρό scale όπως στη gallery
+        duration: 0.5,
+        stagger: 0.15,    // Εμφάνιση μία προς μία
+        ease: "power2.out"
+    });
+
+    // 2. Testimonials (Με το εφέ της Gallery)
+    gsap.from(".testimonial-card", {
+        scrollTrigger: {
+            trigger: ".testimonials-section",
+            start: "top 95%", // Πολύ γρήγορη ενεργοποίηση στο scroll
+            toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 30,
+        scale: 0.95,      // Το εφέ που ζήτησες από τη gallery
+        duration: 0.5,
+        stagger: 0.2,     // Πιο έντονο σταδιακό εφέ για τις κριτικές
+        ease: "power2.out"
+    });
+
+    // 3. Gallery Section (Το σημείο αναφοράς μας)
+    gsap.from(".gallery-container .box", {
+        scrollTrigger: {
+            trigger: ".gallery",
+            start: "top 90%",
+            toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 30,
+        scale: 0.95,
+        duration: 0.5,
+        stagger: 0.15,
+        ease: "power2.out"
+    });
 });
