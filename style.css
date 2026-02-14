@@ -402,7 +402,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* Η περιγραφή μέσα στο tooltip */
+
 .carousel-tooltip p {
     font-size: 0.95rem;
     line-height: 1.5;
@@ -420,22 +420,20 @@ body {
 .carousel-tooltip::after {
     content: "";
     position: absolute;
-    top: 100%; /* Τοποθέτηση ακριβώς στο κάτω μέρος του πλαισίου */
+    top: 100%; 
     left: 50%;
     transform: translateX(-50%);
     border-width: 8px; /* Το μέγεθος της ουράς */
     border-style: solid;
-    /* Το χρώμα πρέπει να είναι ίδιο με το background του tooltip (λευκό) */
     border-color: white transparent transparent transparent; 
 }
-
 
 
 .carousel-dots {
     display: flex;
     justify-content: center; /* Διατηρεί τις τελείες στο κέντρο */
     gap: 12px;
-    margin-top: 5px; /* 🔴 Μειώθηκε από 30px σε 5px για να ανέβουν πιο ψηλά */ 
+    margin-top: 5px; 
 }
 
 .dot {
@@ -452,8 +450,6 @@ body {
     transform: scale(1.2);
 }
 
-
-/* 🔴 ΝΕΑ ΚΛΑΣΗ: Εμφάνιση του modal. ΠΡΕΠΕΙ ΝΑ ΧΡΗΣΙΜΟΠΟΙΗΘΕΙ ΣΤΟ JS. */
 .modal.active {
     visibility: visible;
     opacity: 1;
@@ -466,50 +462,38 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Λίγο πιο σκούρο για να ξεχωρίζει το modal */
+    background-color: rgba(0, 0, 0, 0.7);
     
-    /* 🔴 ΠΡΟΣΘΕΣΕ ΑΥΤΑ */
+    /* ΑΛΛΑΓΗ ΕΔΩ: Κεντράρισμα παντού */
     display: flex;
-    justify-content: center;   /* Κεντράρισμα οριζόντια */
-    align-items: flex-start;    /* Ξεκινάει από πάνω για να μην "πνίγεται" */
-    overflow-y: auto;          /* Επιτρέπει το scroll αν η οθόνη είναι μικρή */
-    padding: 20px 0;           /* Χώρος ασφαλείας πάνω-κάτω */
+    justify-content: center;  
+    align-items: center;     
+    
+    overflow-y: auto;          
+    padding: 20px;             
 
     visibility: hidden; 
     opacity: 0;
     transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-/* Το λευκό πλαίσιο - Κεντραρισμένο */
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 450px;
-    position: relative; /* Για να μπει το καλάθι από πάνω */
-    text-align: center;
-}
-
 
 .modal-content {
-    position: relative;        /* ΟΧΙ fixed εδώ */
-    background-color: var(--color-light);
+    position: relative;
+    background-color: var(--color-light, white); /* Χρησιμοποιεί τη μεταβλητή σου ή white */
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding: 25px 20px;
     width: 90%;
     max-width: 450px;
-    
-    /* 🔴 ΑΥΤΟ ΔΙΟΡΘΩΝΕΙ ΤΟ ΠΕΡΙΘΩΡΙΟ */
-    margin: 20px auto;         /* Μικρό περιθώριο από πάνω, auto στα πλάγια */
-    
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     z-index: 1001;
+    text-align: center;
+    margin: 0; /* Αφαιρέθηκε το margin: 20px auto γιατί το flex το κεντράρει αυτόματα */
 }
+
 
 @keyframes tooltipShow {
     from {
