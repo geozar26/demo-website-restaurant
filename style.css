@@ -380,53 +380,61 @@ body {
     overflow: visible; /* Απαραίτητο για να μη "κόβεται" το tooltip */
 }
 
-/* 2. Το Tooltip */
+
 .carousel-tooltip {
-    /* Απόκρυψη */
-    display: block; /* Χρησιμοποιούμε block αντί για none για να μην "πηδάει" το layout */
     visibility: hidden;
     opacity: 0;
-    
-    position: absolute;
-    /* ΤΟΠΟΘΕΤΗΣΗ: Στην πάνω-πάνω άκρη της κάρτας */
-    top: 0;
+    position: absolute; 
+    top: -10px; 
     left: 50%;
-    
-    /* ΜΕΤΑΚΙΝΗΣΗ: Το σπρώχνουμε όλο προς τα πάνω (-100%) για να βγει έξω από την εικόνα */
-    transform: translateX(-50%) translateY(-100%);
-    
-    /* ΣΤΑΘΕΡΟΤΗΤΑ: pointer-events none για να μην τρεμοπαίζει */
-    pointer-events: none;
-    
-    /* Στυλ (χωρίς να αλλάζουν το carousel) */
+    transform: translateX(-50%) translateY(10px);
+    z-index: 1000; 
     background: white;
-    width: 240px;
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 10px;
+    width: 260px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    z-index: 9999;
-    margin-top: -10px; /* Μικρή απόσταση από την εικόνα */
-    
-    transition: opacity 0.3s ease, visibility 0.3s;
+    transition: all 0.3s ease;
 }
 
-/* 3. Εμφάνιση ΜΟΝΟ στο hover */
+/* Η λέξη ΥΛΙΚΑ */
+.carousel-tooltip b {
+    display: block; 
+    color: var(--color-primary);
+    margin-bottom: 8px;
+   
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* Η περιγραφή μέσα στο tooltip */
+.carousel-tooltip p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+    font-weight: normal;
+    margin: 0;
+}
+
 .carousel-card:hover .carousel-tooltip {
     visibility: visible;
     opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
-/* 4. Η ουρά */
 .carousel-tooltip::after {
     content: "";
     position: absolute;
-    top: 100%;
+    top: 100%; /* Τοποθέτηση ακριβώς στο κάτω μέρος του πλαισίου */
     left: 50%;
     transform: translateX(-50%);
-    border-width: 8px;
+    border-width: 8px; /* Το μέγεθος της ουράς */
     border-style: solid;
-    border-color: white transparent transparent transparent;
+    /* Το χρώμα πρέπει να είναι ίδιο με το background του tooltip (λευκό) */
+    border-color: white transparent transparent transparent; 
 }
+
+
 
 
 
