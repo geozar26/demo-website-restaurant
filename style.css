@@ -369,58 +369,44 @@ body {
 }
 
 
+.carousel-card {
+    position: relative; /* Απαραίτητο για να ξέρει το tooltip πού να κολλήσει */
+}
 
 .carousel-tooltip {
     visibility: hidden;
     opacity: 0;
     position: absolute; 
-    top: -10px; 
+    /* Τοποθέτηση πάνω από την κάρτα */
+    bottom: 100%; 
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(-10px); /* Ξεκινάει λίγο πιο πάνω */
+    
     z-index: 1000; 
     background: white;
     padding: 15px 20px;
     border-radius: 10px;
     width: 260px;
-    box-shadow: var(--shadow-lg);
-      box-shadow: var(--shadow-lg);
-    transition: all var(--transition-fast);
-}
-   
-
-
-/* Η λέξη ΥΛΙΚΑ */
-.carousel-tooltip b {
-    display: block; 
-    color: var(--color-primary);
-    margin-bottom: 8px;
-   
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    pointer-events: none; /* Για να μην εμποδίζει το ποντίκι */
 }
 
-
-.carousel-tooltip p {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #444;
-    font-weight: normal;
-    margin: 0;
-}
-
+/* Εμφάνιση στο Hover */
 .carousel-card:hover .carousel-tooltip {
     visibility: visible;
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(-20px); /* Ανεβαίνει ελαφρώς καθώς εμφανίζεται */
 }
 
+/* Η ουρά του Tooltip */
 .carousel-tooltip::after {
     content: "";
     position: absolute;
     top: 100%; 
     left: 50%;
     transform: translateX(-50%);
-    border-width: 8px; /* Το μέγεθος της ουράς */
+    border-width: 8px;
     border-style: solid;
     border-color: white transparent transparent transparent; 
 }
