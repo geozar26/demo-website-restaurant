@@ -1,75 +1,46 @@
 :root {
     --color-primary: #0078ff;
     --color-dark: #222;
-    --color-light: #F9F9F9;
+    --color-light: #ffffff; /* Καθαρό λευκό για την μπάρα */
     --color-text-main: #333;
     --color-text-secondary: #555;
-    --color-light: #fcfcfc;
-    --color-accent-login: #58a6ad;
     --font-stack: "Poppins", sans-serif;
 }
 
-html,
-body {
-    width: 100%;
-    overflow-x: hidden;
-    color: var(--color-dark);
-    background: var(--color-light);
-}
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: var(--font-stack);
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px; /* Βάζουμε σταθερό πλευρικό κενό για ασφάλεια σε desktop */
-}
-
-
-/* === NAVBAR & HEADER (Desktop) === */
+/* === NAVBAR ΔΙΟΡΘΩΣΗ === */
 .navbar {
     display: flex;
-    align-items: center;
+    align-items: center; /* Κεντράρει κάθετα τα πάντα */
     justify-content: space-between;
-    padding: 19px 19px;
+    padding: 0 40px; /* Padding μόνο δεξιά-αριστερά */
     background: var(--color-light);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    height: 80px; /* Σταθερό ύψος για να είναι ομοιόμορφη */
     z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
+
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-primary);
-    padding-left: 15px;
-    /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει το logo και το nav bar προς τα κάτω */
-    margin-top: 0; /* Ήταν 16px */
+    margin: 0; /* Αφαίρεση του margin που το χαλούσε */
 }
 
 .nav-links {
     display: flex;
-    text-align: center;
+    align-items: center;
     gap: 30px;
-    /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει τους συνδέσμους προς τα κάτω */
-    margin-top: 10px; /* Ήταν 10px */
+    margin: 0; /* Αφαίρεση του margin */
 }
 
-.nav-links a {
-    text-decoration: none;
-  
-    color: var(--color-dark);
-    font-weight: 500;
-    transition: color 0.3s;
+/* Τα εικονίδια στα δεξιά (Social & Τηλέφωνο) */
+.footer-right i, .social-icons i {
+    color: var(--color-primary); /* Δίνει το μπλε χρώμα που λείπει */
+    margin-right: 8px;
 }
 
 .nav-links a:hover {
