@@ -62,12 +62,12 @@ body {
     box-shadow: var(--shadow-sm);
 }
     
-}
+
 .logo {
     font-weight: bold;
     color: var(--color-primary);
     padding-left: 15px;
-    font-size:var( --font-size-h3)
+    font-size:var( --font-size-h3);
     margin-top: 0; 
 }
 
