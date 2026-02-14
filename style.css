@@ -473,8 +473,8 @@ body {
 
 .modal-content h2 {
     /* 1. ΘΕΣΗ: Το κλειδί για να ανέβει ψηλά */
-    margin-top: -15px !important; /* Αρνητικό margin για να "τραβήξουμε" τον τίτλο προς τα πάνω */
-    margin-bottom: 15px !important;
+    margin-top: -15px; /* Αρνητικό margin για να "τραβήξουμε" τον τίτλο προς τα πάνω */
+    margin-bottom: 15px;
     
     /* 2. ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΟ "X": Χρησιμοποιούμε padding στα πλάγια */
     padding: 0 40px; /* Αυξάνουμε το πλάγιο padding για να μην ακουμπάει ΠΟΤΕ το κλείσιμο */
@@ -1714,9 +1714,9 @@ html {
     .main-contact-form input,
     .form-group input, 
     .form-group textarea {
-        width: 100%; /* Τα inputs πιάνουν όλο το διαθέσιμο πλάτος της κάρτας */
-        padding: 12px 8px;      /* Επαγγελματικό εσωτερικό padding */
-        font-size: 16px;        /* Αποφυγή αυτόματου zoom σε κινητά */
+        width: 100%; 
+        padding: 12px 8px;      
+        font-size: 16px;       
         margin-left: 0;
         margin-right: 0;
         box-sizing: border-box;
