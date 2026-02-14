@@ -86,12 +86,12 @@ body {
     margin-top: 10px;
 }
 
-/* Προσθήκη ΕΚΤΟΣ media query */
+
 .menu-overlay {
     display: none;
 }
 
-/* Αυτό κρύβει το footer σε όλες τις οθόνες από προεπιλογή */
+
 .nav-footer {
     display: none;
 }
@@ -1150,7 +1150,7 @@ html {
 /* --- ΕΙΚΟΝΑ ΔΕΞΙΑ (Σιγουρευόμαστε ότι δεν πιάνει χώρο) --- */
 .form-image-side {
     display: none ;
-    position: absolute; /* Την βγάζουμε τελείως από τη ροή */
+    position: absolute; 
 }
 /* --- ΕΣΩΤΕΡΙΚΟ ΤΗΣ ΦΟΡΜΑΣ --- */
 .contact-card.form-card-style {
@@ -1164,13 +1164,13 @@ html {
      background-color: var(--color-light);
     width: 100%;
     border: none; 
-    border-bottom: 3px solid #e0e0e0; /* Πιο απαλή γραμμή */
+    border-bottom: 3px solid #e0e0e0; 
     padding: 20px 0 10px 0; 
     margin-bottom: 30px; 
     font-size: 1.1rem;
     box-sizing: border-box;
     outline: none;
-    transition: border-bottom-color 0.3s, box-shadow 0.3s; /* Προσθήκη box-shadow στο transition */
+    transition: border-bottom-color 0.3s, box-shadow 0.3s; 
 }
 
 /* ΝΕΟ: Focus State για μοντέρνα αίσθηση */
@@ -1302,15 +1302,13 @@ html {
 
 @media (max-width: 1085px) {
     .items {
-        /* Μείωση του ελάχιστου πλάτους στήλης από 280px σε 240px. 
-           Αυτό επιτρέπει στο grid να χωρέσει τις στήλες άνετα 
-           στο πλάτος της οθόνης 1085px. */
+       
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 20px;
         padding: 20px 10px;
     }
 
-    /* 🟢 ΑΛΛΑΓΗ 1: Επαναφέρουμε τις ρυθμίσεις του container για να δώσουμε padding */
+   
     .form-section-clean {
         background-color: #ffffff;
         
@@ -1379,14 +1377,14 @@ html {
         justify-content: flex-start; 
         padding: 60px 20px 40px 30px; 
         margin: 0;
-        overflow-y: auto; /* Για να μπορείς να σκρολάρεις αν το μενού είναι μεγάλο */
+        overflow-y: auto; 
     }
 
     #menu-toggle:checked ~ .nav-links {
         right: 0;
     }
 
-    /* Links - Επαναφορά εμφάνισης */
+    
     .nav-links a {
         display: block;
         width: 100%;
@@ -1428,7 +1426,7 @@ html {
     color: #333;
 }
 
-/* 3. ΤΟ ΚΟΥΜΠΙ - Απόσταση από τα στοιχεία επικοινωνίας */
+
 .nav-links .nav-footer .order-btn {
     display: inline-block;
     background: linear-gradient(135deg, #007bff, #0056b3);
@@ -1536,7 +1534,6 @@ html {
         font-size: 2rem;
     }
 
-    /* === 3. Footer Adjustments === */
     .footer {
         margin-top: 1.2rem;
     }
