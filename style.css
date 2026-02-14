@@ -622,7 +622,6 @@ body {
     z-index: 10;
 }
 
-/* Hover εφέ για καλύτερο UX */
 .info-btn:hover {
     background: var(--color-primary);
     color: white;
@@ -630,7 +629,7 @@ body {
 }
 
 
-/* Το κύριο πλαίσιο του Item (βεβαιώσου ότι έχει relative) */
+
 .item {
     position: relative; /* Αυτό επιτρέπει στο κουμπί να κλειδώσει πάνω του */
     padding-top: 50px;  /* Δίνουμε χώρο πάνω για να χωρέσει το κουμπί αν χρειάζεται */
@@ -730,13 +729,13 @@ body {
         transform: scale(1) translateY(0);
     }
 }
-/* Γενική κλάση reveal για όλα */
+
 .reveal {
     opacity: 0;
     will-change: transform, opacity;
 }
 
-/* Ειδικό, πιο "φανερό" animation για τις κάρτες των Testimonials */
+
 .testimonial-card.reveal {
     transform: translateY(50px) rotateX(-15deg) scale(0.9);
     transform-origin: top; /* Το animation ξεκινά από το πάνω μέρος */
@@ -745,7 +744,7 @@ body {
         transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Όταν ενεργοποιηθεί */
+
 .testimonial-card.reveal.active {
     opacity: 1;
     transform: translateY(0) rotateX(0deg) scale(1);
@@ -952,7 +951,7 @@ html {
     font-size: 1rem;
     line-height: 1.6;
     text-align: justify;
-    margin-top: 8px;      /* Σιγουρεύουμε ότι η παράγραφος δεν σπρώχνει προς τα πάνω */
+    margin-top: 8px;      
 }
 
 
@@ -1123,9 +1122,9 @@ html {
     
     /* Χρήση Flexbox */
     display: flex;
-    flex-direction: column;   /* Ευθυγράμμιση σε στήλη */
-    justify-content: center;  /* Κεντράρισμα */
-    align-items: center;      /* Κεντράρισμα οριζόντια */
+    flex-direction: column;   
+    justify-content: center;  
+    align-items: center;   
     
     padding-top: 50px;
     padding-bottom: 50px;
@@ -1133,7 +1132,7 @@ html {
     max-width: 100%;
     margin: 0 auto;
     position: relative;
-    overflow: hidden; /* Διασφαλίζει ότι τίποτα δεν εξέχει δεξιά */
+    overflow: hidden;
 }
 
 /* --- ΦΟΡΜΑ (Το παιδί) --- */
@@ -1505,13 +1504,13 @@ html {
     
     border-radius: 4px; /* Διακριτική καμπύλη */
 }
-    /* ... οι υπόλοιπες ρυθμίσεις σου ... */
+
 
     .row {
         flex-direction: column; 
         align-items: center; 
-        gap: 5px;          /* ΑΠΟ 20px ΣΕ 5px: Ανεβάζει όλο το μπλοκ του κειμένου πιο κοντά στην εικόνα */
-        margin: 10px 0;    /* Μείωση εξωτερικού περιθωρίου αν χρειάζεται */
+        gap: 5px;         
+        margin: 10px 0;    
         height: auto; 
     }
 
@@ -1591,7 +1590,7 @@ html {
         max-height: 250px; 
     }
 
-  /* === ΤΕΛΙΚΟ FIX ΓΙΑ ΤΟ MODAL: ΤΙΤΛΟΣ ΠΙΟ ΠΑΝΩ & ΚΟΥΜΠΙ Χ === */
+ 
     .modal-content {
         position: relative;
         padding-top: 35px; /* Μειωμένο κενό στην κορυφή για να ανέβουν όλα */
@@ -1609,7 +1608,6 @@ html {
         color: #333; /* Σκούρο χρώμα για να φαίνεται καθαρά */
     }
 
-   /* === ΕΠΑΓΓΕΛΜΑΤΙΚΟ FIX ΓΙΑ ΤΟΥΣ ΤΙΤΛΟΥΣ (ΟΧΙ ΣΠΑΣΙΜΟ ΛΕΞΕΩΝ) === */
  .modal-content h2 {
         /* 1. ΘΕΣΗ & ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΟ "X" */
         margin-top: -10px ; 
@@ -1634,7 +1632,7 @@ html {
         color: var(--color-primary);
     }
 
-    /* Διασφάλιση ότι το κουμπί X δεν θα "πατάει" ποτέ το κείμενο */
+   
     #recipeClose, .close-btn {
         top: 5px;
         right: 10px;
@@ -1752,15 +1750,15 @@ html {
     .main-contact-form input,
     .form-group input, 
     .form-group textarea {
-        width: 100%; /* Τα inputs πιάνουν όλο το διαθέσιμο πλάτος της κάρτας */
-        padding: 12px 8px;      /* Επαγγελματικό εσωτερικό padding */
-        font-size: 16px;        /* Αποφυγή αυτόματου zoom σε κινητά */
+        width: 100%; 
+        padding: 12px 8px;      
+        font-size: 16px;       
         margin-left: 0;
         margin-right: 0;
         box-sizing: border-box;
     }
 
-    /* Ο τίτλος της φόρμας */
+   
     .contact-card.form-card-style h3 {
         font-size: 2rem;
         text-align: center;
