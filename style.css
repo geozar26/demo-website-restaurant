@@ -369,47 +369,57 @@ body {
 }
 
 
+/* 1. Ο ΓΟΝΕΑΣ: Δεν αλλάζουμε τίποτα στο μέγεθος, μόνο δηλώνουμε ότι είναι το κέντρο αναφοράς */
 .carousel-card {
-    position: relative; /* Απαραίτητο για να ξέρει το tooltip πού να κολλήσει */
+    position: relative; /* Απαραίτητο για να "κολλήσει" το tooltip πάνω του */
 }
 
+/* 2. ΤΟ TOOLTIP: Το βγάζουμε από τη ροή του εγγράφου για να μην επηρεάζει τις εικόνες */
 .carousel-tooltip {
+    /* Απόκρυψη */
     visibility: hidden;
     opacity: 0;
-    position: absolute; 
-    /* Τοποθέτηση πάνω από την κάρτα */
-    bottom: 100%; 
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px); /* Ξεκινάει λίγο πιο πάνω */
     
-    z-index: 1000; 
+    /* Θέση: Το τοποθετούμε ακριβώς πάνω από την εικόνα */
+    position: absolute;
+    bottom: 100%; /* Ξεκινάει ακριβώς στην πάνω άκρη της εικόνας */
+    left: 50%;
+    transform: translateX(-50%) translateY(0); /* Κεντράρισμα οριζόντια */
+    
+    /* ΤΟ ΚΛΕΙΔΙ: Μην επιτρέπεις στο ποντίκι να "βλέπει" το tooltip */
+    pointer-events: none; 
+    
+    /* Εμφάνιση */
     background: white;
-    padding: 15px 20px;
-    border-radius: 10px;
-    width: 260px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-    pointer-events: none; /* Για να μην εμποδίζει το ποντίκι */
+    width: 220px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
+    
+    /* Ομαλότητα χωρίς να επηρεάζει το carousel */
+    transition: opacity 0.2s ease-in-out, visibility 0.2s;
 }
 
-/* Εμφάνιση στο Hover */
+/* 3. HOVER: Μόνο τότε εμφανίζεται, χωρίς να σπρώχνει τα διπλανά στοιχεία */
 .carousel-card:hover .carousel-tooltip {
     visibility: visible;
     opacity: 1;
-    transform: translateX(-50%) translateY(-20px); /* Ανεβαίνει ελαφρώς καθώς εμφανίζεται */
+    transform: translateX(-50%) translateY(-10px); /* Μικρή κίνηση προς τα πάνω */
 }
 
-/* Η ουρά του Tooltip */
+/* 4. Η ΟΥΡΑ: */
 .carousel-tooltip::after {
     content: "";
     position: absolute;
     top: 100%; 
     left: 50%;
     transform: translateX(-50%);
-    border-width: 8px;
+    border-width: 6px;
     border-style: solid;
-    border-color: white transparent transparent transparent; 
+    border-color: white transparent transparent transparent;
 }
+
 
 
 .carousel-dots {
