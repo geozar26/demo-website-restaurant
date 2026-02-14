@@ -374,48 +374,56 @@ body {
     position: relative; /* Απαραίτητο για να "κολλήσει" το tooltip πάνω του */
 }
 
-/* 2. ΤΟ TOOLTIP: Το βγάζουμε από τη ροή του εγγράφου για να μην επηρεάζει τις εικόνες */
+/* 1. Σιγουρευόμαστε ότι η κάρτα είναι το σημείο αναφοράς */
+.carousel-card {
+    position: relative;
+    overflow: visible; /* Απαραίτητο για να μη "κόβεται" το tooltip */
+}
+
+/* 2. Το Tooltip */
 .carousel-tooltip {
     /* Απόκρυψη */
+    display: block; /* Χρησιμοποιούμε block αντί για none για να μην "πηδάει" το layout */
     visibility: hidden;
     opacity: 0;
     
-    /* Θέση: Το τοποθετούμε ακριβώς πάνω από την εικόνα */
     position: absolute;
-    bottom: 100%; /* Ξεκινάει ακριβώς στην πάνω άκρη της εικόνας */
+    /* ΤΟΠΟΘΕΤΗΣΗ: Στην πάνω-πάνω άκρη της κάρτας */
+    top: 0;
     left: 50%;
-    transform: translateX(-50%) translateY(0); /* Κεντράρισμα οριζόντια */
     
-    /* ΤΟ ΚΛΕΙΔΙ: Μην επιτρέπεις στο ποντίκι να "βλέπει" το tooltip */
-    pointer-events: none; 
+    /* ΜΕΤΑΚΙΝΗΣΗ: Το σπρώχνουμε όλο προς τα πάνω (-100%) για να βγει έξω από την εικόνα */
+    transform: translateX(-50%) translateY(-100%);
     
-    /* Εμφάνιση */
+    /* ΣΤΑΘΕΡΟΤΗΤΑ: pointer-events none για να μην τρεμοπαίζει */
+    pointer-events: none;
+    
+    /* Στυλ (χωρίς να αλλάζουν το carousel) */
     background: white;
-    width: 220px;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    width: 240px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     z-index: 9999;
+    margin-top: -10px; /* Μικρή απόσταση από την εικόνα */
     
-    /* Ομαλότητα χωρίς να επηρεάζει το carousel */
-    transition: opacity 0.2s ease-in-out, visibility 0.2s;
+    transition: opacity 0.3s ease, visibility 0.3s;
 }
 
-/* 3. HOVER: Μόνο τότε εμφανίζεται, χωρίς να σπρώχνει τα διπλανά στοιχεία */
+/* 3. Εμφάνιση ΜΟΝΟ στο hover */
 .carousel-card:hover .carousel-tooltip {
     visibility: visible;
     opacity: 1;
-    transform: translateX(-50%) translateY(-10px); /* Μικρή κίνηση προς τα πάνω */
 }
 
-/* 4. Η ΟΥΡΑ: */
+/* 4. Η ουρά */
 .carousel-tooltip::after {
     content: "";
     position: absolute;
-    top: 100%; 
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border-width: 6px;
+    border-width: 8px;
     border-style: solid;
     border-color: white transparent transparent transparent;
 }
