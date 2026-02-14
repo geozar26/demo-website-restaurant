@@ -126,7 +126,7 @@ body {
 }
 
 .hero h1 {
-  
+    font-size: var(--font-size-h1);
     margin-bottom: 20px;
 }
 /* ... (Τα υπόλοιπα styles του hero παραμένουν ίδια) ... */
