@@ -62,7 +62,7 @@ body {
     color: var(--color-primary);
     padding-left: 15px;
   
-    margin-top: 0; /* Ήταν 16px */
+    margin-top: 0; 
 }
 
 .nav-links {
@@ -70,7 +70,7 @@ body {
     text-align: center;
     gap: 30px;
 
-    margin-top: 10px; /* Ήταν 10px */
+    margin-top: 10px; /
 }
 
 .nav-links a {
@@ -126,7 +126,7 @@ body {
 }
 
 .hero h1 {
-   font-size: var(--font-size-h2);
+  
     margin-bottom: 20px;
 }
 /* ... (Τα υπόλοιπα styles του hero παραμένουν ίδια) ... */
