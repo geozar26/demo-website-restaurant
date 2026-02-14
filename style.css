@@ -1,4 +1,4 @@
-
+:root{
     --color-primary: #0078ff;
     --color-dark: #222;
     --color-light: #F9F9F9;
@@ -1694,8 +1694,6 @@ body {
         line-height: 1.8;
     }
 }
-
-
 
 
 
