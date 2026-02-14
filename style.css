@@ -1,48 +1,36 @@
-/* =========================================
-   1. DESIGN TOKENS (ROOT)
-   ========================================= */
+
+/* === 1. DESIGN TOKENS (ROOT) === */
 :root {
-    /* Colors */
     --color-primary: #0078ff;
     --color-primary-hover: #005fcc;
     --color-dark: #222;
     --color-light: #F9F9F9;
-    --color-white: #ffffff;
+    --color-light-alt: #fcfcfc;
     --color-text-main: #333;
     --color-text-secondary: #555;
     --color-accent-login: #58a6ad;
-    
-    /* Typography */
     --font-stack: "Poppins", sans-serif;
-
-    /* Shadows */
+    
+    /* Shadows & Effects */
     --shadow-navbar: 0 4px 15px rgba(0, 0, 0, 0.12);
     --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.08);
-    --shadow-card-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
-    --shadow-modal: 0 10px 30px rgba(0, 0, 0, 0.4);
-    --shadow-carousel: 0 6px 20px rgba(0, 0, 0, 0.1);
-
-    /* Transitions */
-    --transition-normal: 0.3s ease;
-    --transition-fast: 0.2s ease;
+    --shadow-modal: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* =========================================
-   2. GLOBAL RESET
-   ========================================= */
+/* === 2. BASE STYLES === */
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+    color: var(--color-dark);
+    background: var(--color-light);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: var(--font-stack);
-}
-
-html, body {
-    width: 100%;
-    overflow-x: hidden;
-    color: var(--color-dark);
-    background: var(--color-light);
-    scrollbar-gutter: stable;
 }
 
 .container {
@@ -51,14 +39,12 @@ html, body {
     padding: 0 20px;
 }
 
-/* =========================================
-   3. NAVBAR (DESKTOP)
-   ========================================= */
+/* === 3. NAVBAR & HEADER === */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 19px;
+    padding: 19px 19px;
     background: var(--color-light);
     position: fixed;
     top: 0;
@@ -73,10 +59,12 @@ html, body {
     font-weight: bold;
     color: var(--color-primary);
     padding-left: 15px;
+    margin-top: 0; 
 }
 
 .nav-links {
     display: flex;
+    text-align: center;
     gap: 30px;
     margin-top: 10px;
 }
@@ -85,27 +73,25 @@ html, body {
     text-decoration: none;
     color: var(--color-dark);
     font-weight: 500;
-    transition: color var(--transition-fast);
+    transition: color 0.3s;
 }
 
 .nav-links a:hover {
     color: var(--color-primary);
 }
 
-/* =========================================
-   4. HERO SECTION
-   ========================================= */
+/* --- Hero Section --- */
 .hero {
     min-height: 60vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url("images/restaurant.png") no-repeat center/cover;
+        url("images/restaurant.png") no-repeat center/cover;
     color: var(--color-light);
     text-align: center;
-    padding: 150px 20px 120px; /* Adjusted top padding for fixed navbar */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 150px 20px 120px; 
 }
 
 .hero h1 {
@@ -120,7 +106,7 @@ html, body {
     border-radius: 25px;
     text-decoration: none;
     font-weight: bold;
-    transition: var(--transition-normal);
+    transition: 0.3s;
     display: inline-block;
     white-space: nowrap;
 }
@@ -129,9 +115,92 @@ html, body {
     background: var(--color-primary-hover);
 }
 
-/* =========================================
-   5. MODAL (NO IMPORTANT - CLEANED)
-   ========================================= */
+/* --- Content / About (.row) --- */
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.row .content {
+    flex: 1 1 400px;
+    margin-top: 12px;
+    padding-right: 15px; 
+}
+
+.row .image img {
+    margin-top: 30px;
+    max-width: 100%;
+    border-radius: 10px;
+    height: auto;
+    max-height: 350px;
+    object-fit: cover;
+}
+
+/* --- Items / Grid --- */
+.items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding: 30px 20px;
+    gap: 30px;
+}
+
+.item h4 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: var(--color-text-main);
+}
+
+/* --- Gallery --- */
+.gallery .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 60px 5%;
+    margin-top: 15px;
+}
+
+/* --- Testimonials --- */
+.testimonial-card {
+    background: var(--color-light);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Services --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+}
+
+.service-card {
+    background-color: white;
+    padding: 40px 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card i {
+    color: var(--color-primary);
+    font-size: 2rem;
+}
+
+/* --- Modals (Clean version) --- */
 .modal {
     position: fixed;
     z-index: 2000;
@@ -140,9 +209,9 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    visibility: hidden; 
+    opacity: 0; 
+    transition: opacity 0.2s ease, visibility 0.2s ease; 
 }
 
 .modal.active {
@@ -153,16 +222,13 @@ html, body {
 .modal-content {
     background-color: var(--color-light);
     margin: 5% auto;
-    padding: 40px 30px 30px; /* Increased top padding */
+    padding: 40px 30px; /* Σταθερό padding αντί για negative margins */
     max-width: 600px;
     max-height: 80vh;
     overflow-y: auto;
     border-radius: 10px;
     position: relative;
-    box-shadow: var(--shadow-modal);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content h2 {
@@ -171,63 +237,38 @@ html, body {
     font-size: 1.6rem;
     font-weight: 600;
     padding: 0 40px;
-    text-align: center;
 }
 
-.modal .close {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    color: var(--color-text-main);
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color var(--transition-fast);
+/* --- Footer --- */
+.footer {
+    background-color: #000;
+    color: var(--color-light);
+    margin-top: 40px;
+    padding: 35px 0;
 }
 
-.modal .close:hover {
-    color: var(--color-primary);
-}
-
-/* =========================================
-   6. GRID SECTIONS (SERVICES & TESTIMONIALS)
-   ========================================= */
-.services-grid {
+.footer-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.service-card, .testimonial-card {
-    background-color: var(--color-white);
-    padding: 40px 20px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: var(--shadow-card);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.service-card:hover, .testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-card-hover);
-}
-
-/* =========================================
-   7. RESPONSIVE MEDIA QUERIES
-   ========================================= */
-
-/* Tablets & Small Desktops */
-@media (max-width: 992px) {
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
+/* --- Media Queries (Διατήρηση 100% των δικών σου ορίων) --- */
+@media (max-width: 1085px) {
+    .items {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
+}
+
+@media (max-width: 910px) {
     .row {
         flex-direction: column;
         text-align: center;
     }
 }
 
-/* Mobile Devices */
 @media (max-width: 768px) {
     .nav-links {
         position: fixed;
@@ -235,33 +276,24 @@ html, body {
         top: 0;
         height: 100vh;
         width: 70%;
-        max-width: 300px;
         background: var(--color-light);
+        display: flex;
         flex-direction: column;
-        padding: 80px 30px;
+        padding: 60px 30px;
         transition: transform 0.3s ease-in-out;
-        transform: translateX(0);
     }
 
     #menu-toggle:checked ~ .nav-links {
-        right: 0;
-        transform: translateX(0);
+        transform: translateX(-100%);
     }
 
     .footer-container {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
-@media (max-width: 480px) {
-    .footer-container {
+@media (max-width: 600px) {
+    .services-grid {
         grid-template-columns: 1fr;
-    }
-    .hero h1 {
-        font-size: 1.8rem;
     }
 }
