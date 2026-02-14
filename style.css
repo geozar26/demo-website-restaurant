@@ -16,6 +16,9 @@
     --font-size-small: 0.9rem;
     --line-height-base: 1.6;
     
+
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+    
 }
 
 html,
@@ -177,7 +180,7 @@ body {
     max-width: 360px;
     width: 80%;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-xl);
     z-index: 3000;
 }
 
