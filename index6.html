@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu - Kitchen Grid</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">kitchen grid</div>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon"><i class="fa-solid fa-bars"></i></label>
+        <nav class="nav-links">
+            <a href="index.html">Αρχική</a>
+            <a href="menu.html" class="active" style="color: var(--color-primary);">Μενού</a>
+            <a href="index1.html">Σχετικά</a>
+            <a href="index3.html">Επικοινωνία</a>
+            <div class="nav-footer-mobile">
+                <a href="#" class="order-btn">Online Παραγγελία</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero menu-hero" style="min-height: 40vh; padding-top: 120px;">
+        <div class="hero-content">
+            <h1>Ο Κατάλογός μας</h1>
+            <p>Ανακαλύψτε γεύσεις φτιαγμένες με μεράκι και αγνά υλικά.</p>
+        </div>
+    </section>
+
+    <section class="menu-section container">
+        <div class="menu-tabs">
+            <button class="tab-btn active" onclick="filterMenu('all')">Όλα</button>
+            <button class="tab-btn" onclick="filterMenu('main')">Κυρίως Πιάτα</button>
+            <button class="tab-btn" onclick="filterMenu('pizza')">Πίτσες</button>
+            <button class="tab-btn" onclick="filterMenu('dessert')">Γλυκά</button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item main">
+                <div class="menu-item-info">
+                    <h3>Παστίτσιο <span class="price">9.50€</span></h3>
+                    <p>Παραδοσιακό με φρέσκο μοσχαρίσιο κιμά και πλούσια μπεσαμέλ.</p>
+                </div>
+            </div>
+
+            <div class="menu-item pizza">
+                <div class="menu-item-info">
+                    <h3>Special Pizza <span class="price">12.00€</span></h3>
+                    <p>Με μοτσαρέλα, ζαμπόν, μπέικον, πιπεριά και φρέσκα μανιτάρια.</p>
+                </div>
+            </div>
+
+            <div class="menu-item main">
+                <div class="menu-item-info">
+                    <h3>Γιουβέτσι Μοσχάρι <span class="price">11.00€</span></h3>
+                    <p>Σιγομαγειρεμένο στο φούρνο με κριθαράκι και σάλτσα ντομάτας.</p>
+                </div>
+            </div>
+
+            <div class="menu-item dessert">
+                <div class="menu-item-info">
+                    <h3>Σοκολατόπιτα <span class="price">5.50€</span></h3>
+                    <p>Ζουμερή σοκολατόπιτα με γλάσο μαύρης σοκολάτας.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            © 2025 The kitchen grid. Όλα τα δικαιώματα διατηρούνται.
+        </div>
+    </footer>
+
+    <script>
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const btns = document.querySelectorAll('.tab-btn');
+            
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+/* === MENU PAGE STYLES === */
+
+.menu-section {
+    padding: 60px 20px;
+}
+
+.menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 10px 25px;
+    border: 2px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.menu-item {
+    background: white;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    transition: transform 0.3s;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+}
+
+.menu-item-info h3 {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.menu-item-info p {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
