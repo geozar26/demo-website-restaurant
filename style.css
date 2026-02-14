@@ -51,7 +51,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; /* Βάζουμε σταθερό πλευρικό κενό για ασφάλεια σε desktop */
+    padding: 0 20px; 
 }
 
 
@@ -354,10 +354,7 @@ body {
 .carousel-card {
     position: relative;
     text-align: left;
-    /* ΑΛΛΑΓΗ: Αντί για width: 300px, βάζουμε flex-basis */
     flex: 0 0 300px; 
-    /* ΚΡΙΣΙΜΟ ΓΙΑ 300px-670px: Η κάρτα θα είναι ΜΕΧΡΙ 80% της οθόνης 
-       για να μη βγαίνει ποτέ έξω και κόβεται η εικόνα */
     max-width: calc(100vw - 60px); 
     background: #fff;
     border-radius: 12px;
@@ -366,7 +363,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Εξασφάλιση ότι το tooltip δεν θα κρύβεται από άλλες κάρτες */
+
 .carousel-card:hover {
     z-index: 999; 
 }
@@ -431,13 +428,13 @@ body {
 
 .carousel-dots {
     display: flex;
-    justify-content: center; /* Διατηρεί τις τελείες στο κέντρο */
+    justify-content: center; 
     gap: 12px;
     margin-top: 5px; 
 }
 
 .dot {
-    width: 10px; /* Ελαφρώς πιο μικρά για να μοιάζουν με τη φωτό */
+    width: 10px; 
     height: 10px;
     background-color: #ddd;
     border-radius: 50%;
@@ -464,7 +461,7 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     
-    /* ΑΛΛΑΓΗ ΕΔΩ: Κεντράρισμα παντού */
+   
     display: flex;
     justify-content: center;  
     align-items: center;     
@@ -480,7 +477,7 @@ body {
 
 .modal-content {
     position: relative;
-    background-color: var(--color-light, white); /* Χρησιμοποιεί τη μεταβλητή σου ή white */
+    background-color: var(--color-light, white);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -491,7 +488,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     z-index: 1001;
     text-align: center;
-    margin: 0; /* Αφαιρέθηκε το margin: 20px auto γιατί το flex το κεντράρει αυτόματα */
+    margin: 0; 
 }
 
 
@@ -540,7 +537,6 @@ body {
 
 .modal-content p {
     text-align: center;
-    
     padding: 0 10px;
     line-height: 1.6;
     color: var(--color-text-secondary);
@@ -1312,15 +1308,12 @@ html {
 
 @media (max-width: 1085px) {
     .items {
-        /* Μείωση του ελάχιστου πλάτους στήλης από 280px σε 240px. 
-           Αυτό επιτρέπει στο grid να χωρέσει τις στήλες άνετα 
-           στο πλάτος της οθόνης 1085px. */
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 20px;
         padding: 20px 10px;
     }
 
-    /* 🟢 ΑΛΛΑΓΗ 1: Επαναφέρουμε τις ρυθμίσεις του container για να δώσουμε padding */
+  
     .form-section-clean {
         background-color: #ffffff;
         
@@ -1700,7 +1693,7 @@ html {
     .items {
         grid-template-columns: 1fr; 
         padding: 20px 15px; 
-        gap: 25px;
+        gap: 10px;
     }
 
     .item img {
