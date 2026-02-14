@@ -6,6 +6,16 @@
     --color-text-secondary: #555;
     --color-accent-login: #58a6ad;
     --font-stack: "Poppins", sans-serif;
+
+/* Typography */
+    --font-stack: "Poppins", sans-serif;
+    --font-size-h1: 2.5rem;
+    --font-size-h2: 2.2rem;
+    --font-size-h3: 1.5rem;
+    --font-size-body: 1rem;
+    --font-size-small: 0.9rem;
+    --line-height-base: 1.6;
+    
 }
 
 html,
@@ -51,7 +61,7 @@ body {
     font-weight: bold;
     color: var(--color-primary);
     padding-left: 15px;
-    /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει το logo και το nav bar προς τα κάτω */
+  
     margin-top: 0; /* Ήταν 16px */
 }
 
@@ -59,7 +69,7 @@ body {
     display: flex;
     text-align: center;
     gap: 30px;
-    /* ❌ ΑΦΑΙΡΕΣΗ: Αυτό σπρώχνει τους συνδέσμους προς τα κάτω */
+
     margin-top: 10px; /* Ήταν 10px */
 }
 
@@ -86,7 +96,7 @@ body {
     margin-top: 10px;
 }
 
-/* Προσθήκη ΕΚΤΟΣ media query */
+
 .menu-overlay {
     display: none;
 }
@@ -96,8 +106,7 @@ body {
     display: none;
 }
 
-/* --- Hero Section --- */
-/* --- Hero Section --- */
+
 .hero {
     min-height: 60vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -106,18 +115,18 @@ body {
     text-align: center;
     padding: 120px 20px;
     
-    /* 🔴 ΕΔΩ ΕΙΝΑΙ Η ΑΛΛΑΓΗ ΓΙΑ ΚΕΝΤΡΑΡΙΣΜΑ */
-    display: flex; /* Ενεργοποιεί το Flexbox */
+   
+    display: flex;
     flex-direction: column; /* Τα στοιχεία στοιβάζονται κάθετα */
     justify-content: center; /* Κεντράρισμα κάθετα (στο κέντρο) */
     align-items: center; /* Κεντράρισμα οριζόντια */
     
-    /* 🔴 ΠΡΟΣΟΧΗ: Προσθήκη padding-top για να μην κρύβεται κάτω από το FIXED navbar */
+  
     padding-top: 150px; /* Πρέπει να είναι αρκετό για να "σπρώξει" το περιεχόμενο κάτω από το navbar */
 }
 
 .hero h1 {
-    font-size: 2.5rem;
+   font-size: var(--font-size-h2);
     margin-bottom: 20px;
 }
 /* ... (Τα υπόλοιπα styles του hero παραμένουν ίδια) ... */
