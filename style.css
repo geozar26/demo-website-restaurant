@@ -19,6 +19,7 @@
 
   --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
     
     
 }
@@ -58,7 +59,8 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-sm);
+}
     
 }
 .logo {
